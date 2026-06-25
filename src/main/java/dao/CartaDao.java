@@ -11,7 +11,7 @@ public interface CartaDao {
 	
 	public boolean deleteCarta(int id) throws SQLException;
 	
-	public CartaBean retriveByKey(int code) throws SQLException;
+	public CartaBean retriveByKey(int id) throws SQLException;
 	
 	public List<CartaBean> retrieveAll() throws SQLException;
 	

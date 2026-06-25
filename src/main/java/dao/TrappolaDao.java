@@ -11,7 +11,7 @@ public interface TrappolaDao extends CartaDao{
 	
 	public boolean deleteTrappola(int id) throws SQLException;
 	
-	public TrappolaBean retriveByKey(int code) throws SQLException;
+	public TrappolaBean retriveByKey(int id) throws SQLException;
 	
 	public List<TrappolaBean> retriveFiltered(TrappolaBean trappola) throws SQLException;
 		

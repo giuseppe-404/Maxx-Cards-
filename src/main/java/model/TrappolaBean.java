@@ -2,29 +2,21 @@ package model;
 
 import java.io.Serializable;
 
-public class TrappolaBean implements Serializable{
+public class TrappolaBean extends CartaBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private int id;
 	private String tipologia;
 	
 	public TrappolaBean() {
 	}
 
-	public TrappolaBean(int id, String tipologia) {
-		super();
-		this.id = id;
+	public TrappolaBean(int id, int punteggio, String nomeIt, String nomeEn, String nomeJp, String testo, String pathImg, String mimeType,
+			String tipologia) {
+		super(id, punteggio, nomeIt, nomeEn, nomeJp, testo, pathImg, mimeType);
 		this.tipologia = tipologia;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getTipologia() {
 		return tipologia;

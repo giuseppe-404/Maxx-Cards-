@@ -3,11 +3,10 @@ package model;
 import java.io.Serializable;
 import java.util.BitSet;
 
-public class MostroBean implements Serializable{
+public class MostroBean extends CartaBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	private int id;
 	private String tipologia;
 	private int livello;
 	private String attributo;
@@ -21,9 +20,10 @@ public class MostroBean implements Serializable{
 	public MostroBean() {
 	}
 	
-	public MostroBean(int id, String tipologia, int livello, String attributo, int atk, int def, String categoria,
+	public MostroBean(int id, int punteggio, String nomeIt, String nomeEn, String nomeJp, String testo, String pathImg, String mimeType, 
+			String tipologia, int livello, String attributo, int atk, int def, String categoria,
 			boolean tuner, BitSet frecce_link, int scala_pendulum) {
-		this.id = id;
+		super(id, punteggio, nomeIt, nomeEn, nomeJp, testo, pathImg, mimeType);
 		this.tipologia = tipologia;
 		this.livello = livello;
 		this.attributo = attributo;
@@ -35,12 +35,6 @@ public class MostroBean implements Serializable{
 		this.scala_pendulum = scala_pendulum;
 	}
 
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getTipologia() {
 		return tipologia;
 	}

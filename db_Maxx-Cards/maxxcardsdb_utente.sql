@@ -28,6 +28,7 @@ CREATE TABLE `utente` (
   `email` varchar(256) DEFAULT NULL,
   `pwd` varchar(256) NOT NULL,
   `dark_theme` tinyint(1) NOT NULL DEFAULT '0',
+  `amministratore` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

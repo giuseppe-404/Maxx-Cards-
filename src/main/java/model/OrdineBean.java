@@ -17,6 +17,28 @@ public class OrdineBean implements Serializable{
 	
 	public OrdineBean() {}
 
+	public OrdineBean(int id_ordine, int id_utente, int id_metodo, int id_infosped) {
+		this.stato = "Carrello";
+		this.id_ordine = id_ordine;
+		this.id_utente = id_utente;
+		this.id_metodo = id_metodo;
+		this.id_infosped = id_infosped;
+		this.data_acquisto = null;
+		this.data_consegna = null;
+	}
+
+	public OrdineBean(String stato, int id_ordine, int id_utente, int id_metodo, int id_infosped, Date data_acquisto,
+			Date data_consegna) {
+		super();
+		this.stato = stato;
+		this.id_ordine = id_ordine;
+		this.id_utente = id_utente;
+		this.id_metodo = id_metodo;
+		this.id_infosped = id_infosped;
+		this.data_acquisto = data_acquisto;
+		this.data_consegna = data_consegna;
+	}
+
 	public String getStato() {
 		return stato;
 	}
@@ -25,52 +47,51 @@ public class OrdineBean implements Serializable{
 		this.stato = stato;
 	}
 
-	public int getId_ordine() {
+	public int getIdOrdine() {
 		return id_ordine;
 	}
 
-	public void setId_ordine(int id_ordine) {
+	public void setIdOrdine(int id_ordine) {
 		this.id_ordine = id_ordine;
 	}
 
-	public int getId_utente() {
+	public int getIdUtente() {
 		return id_utente;
 	}
 
-	public void setId_utente(int id_utente) {
+	public void setIdUtente(int id_utente) {
 		this.id_utente = id_utente;
 	}
 
-	public int getId_metodo() {
+	public int getIdMetodo() {
 		return id_metodo;
 	}
 
-	public void setId_metodo(int id_metodo) {
+	public void setIdMetodo(int id_metodo) {
 		this.id_metodo = id_metodo;
 	}
 
-	public int getId_infosped() {
+	public int getIdInfoSped() {
 		return id_infosped;
 	}
 
-	public void setId_infosped(int id_infosped) {
+	public void setIdInfoSped(int id_infosped) {
 		this.id_infosped = id_infosped;
 	}
 
-	public Date getData_acquisto() {
+	public Date getDataAcquisto() {
 		return data_acquisto;
 	}
 
-	public void setData_acquisto(Date data_acquisto) {
+	public void setDataAcquisto(Date data_acquisto) {
 		this.data_acquisto = data_acquisto;
 	}
 
-	public Date getData_consegna() {
+	public Date getDataConsegna() {
 		return data_consegna;
 	}
 
-	public void setData_consegna(Date data_consegna) {
+	public void setDataConsegna(Date data_consegna) {
 		this.data_consegna = data_consegna;
 	}
-
 }

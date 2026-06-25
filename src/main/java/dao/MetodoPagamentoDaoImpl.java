@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import model.InfoSpedBean;
 import model.MetodoPagamentoBean;
 
 public class MetodoPagamentoDaoImpl implements MetodoPagamentoDao{

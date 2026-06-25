@@ -13,9 +13,9 @@ public interface MagiaDao extends CartaDao{
 	
 	public MagiaBean retriveByKey(int code) throws SQLException;
 	
-	public List<MagiaBean> retriveFiltered(String nome, String testo, int punteggio, String tipologia) throws SQLException;
+	public List<MagiaBean> retriveFiltered(MagiaBean magia) throws SQLException;
 		
-	public List<MagiaBean> retriveFiltered(String nome, String testo, int punteggio, String tipologia, int length, int limit, int page) throws SQLException;
+	public List<MagiaBean> retriveFiltered(MagiaBean magia, int limit, int page) throws SQLException;
 		
 	public boolean changeTipologia(MagiaBean magia) throws SQLException;
 }

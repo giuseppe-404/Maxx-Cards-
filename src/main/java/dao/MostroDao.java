@@ -14,13 +14,9 @@ public interface MostroDao extends CartaDao{
 	
 	public MostroBean retrieveByKey(int id) throws SQLException;
 	
-	public List<MostroBean> retrieveFiltered(String nome, String testo, int punteggio, 
-			String tipologia, int livello, String attributo, int atk, int def, String categoria,
-			boolean tuner, BitSet frecce_link, int scala_pendulum) throws SQLException;
+	public List<MostroBean> retrieveFiltered(MostroBean mostro) throws SQLException;
 	
-	public List<MostroBean> retrieveFiltered(String nome, String testo, int punteggio, 
-			String tipologia, int livello, String attributo, int atk, int def, String categoria,
-			boolean tuner, BitSet frecceLink, int scalaPendulum, int length, int limit, int page) throws SQLException;
+	public List<MostroBean> retrieveFiltered(MostroBean mostro, int limit, int page) throws SQLException;
 	
 	public boolean changeTipologia(MostroBean mostro) throws SQLException;
 	

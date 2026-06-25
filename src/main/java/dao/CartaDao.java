@@ -15,6 +15,10 @@ public interface CartaDao {
 	
 	public List<CartaBean> RetrieveAll() throws SQLException;
 	
+	public List<CartaBean> RetrieveAll(int lenght, int limit, int page) throws SQLException;
+	
+	public List<CartaBean> RetriveFiltered(String nome, String testo, int punteggio) throws SQLException;
+	
 	public boolean UpdateId(CartaBean carta, int originalId) throws SQLException;
 	
 	public boolean UpdatePunteggio(CartaBean carta) throws SQLException;
@@ -28,5 +32,4 @@ public interface CartaDao {
 	public boolean UpdateTesto(CartaBean carta) throws SQLException;
 
 	public boolean UpdateImage(CartaBean carta) throws SQLException;
-
 }

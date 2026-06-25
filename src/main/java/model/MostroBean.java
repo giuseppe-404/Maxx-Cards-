@@ -14,8 +14,8 @@ public class MostroBean extends CartaBean implements Serializable{
 	private int def;
 	private String categoria;
 	private boolean tuner;
-	private BitSet frecce_link;
-	private int scala_pendulum;
+	private BitSet frecceLink;
+	private int scalaPendulum;
 	
 	public MostroBean() {
 	}
@@ -31,8 +31,8 @@ public class MostroBean extends CartaBean implements Serializable{
 		this.def = def;
 		this.categoria = categoria;
 		this.tuner = tuner;
-		this.frecce_link = frecce_link;
-		this.scala_pendulum = scala_pendulum;
+		this.frecceLink = frecce_link;
+		this.scalaPendulum = scala_pendulum;
 	}
 
 	public String getTipologia() {
@@ -77,17 +77,17 @@ public class MostroBean extends CartaBean implements Serializable{
 	public void setTuner(boolean tuner) {
 		this.tuner = tuner;
 	}
-	public BitSet getFrecce_link() {
-		return frecce_link;
+	public BitSet getFrecceLink() {
+		return frecceLink;
 	}
-	public void setFrecce_link(BitSet frecce_link) {
-		this.frecce_link = frecce_link;
+	public void setFrecceLink(BitSet frecceLink) {
+		this.frecceLink = frecceLink;
 	}
-	public int getScala_pendulum() {
-		return scala_pendulum;
+	public int getScalaPendulum() {
+		return scalaPendulum;
 	}
-	public void setScala_pendulum(int scala_pendulum) {
-		this.scala_pendulum = scala_pendulum;
+	public void setScalaPendulum(int scalaPendulum) {
+		this.scalaPendulum = scalaPendulum;
 	}
 	
 	

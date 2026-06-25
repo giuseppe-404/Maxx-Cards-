@@ -21,17 +21,17 @@ public interface CartaDao {
 	
 	public List<CartaBean> RetriveFiltered(String nome, String testo, int punteggio, int length, int limit, int page) throws SQLException;
 	
-	public boolean UpdateId(CartaBean carta, int originalId) throws SQLException;
+	public boolean ChangeId(CartaBean carta, int originalId) throws SQLException;
 	
-	public boolean UpdatePunteggio(CartaBean carta) throws SQLException;
+	public boolean ChangePunteggio(CartaBean carta) throws SQLException;
 
-	public boolean UpdateNomeIt(CartaBean carta) throws SQLException;
+	public boolean ChangeNomeIt(CartaBean carta) throws SQLException;
 	
-	public boolean UpdateNomeEn(CartaBean carta) throws SQLException;
+	public boolean ChangeNomeEn(CartaBean carta) throws SQLException;
 	
-	public boolean UpdateNomeJp(CartaBean carta) throws SQLException;
+	public boolean ChangeNomeJp(CartaBean carta) throws SQLException;
 
-	public boolean UpdateTesto(CartaBean carta) throws SQLException;
+	public boolean ChangeTesto(CartaBean carta) throws SQLException;
 
-	public boolean UpdateImage(CartaBean carta) throws SQLException;
+	public boolean ChangeImage(CartaBean carta) throws SQLException;
 }

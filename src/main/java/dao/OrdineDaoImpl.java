@@ -109,7 +109,7 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public synchronized OrdineBean retrieveOrdineByKey(int idOrdine) throws SQLException {
+	public synchronized OrdineBean retrieveByKey(int idOrdine) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+ " where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -123,7 +123,7 @@ public class OrdineDaoImpl implements OrdineDao{
 		return null;	}
 
 	@Override
-	public synchronized List<OrdineBean> retrieveOrdineByIdUtente(int idUtente) throws SQLException {
+	public synchronized List<OrdineBean> retrieveByIdUtente(int idUtente) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+ " where id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

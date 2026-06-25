@@ -35,7 +35,7 @@ public class MetodoPagamentoDaoImpl implements MetodoPagamentoDao{
 	}
 	
 	@Override
-	public synchronized MetodoPagamentoBean retrieveMetodoPagamentodByKey(int id, int idUtente) throws SQLException {
+	public synchronized MetodoPagamentoBean retrieveByKey(int id, int idUtente) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+ " where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -50,7 +50,7 @@ public class MetodoPagamentoDaoImpl implements MetodoPagamentoDao{
 		return null;
 	}
 	@Override
-	public synchronized List<MetodoPagamentoBean> retrieveMetodoPagamentoByIdUtente(int idUtente) throws SQLException {
+	public synchronized List<MetodoPagamentoBean> retrieveByIdUtente(int idUtente) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+" where id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -64,7 +64,7 @@ public class MetodoPagamentoDaoImpl implements MetodoPagamentoDao{
 		}
 	}
 	@Override
-	public synchronized boolean deleteMetodoPagamentoByKey(int id, int idUtente) throws SQLException {
+	public synchronized boolean deleteByKey(int id, int idUtente) throws SQLException {
 		String sql = "DELETE from "+TABLE_NAME+" where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -75,7 +75,7 @@ public class MetodoPagamentoDaoImpl implements MetodoPagamentoDao{
 		}
 	}
 	@Override
-	public synchronized boolean deleteMetodoPagamentoByIdUtente(int idUtente) throws SQLException {
+	public synchronized boolean deleteByIdUtente(int idUtente) throws SQLException {
 		String sql = "DELETE from "+TABLE_NAME+" where id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

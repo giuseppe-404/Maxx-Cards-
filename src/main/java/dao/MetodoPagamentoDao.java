@@ -9,13 +9,13 @@ public interface MetodoPagamentoDao {
 	
 	public boolean saveMetodoPagamento(MetodoPagamentoBean met) throws SQLException;
 	
-	public MetodoPagamentoBean retrieveMetodoPagamentodByKey(int id, int idUtente) throws SQLException;
+	public MetodoPagamentoBean retrieveByKey(int id, int idUtente) throws SQLException;
 	
-	public List<MetodoPagamentoBean> retrieveMetodoPagamentoByIdUtente(int idUtente) throws SQLException;
+	public List<MetodoPagamentoBean> retrieveByIdUtente(int idUtente) throws SQLException;
 	
-	public boolean deleteMetodoPagamentoByKey(int id, int idUtente) throws SQLException;
+	public boolean deleteByKey(int id, int idUtente) throws SQLException;
 	
-	public boolean deleteMetodoPagamentoByIdUtente(int idUtente) throws SQLException;
+	public boolean deleteByIdUtente(int idUtente) throws SQLException;
 	
 	public boolean updateMetodoPagamento(int id, int idUtente, String met) throws SQLException;
 	

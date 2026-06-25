@@ -34,7 +34,7 @@ public class UtenteDaoImpl implements UtenteDao{
 	}
 
 	@Override
-	public synchronized UtenteBean retrieveUtenteByEmail(String email) throws SQLException {
+	public synchronized UtenteBean retrieveByEmail(String email) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+" where email=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -84,11 +84,12 @@ public class UtenteDaoImpl implements UtenteDao{
 	}
 
 	@Override
-	public synchronized boolean makeAdmin(String email) throws SQLException {
-		String sql = "UPDATE "+ TABLE_NAME + "SET admin=true where email=?";
+	public synchronized boolean makeAdmin(String email, boolean isAdmin) throws SQLException {
+		String sql = "UPDATE "+ TABLE_NAME + "SET admin=? where email=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1,email);
+			ps.setBoolean(1, isAdmin);
+			ps.setString(2,email);
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated!=0;
 		}

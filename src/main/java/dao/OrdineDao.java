@@ -21,7 +21,7 @@ public interface OrdineDao {
 	
 	public boolean deleteOrdine(int idOrdine) throws SQLException;
 	
-	public OrdineBean retrieveOrdineByKey(int idOrdine) throws SQLException;
+	public OrdineBean retrieveByKey(int idOrdine) throws SQLException;
 	
-	public List<OrdineBean> retrieveOrdineByIdUtente(int idUtente) throws SQLException;
+	public List<OrdineBean> retrieveByIdUtente(int idUtente) throws SQLException;
 }

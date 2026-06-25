@@ -41,7 +41,7 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized InfoSpedBean retrieveInfoSpedByKey(int id, int idUtente) throws SQLException{
+	public synchronized InfoSpedBean retrieveByKey(int id, int idUtente) throws SQLException{
 		String sql = "SELECT * from "+TABLE_NAME+" where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -56,7 +56,7 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized List<InfoSpedBean> retrieveInfoSpedByIdUtente(int idUtente) throws SQLException{
+	public synchronized List<InfoSpedBean> retrieveByIdUtente(int idUtente) throws SQLException{
 		String sql = "SELECT * from "+TABLE_NAME+" where id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -71,7 +71,7 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized boolean deleteInfoSpedByKey(int id, int idUtente) throws SQLException{
+	public synchronized boolean deleteByKey(int id, int idUtente) throws SQLException{
 		String sql = "DELETE from "+TABLE_NAME+" where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -83,7 +83,7 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized boolean deleteInfoSpedByIdUtente(int idUtente) throws SQLException{
+	public synchronized boolean deleteByIdUtente(int idUtente) throws SQLException{
 		String sql = "DELETE from "+TABLE_NAME+" where id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -94,7 +94,7 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized boolean updateInfoSpedNome(int id, int idUtente, String nome) throws SQLException{
+	public synchronized boolean updateNome(int id, int idUtente, String nome) throws SQLException{
 		String sql = "UPDATE "+TABLE_NAME+" set nome=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -107,7 +107,7 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized boolean updateInfoSpedCognome(int id, int idUtente, String cognome) throws SQLException {
+	public synchronized boolean updateCognome(int id, int idUtente, String cognome) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" set cognome=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -120,7 +120,7 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized boolean updateInfoSpedVia(int id, int idUtente, String via) throws SQLException {
+	public synchronized boolean updateVia(int id, int idUtente, String via) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" set via=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -133,7 +133,7 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized boolean updateInfoSpedCivico(int id, int idUtente, int civico) throws SQLException {
+	public synchronized boolean updateCivico(int id, int idUtente, int civico) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" set civico=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -146,7 +146,7 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized boolean updateInfoSpedNameCAP(int id, int idUtente, int cap) throws SQLException {
+	public synchronized boolean updateCAP(int id, int idUtente, int cap) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" set cap=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

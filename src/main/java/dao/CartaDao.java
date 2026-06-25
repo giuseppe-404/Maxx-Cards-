@@ -7,7 +7,7 @@ import model.CartaBean;
 
 public interface CartaDao {
 
-	public void saveCarta(CartaBean carta) throws SQLException;
+	public boolean saveCarta(CartaBean carta) throws SQLException;
 	
 	public boolean deleteCarta(int id) throws SQLException;
 	

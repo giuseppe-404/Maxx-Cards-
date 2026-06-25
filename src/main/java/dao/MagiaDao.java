@@ -7,7 +7,7 @@ import model.MagiaBean;
 
 public interface MagiaDao extends CartaDao{
 
-	public void saveMagia(MagiaBean magia) throws SQLException;
+	public boolean saveMagia(MagiaBean magia) throws SQLException;
 	
 	public boolean deleteMagia(int id) throws SQLException;
 	

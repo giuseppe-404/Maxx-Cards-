@@ -8,7 +8,7 @@ import model.MostroBean;
 
 public interface MostroDao extends CartaDao{
 
-	public void saveMostro(MostroBean mostro) throws SQLException;
+	public boolean saveMostro(MostroBean mostro) throws SQLException;
 	
 	public boolean deleteMostro(int id) throws SQLException;
 	

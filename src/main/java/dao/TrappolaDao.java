@@ -7,7 +7,7 @@ import model.TrappolaBean;
 
 public interface TrappolaDao extends CartaDao{
 
-	public void saveTrappola(TrappolaBean trappola) throws SQLException;
+	public boolean saveTrappola(TrappolaBean trappola) throws SQLException;
 	
 	public boolean deleteTrappola(int id) throws SQLException;
 	

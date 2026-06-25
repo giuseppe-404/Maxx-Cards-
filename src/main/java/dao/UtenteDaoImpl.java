@@ -33,7 +33,7 @@ public class UtenteDaoImpl implements UtenteDao{
 	}
 
 	@Override
-	public UtenteBean retrieveUtente(String email) throws SQLException {
+	public synchronized UtenteBean retrieveUtente(String email) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+" where email=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -49,7 +49,7 @@ public class UtenteDaoImpl implements UtenteDao{
 	}
 
 	@Override
-	public boolean setTheme(int id, boolean darkTheme) throws SQLException {
+	public synchronized boolean setTheme(int id, boolean darkTheme) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET dark_theme=? WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -61,7 +61,7 @@ public class UtenteDaoImpl implements UtenteDao{
 	}
 
 	@Override
-	public boolean deleteAccount(int id) throws SQLException {
+	public synchronized boolean deleteAccount(int id) throws SQLException {
 		String sql = "DELETE FROM "+TABLE_NAME+" WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -71,7 +71,7 @@ public class UtenteDaoImpl implements UtenteDao{
 		}
 	}
 	
-	public boolean changePassword(int id,String pwd) throws SQLException {
+	public synchronized boolean changePassword(int id,String pwd) throws SQLException {
 		String sql = "UPDATE "+ TABLE_NAME +" SET pwd=? where id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -83,7 +83,7 @@ public class UtenteDaoImpl implements UtenteDao{
 	}
 
 	@Override
-	public boolean makeAdmin(String email) throws SQLException {
+	public synchronized boolean makeAdmin(String email) throws SQLException {
 		String sql = "UPDATE "+ TABLE_NAME + "SET admin=true where email=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

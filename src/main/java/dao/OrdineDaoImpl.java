@@ -19,7 +19,7 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public void createOrdine(OrdineBean ordine) throws SQLException {
+	public synchronized void createOrdine(OrdineBean ordine) throws SQLException {
 		String sql = "INSERT INTO "+TABLE_NAME+"(stato,id_ordine,id_utente,id_metodo,id_infosped,data_acquisto,data_consegna)"
 				+ " VALUES(?,?,?,?,?,?,?)";
 		try(Connection connection = ds.getConnection();
@@ -37,7 +37,7 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public boolean changeStato(int idOrdine, String stato) throws SQLException {
+	public synchronized boolean changeStato(int idOrdine, String stato) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET stato=? where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -49,7 +49,7 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public boolean changeDataAcquisto(int idOrdine, Date acquisto) throws SQLException {
+	public synchronized boolean changeDataAcquisto(int idOrdine, Date acquisto) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET data_acquisto=? where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -61,7 +61,7 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public boolean changeDataConsegna(int idOrdine, Date consegna) throws SQLException {
+	public synchronized boolean changeDataConsegna(int idOrdine, Date consegna) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET data_consegna=? where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -73,7 +73,7 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public boolean changeMetodoPagamento(int idOrdine, int idMetodo) throws SQLException {
+	public synchronized boolean changeMetodoPagamento(int idOrdine, int idMetodo) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET id_metodo=? where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -85,7 +85,7 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public boolean changeInfoSped(int idOrdine, int idInfoSped) throws SQLException {
+	public synchronized boolean changeInfoSped(int idOrdine, int idInfoSped) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET id_infosped=? where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -97,7 +97,7 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public boolean deleteOrdine(int idOrdine) throws SQLException {
+	public synchronized boolean deleteOrdine(int idOrdine) throws SQLException {
 		String sql = "DELETE FROM "+TABLE_NAME+" WHERE id_ordine = ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -108,7 +108,7 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public OrdineBean retrieveOrdineByKey(int idOrdine) throws SQLException {
+	public synchronized OrdineBean retrieveOrdineByKey(int idOrdine) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+ " where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -122,7 +122,7 @@ public class OrdineDaoImpl implements OrdineDao{
 		return null;	}
 
 	@Override
-	public List<OrdineBean> retrieveOrdineByIdUtente(int idUtente) throws SQLException {
+	public synchronized List<OrdineBean> retrieveOrdineByIdUtente(int idUtente) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+ " where id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

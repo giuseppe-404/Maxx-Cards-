@@ -15,7 +15,7 @@ public interface TrappolaDao extends CartaDao{
 	
 	public List<TrappolaBean> RetriveFiltered(String nome, String testo, int punteggio, String tipologia) throws SQLException;
 		
-	public List<TrappolaBean> RetriveFiltered(String nome, String testo, int punteggio, String tipologia, int lenght, int limit, int page) throws SQLException;
+	public List<TrappolaBean> RetriveFiltered(String nome, String testo, int punteggio, String tipologia, int length, int limit, int page) throws SQLException;
 		
 	public TrappolaBean UpdateTipologia(TrappolaBean trappola) throws SQLException;
 }

@@ -7,7 +7,7 @@ import model.InfoSpedBean;
 
 public interface InfoSpedDao{
 	
-	public void saveInfoSped(InfoSpedBean info) throws SQLException;
+	public boolean saveInfoSped(InfoSpedBean info) throws SQLException;
 	
 	public InfoSpedBean retrieveInfoSpedByKey(int id, int idUtente) throws SQLException;
 	

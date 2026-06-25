@@ -19,7 +19,7 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public synchronized void createOrdine(OrdineBean ordine) throws SQLException {
+	public synchronized boolean createOrdine(OrdineBean ordine) throws SQLException {
 		String sql = "INSERT INTO "+TABLE_NAME+"(stato,id_ordine,id_utente,id_metodo,id_infosped,data_acquisto,data_consegna)"
 				+ " VALUES(?,?,?,?,?,?,?)";
 		try(Connection connection = ds.getConnection();
@@ -31,7 +31,8 @@ public class OrdineDaoImpl implements OrdineDao{
 			ps.setInt(5, ordine.getIdInfoSped());
 			ps.setDate(6, ordine.getDataAcquisto());
 			ps.setDate(7, ordine.getDataConsegna());
-			ps.executeQuery();
+			int rowAdded = ps.executeUpdate();
+			return rowAdded != 0;
 		}
 		
 	}

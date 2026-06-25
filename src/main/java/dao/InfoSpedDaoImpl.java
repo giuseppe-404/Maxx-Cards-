@@ -22,7 +22,7 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized void saveInfoSped(InfoSpedBean info) throws SQLException{
+	public synchronized boolean saveInfoSped(InfoSpedBean info) throws SQLException{
 		String sql = "INSERT INTO "+TABLE_NAME+"(id,id_utente,nome,cognome,via,civico,cap)"
 				+ "values (?,?,?,?,?,?,?)";
 		try(Connection connection = ds.getConnection();
@@ -34,7 +34,8 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 			ps.setString(5, info.getVia());
 			ps.setInt(6, info.getCivico());
 			ps.setInt(7,info.getCap());
-			ps.executeQuery();
+			int rowAdded = ps.executeUpdate();
+			return rowAdded != 0;
 		}
 		
 	}

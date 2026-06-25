@@ -21,7 +21,7 @@ public class MetodoPagamentoDaoImpl implements MetodoPagamentoDao{
 	}
 	
 	@Override
-	public synchronized void saveMetodoPagamento(MetodoPagamentoBean met) throws SQLException{
+	public synchronized boolean saveMetodoPagamento(MetodoPagamentoBean met) throws SQLException{
 		String sql = "INSERT into "+TABLE_NAME+"(metodo,id,id_utente)"
 				+ "values(?,?,?)";
 		try(Connection connection = ds.getConnection();
@@ -29,7 +29,8 @@ public class MetodoPagamentoDaoImpl implements MetodoPagamentoDao{
 			ps.setString(1,met.getMetodo());
 			ps.setInt(2, met.getId());
 			ps.setInt(3, met.getIdUtente());
-			ps.executeQuery();
+			int rowAdded = ps.executeUpdate();
+			return rowAdded != 0;
 		}
 	}
 	

@@ -7,7 +7,7 @@ import model.OrdineBean;
 
 public interface OrdineDao {
 	
-	public void createOrdine(OrdineBean ordine) throws SQLException;
+	public boolean createOrdine(OrdineBean ordine) throws SQLException;
 	
 	public boolean changeStato(int idOrdine, String stato) throws SQLException;
 	

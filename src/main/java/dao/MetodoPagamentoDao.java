@@ -7,7 +7,7 @@ import model.MetodoPagamentoBean;
 
 public interface MetodoPagamentoDao {
 	
-	public void saveMetodoPagamento(MetodoPagamentoBean met) throws SQLException;
+	public boolean saveMetodoPagamento(MetodoPagamentoBean met) throws SQLException;
 	
 	public MetodoPagamentoBean retrieveMetodoPagamentodByKey(int id, int idUtente) throws SQLException;
 	

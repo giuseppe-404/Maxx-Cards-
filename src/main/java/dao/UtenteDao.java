@@ -5,11 +5,11 @@ import java.sql.SQLException;
 import model.UtenteBean;
 
 public interface UtenteDao {
-	public void createUtente(UtenteBean utente) throws SQLException;
+	public boolean createUtente(UtenteBean utente) throws SQLException;
 	
-	public UtenteBean retrieveUtente(String email) throws SQLException;
+	public UtenteBean retrieveUtenteByEmail(String email) throws SQLException;
 	
-	public boolean setTheme(int id, boolean darkTheme) throws SQLException;
+	public boolean changeTheme(int id, boolean darkTheme) throws SQLException;
 	
 	public boolean deleteAccount(int id) throws SQLException;
 	

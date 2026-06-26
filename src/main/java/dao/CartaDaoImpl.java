@@ -54,7 +54,7 @@ public class CartaDaoImpl implements CartaDao{
 	}
 
 	@Override
-	public synchronized CartaBean retriveByKey(int id) throws SQLException {
+	public synchronized CartaBean retrieveByKey(int id) throws SQLException {
 		CartaBean carta = new CartaBean();
 		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
 		try( 
@@ -64,7 +64,7 @@ public class CartaDaoImpl implements CartaDao{
 			ps.setInt(1, id);
 			try (ResultSet rs = ps.executeQuery(sql)){
 				if (rs.next()) {
-					carta=fillBean(rs);
+					fillBean(carta, rs);
 				}
 			}
 		}
@@ -81,7 +81,8 @@ public class CartaDaoImpl implements CartaDao{
 				){
 			try (ResultSet rs = ps.executeQuery()){
 				while(rs.next()) {
-					CartaBean carta = fillBean(rs);
+					CartaBean carta = new CartaBean();
+					fillBean(carta, rs);
 					list.add(carta);
 				}
 			}
@@ -90,7 +91,7 @@ public class CartaDaoImpl implements CartaDao{
 	}
 
 	@Override
-	public List<CartaBean> retrieveAll(int limit, int page) throws SQLException {
+	public synchronized List<CartaBean> retrieveAll(int limit, int page) throws SQLException {
 		ArrayList<CartaBean> list = new ArrayList<CartaBean>();
 		String sql = "SELECT * FROM " + TABLE_NAME + " LIMIT " + limit + " OFFSET " + page*limit;
 		try(
@@ -99,7 +100,8 @@ public class CartaDaoImpl implements CartaDao{
 				){
 			try (ResultSet rs = ps.executeQuery()){
 				while(rs.next()) {
-					CartaBean carta = fillBean(rs);
+					CartaBean carta = new CartaBean();
+					fillBean(carta, rs);
 					list.add(carta);
 				}
 			}
@@ -109,43 +111,12 @@ public class CartaDaoImpl implements CartaDao{
 
 	@Override
 	//Non utilizza nomeEn e nomeJp per la ricerca, ma solo nomeIt, che viene usato come campo nome generico e cercato in tutti e tre
-	public List<CartaBean> retriveFiltered(CartaBean carta) throws SQLException {
+	public synchronized List<CartaBean> retrieveFiltered(CartaBean carta) throws SQLException {
 		ArrayList<CartaBean> list = new ArrayList<CartaBean>();
 		StringBuilder sql = new StringBuilder("SELECT * FROM " + TABLE_NAME);
 		ArrayList<String> params = new ArrayList<String>();
-		boolean first = true;
-		if (!carta.getNomeIt().equals("")) {
-			if (first) {
-				first = false;
-				sql.append(" WHERE ");
-			}
-			else 
-				sql.append(" AND ");
-			sql.append(" ( nome_it LIKE ? || nome_en LIKE ? || nome_jp LIKE ? )");
-			params.add("%"+carta.getNomeIt()+"%");
-			params.add("%"+carta.getNomeIt()+"%");
-			params.add("%"+carta.getNomeIt()+"%");
-		}
-		if (!(carta.getPunteggio() == -1)) {
-			if (first) {
-				first = false;
-				sql.append(" WHERE ");
-			}
-			else 
-				sql.append(" AND ");
-			sql.append(" punteggio <= ? ");
-			params.add(Integer.toString(carta.getPunteggio()));
-		}
-		if (!carta.getTesto().equals("")) {
-			if (first) {
-				first = false;
-				sql.append(" WHERE ");
-			}
-			else 
-				sql.append(" AND ");
-			sql.append(" testo LIKE ? ");
-			params.add("%"+carta.getTesto()+"%");
-		}
+		
+		buildCartaFilter(sql, params, carta);
 
 		try(
 				Connection conn = ds.getConnection();
@@ -156,7 +127,8 @@ public class CartaDaoImpl implements CartaDao{
 			}
 			try (ResultSet rs = ps.executeQuery()){
 				while(rs.next()) {
-					CartaBean bean = fillBean(rs);
+					CartaBean bean = new CartaBean();
+					fillBean(bean, rs);
 					list.add(bean);
 				}
 			}
@@ -166,43 +138,12 @@ public class CartaDaoImpl implements CartaDao{
 	}	
 
 	@Override
-	public List<CartaBean> retriveFiltered(CartaBean carta, int limit, int page) throws SQLException {
+	public synchronized List<CartaBean> retrieveFiltered(CartaBean carta, int limit, int page) throws SQLException {
 		ArrayList<CartaBean> list = new ArrayList<CartaBean>();
 		StringBuilder sql = new StringBuilder("SELECT * FROM " + TABLE_NAME);
 		ArrayList<String> params = new ArrayList<String>();
-		boolean first = true;
-		if (!carta.getNomeIt().equals("")) {
-			if (first) {
-				first = false;
-				sql.append(" WHERE ");
-			}
-			else 
-				sql.append(" AND ");
-			sql.append(" ( nome_it LIKE ? || nome_en LIKE ? || nome_jp LIKE ? )");
-			params.add("%"+carta.getNomeIt()+"%");
-			params.add("%"+carta.getNomeIt()+"%");
-			params.add("%"+carta.getNomeIt()+"%");
-		}
-		if (!(carta.getPunteggio() == -1)) {
-			if (first) {
-				first = false;
-				sql.append(" WHERE ");
-			}
-			else 
-				sql.append(" AND ");
-			sql.append(" punteggio <= ? ");
-			params.add(Integer.toString(carta.getPunteggio()));
-		}
-		if (!carta.getTesto().equals("")) {
-			if (first) {
-				first = false;
-				sql.append(" WHERE ");
-			}
-			else 
-				sql.append(" AND ");
-			sql.append(" testo LIKE ? ");
-			params.add("%"+carta.getTesto()+"%");
-		}
+		
+		buildCartaFilter(sql, params, carta);
 		
 		sql.append(" LIMIT " + limit + " OFFSET " + page*limit);
 		
@@ -215,7 +156,8 @@ public class CartaDaoImpl implements CartaDao{
 			}
 			try (ResultSet rs = ps.executeQuery()){
 				while(rs.next()) {
-					CartaBean bean = fillBean(rs);
+					CartaBean bean = new CartaBean();
+					fillBean(bean, rs);
 					list.add(bean);
 				}
 			}
@@ -225,7 +167,7 @@ public class CartaDaoImpl implements CartaDao{
 	}
 
 	@Override
-	public boolean changeId(CartaBean carta, int originalId) throws SQLException {
+	public synchronized boolean changeId(CartaBean carta, int originalId) throws SQLException {
 		String sql = "UPDATE " + TABLE_NAME + " SET id = ? WHERE id = ? ";
         try (
         		Connection conn = ds.getConnection();
@@ -240,7 +182,7 @@ public class CartaDaoImpl implements CartaDao{
 	}
 
 	@Override
-	public boolean changePunteggio(CartaBean carta) throws SQLException {
+	public synchronized boolean changePunteggio(CartaBean carta) throws SQLException {
         String sql = "UPDATE " + TABLE_NAME + " SET punteggio = ? WHERE id = ? ";
         try (
         		Connection conn = ds.getConnection();
@@ -255,7 +197,7 @@ public class CartaDaoImpl implements CartaDao{
 	}
 
 	@Override
-	public boolean changeNomeIt(CartaBean carta) throws SQLException {
+	public synchronized boolean changeNomeIt(CartaBean carta) throws SQLException {
 		String sql = "UPDATE " + TABLE_NAME + " SET nome_it = ? WHERE id = ? ";
         try (
         		Connection conn = ds.getConnection();
@@ -270,7 +212,7 @@ public class CartaDaoImpl implements CartaDao{
 	}
 
 	@Override
-	public boolean changeNomeEn(CartaBean carta) throws SQLException {
+	public synchronized boolean changeNomeEn(CartaBean carta) throws SQLException {
 		String sql = "UPDATE " + TABLE_NAME + " SET nome_en = ? WHERE id = ? ";
         try (
         		Connection conn = ds.getConnection();
@@ -285,7 +227,7 @@ public class CartaDaoImpl implements CartaDao{
 	}
 
 	@Override
-	public boolean changeNomeJp(CartaBean carta) throws SQLException {
+	public synchronized boolean changeNomeJp(CartaBean carta) throws SQLException {
 		String sql = "UPDATE " + TABLE_NAME + " SET nome_jp = ? WHERE id = ? ";
         try (
         		Connection conn = ds.getConnection();
@@ -300,7 +242,7 @@ public class CartaDaoImpl implements CartaDao{
 	}
 
 	@Override
-	public boolean changeTesto(CartaBean carta) throws SQLException {
+	public synchronized boolean changeTesto(CartaBean carta) throws SQLException {
 		String sql = "UPDATE " + TABLE_NAME + " SET testo = ? WHERE id = ? ";
         try (
         		Connection conn = ds.getConnection();
@@ -315,7 +257,7 @@ public class CartaDaoImpl implements CartaDao{
 	}
 
 	@Override
-	public boolean changeImage(CartaBean carta) throws SQLException {
+	public synchronized boolean changeImage(CartaBean carta) throws SQLException {
 		String sql = "UPDATE " + TABLE_NAME + " SET path_img = ? , mime_type = ? WHERE id = ? ";
         try (
         		Connection conn = ds.getConnection();
@@ -330,8 +272,7 @@ public class CartaDaoImpl implements CartaDao{
 	}
 
 
-	private CartaBean fillBean(ResultSet rs) throws SQLException {
-		CartaBean carta = new CartaBean();
+	protected void fillBean(CartaBean carta, ResultSet rs) throws SQLException {
 		carta.setId(rs.getInt("id"));
 		carta.setNomeIt(rs.getString("nome_it"));
 		carta.setNomeEn(rs.getString("nome_en"));
@@ -339,6 +280,42 @@ public class CartaDaoImpl implements CartaDao{
 		carta.setTesto(rs.getString("testo"));
 		carta.setPathImg(rs.getString("path_img"));
 		carta.setMimeType(rs.getString("mime_type"));
-		return carta;
+	}
+	
+	protected boolean buildCartaFilter(StringBuilder filter, ArrayList<String> params, CartaBean carta) {
+		boolean first = true;
+		if (!carta.getNomeIt().equals("")) {
+			if (first) {
+				first = false;
+				filter.append(" WHERE ");
+			}
+			else 
+				filter.append(" AND ");
+			filter.append(" ( nome_it LIKE ? || nome_en LIKE ? || nome_jp LIKE ? )");
+			params.add("%"+carta.getNomeIt()+"%");
+			params.add("%"+carta.getNomeIt()+"%");
+			params.add("%"+carta.getNomeIt()+"%");
+		}
+		if (!(carta.getPunteggio() == -1)) {
+			if (first) {
+				first = false;
+				filter.append(" WHERE ");
+			}
+			else 
+				filter.append(" AND ");
+			filter.append(" punteggio <= ? ");
+			params.add(Integer.toString(carta.getPunteggio()));
+		}
+		if (!carta.getTesto().equals("")) {
+			if (first) {
+				first = false;
+				filter.append(" WHERE ");
+			}
+			else 
+				filter.append(" AND ");
+			filter.append(" testo LIKE ? ");
+			params.add("%"+carta.getTesto()+"%");
+		}
+		return first;
 	}
 }

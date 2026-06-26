@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import model.UtenteBean;
 
@@ -16,5 +17,13 @@ public interface UtenteDao {
 	public boolean changePassword(int id, String pwd) throws SQLException;
 	
 	public boolean makeAdmin(String email, boolean isAdmin) throws SQLException;
+	
+	public List<UtenteBean> retrieveAll() throws SQLException;
+	
+	public List<UtenteBean> retrieveAll(int page, int limit) throws SQLException;
+	
+	public List<UtenteBean> retrieveAmministratore() throws SQLException;
+	
+	public List<UtenteBean> retrieveAmministratore(int page, int limit) throws SQLException;
 	
 }

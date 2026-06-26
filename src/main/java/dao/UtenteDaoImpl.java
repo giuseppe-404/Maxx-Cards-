@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.sql.DataSource;
-
 import model.UtenteBean;
 
 public class UtenteDaoImpl implements UtenteDao{
@@ -94,6 +94,66 @@ public class UtenteDaoImpl implements UtenteDao{
 			return rowUpdated!=0;
 		}
 }
+
+	@Override
+	public synchronized List<UtenteBean> retrieveAll() throws SQLException {
+		String sql = "SELECT * FROM "+TABLE_NAME+";";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ResultSet rs = ps.executeQuery();
+			List<UtenteBean> list = new ArrayList<>();
+			while(rs.next()) {
+				UtenteBean utente = new UtenteBean(rs.getInt(1),rs.getBytes(2),rs.getString(3),rs.getString(4),rs.getBoolean(5));
+				list.add(utente);
+			}
+			return list;
+		}
+	}
+
+	@Override
+	public synchronized List<UtenteBean> retrieveAll(int page, int limit) throws SQLException {
+		String sql = "SELECT * FROM "+TABLE_NAME+" LIMIT "+limit+" OFFSET "+page*limit+";";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ResultSet rs = ps.executeQuery();
+			List<UtenteBean> list = new ArrayList<>();
+			while(rs.next()) {
+				UtenteBean utente = new UtenteBean(rs.getInt(1),rs.getBytes(2),rs.getString(3),rs.getString(4),rs.getBoolean(5));
+				list.add(utente);
+			}
+			return list;
+		}
+	}
+
+	@Override
+	public synchronized List<UtenteBean> retrieveAmministratore() throws SQLException {
+		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE amministratore=true";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ResultSet rs = ps.executeQuery();
+			List<UtenteBean> list = new ArrayList<>();
+			while(rs.next()) {
+				UtenteBean utente = new UtenteBean(rs.getInt(1),rs.getBytes(2),rs.getString(3),rs.getString(4),rs.getBoolean(5));
+				list.add(utente);
+			}
+			return list;
+		}
+	}
+
+	@Override
+	public synchronized List<UtenteBean> retrieveAmministratore(int page, int limit) throws SQLException {
+		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE amministratore=true LIMIT "+limit+" OFFSET "+page*limit+";";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ResultSet rs = ps.executeQuery();
+			List<UtenteBean> list = new ArrayList<>();
+			while(rs.next()) {
+				UtenteBean utente = new UtenteBean(rs.getInt(1),rs.getBytes(2),rs.getString(3),rs.getString(4),rs.getBoolean(5));
+				list.add(utente);
+			}
+			return list;
+		}
+	}
 	
 	
 	

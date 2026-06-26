@@ -46,6 +46,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 			if(rs.next()) {
 				ProdottoCompratoBean prod = new ProdottoCompratoBean(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getString(5),
 						rs.getInt(6),rs.getString(7));
+				return prod;
 			}
 			return null;
 		}

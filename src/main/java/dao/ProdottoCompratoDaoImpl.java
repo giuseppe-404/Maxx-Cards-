@@ -18,7 +18,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 	
 	@Override
-	public boolean saveProdottoComprato(ProdottoCompratoBean prodotto) throws SQLException {
+	public synchronized boolean saveProdottoComprato(ProdottoCompratoBean prodotto) throws SQLException {
 		String sql = "INSERT "+TABLE_NAME+"(id,id_ordine,id_originale,prezzo,nome,qnt,info) "
 				+ "VALUES (?,?,?,?,?,?,?)";
 		try(Connection connection = ds.getConnection();
@@ -36,7 +36,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public ProdottoCompratoBean retrieveByKey(int id, int idOrdine) throws SQLException {
+	public synchronized ProdottoCompratoBean retrieveByKey(int id, int idOrdine) throws SQLException {
 		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -53,7 +53,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public List<ProdottoCompratoBean> retrieveByIdOrdine(int idOrdine) throws SQLException {
+	public synchronized List<ProdottoCompratoBean> retrieveByIdOrdine(int idOrdine) throws SQLException {
 		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -70,7 +70,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public boolean deleteProdottoComprato(int id, int idOrdine) throws SQLException {
+	public synchronized boolean deleteProdottoComprato(int id, int idOrdine) throws SQLException {
 		String sql = "DELETE FROM "+TABLE_NAME+" WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -82,7 +82,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public boolean deleteProdottoCompratoByIdOrdine(int idOrdine) throws SQLException {
+	public synchronized boolean deleteProdottoCompratoByIdOrdine(int idOrdine) throws SQLException {
 		String sql = " SET SQL_SAFE_UPDATES = 0; DELETE FROM "+TABLE_NAME+" WHERE id_ordine=?; SET SQL_SAFE_UPDATE = 1;";
 		try (Connection connection = ds.getConnection()){
 			connection.setAutoCommit(false);
@@ -96,7 +96,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 		}
 	}
 	@Override
-	public boolean changeIdOriginale(int id, int idOrdine, int idOriginale) throws SQLException {
+	public synchronized boolean changeIdOriginale(int id, int idOrdine, int idOriginale) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+ " SET id_originale=? WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -110,7 +110,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public boolean changePrezzo(int id, int idOrdine, int prezzo) throws SQLException {
+	public synchronized boolean changePrezzo(int id, int idOrdine, int prezzo) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+ " SET prezzo=? WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -123,7 +123,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public boolean changeNome(int id, int idOrdine, String nome) throws SQLException {
+	public synchronized boolean changeNome(int id, int idOrdine, String nome) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+ " SET nome=? WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -136,7 +136,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public boolean changeQnt(int id, int idOrdine, int qnt) throws SQLException {
+	public synchronized boolean changeQnt(int id, int idOrdine, int qnt) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+ " SET qnt=? WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -149,7 +149,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public boolean changeInfo(int id, int idOrdine, String info) throws SQLException {
+	public synchronized boolean changeInfo(int id, int idOrdine, String info) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+ " SET info=? WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

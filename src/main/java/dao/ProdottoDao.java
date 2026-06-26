@@ -15,6 +15,10 @@ public interface ProdottoDao {
 	
 	public List<ProdottoBean> retrieveAll(int page, int limit) throws SQLException;
 	
+	public List<ProdottoBean> retrieveFiltered(ProdottoBean prodotto, int page, int limit)throws SQLException; 
+	
+	public List<ProdottoBean> retrieveAll() throws SQLException;
+	
 	public boolean deleteProdotto(int idProdotto) throws SQLException;
 	
 	public boolean changeNome(int idProdotto, String nome) throws SQLException;

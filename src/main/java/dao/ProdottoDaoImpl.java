@@ -103,7 +103,60 @@ public class ProdottoDaoImpl implements ProdottoDao {
 				return list;
 		}
 	}
-
+	
+	@Override
+	public synchronized List<ProdottoBean> retrieveFiltered(ProdottoBean prodotto,int page, int limit) throws SQLException {
+		StringBuilder sql = new StringBuilder("SELECT * FROM "+TABLE_NAME+" ");
+		boolean primo=true;
+		ArrayList<String> attributi = new ArrayList<>();
+		if(!prodotto.getNome().equals("")) {
+			if(primo) {
+				primo = false;
+				sql.append("WHERE ");
+			}else sql.append(" AND ");
+			sql.append(" nome LIKE ? ");
+			attributi.add("%"+prodotto.getNome()+"%");
+		}
+		if(prodotto.getQnt() < 0) {
+			if(primo) {
+				primo = false;
+				sql.append("WHERE ");
+			}else sql.append(" AND ");
+			sql.append(" qnt=? ");
+			attributi.add(Integer.toString(prodotto.getQnt()));
+		}
+		if(prodotto.getPrezzo() < 0) {
+			if(primo) {
+				primo = false;
+				sql.append("WHERE ");
+			}else sql.append(" AND ");
+			sql.append(" (prezzo*(100-sconto)/100)<=? ");
+			attributi.add(Integer.toString(prodotto.getPrezzo()));
+		}
+		if(!prodotto.getDescrizione().equals("")) {
+			if(primo) {
+				primo = false;
+				sql.append("WHERE ");
+			}else sql.append(" AND ");
+			sql.append(" descrizione LIKE ? ");
+			attributi.add("%"+prodotto.getDescrizione()+"%");
+		}
+		sql.append("LIMIT "+limit+" OFFSET "+page*limit+" ;");
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql.toString())) {
+				for (int i = 0; i < attributi.size(); i++) {
+					ps.setString(i + 1, attributi.get(i));
+				}
+				ResultSet rs = ps.executeQuery();
+				List<ProdottoBean> list = new ArrayList<>();
+				while(rs.next()) {
+					ProdottoBean temp = new ProdottoBean(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getString(7),rs.getString(8));
+					list.add(temp);
+				}
+				return list;
+		}
+	}
+	
 	@Override
 	public synchronized List<ProdottoBean> retrieveAll(int page, int limit) throws SQLException {
 		String sql = "SELECT * FROM "+TABLE_NAME+" LIMIT "+limit+" OFFSET "+page*limit+";";
@@ -119,6 +172,20 @@ public class ProdottoDaoImpl implements ProdottoDao {
 		}
 	}
 
+	public synchronized List<ProdottoBean> retrieveAll() throws SQLException {
+		String sql = "SELECT * FROM "+TABLE_NAME+";";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ResultSet rs = ps.executeQuery();
+			List<ProdottoBean> list = new ArrayList<>();
+			while(rs.next()) {
+				ProdottoBean temp = new ProdottoBean(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getString(7),rs.getString(8));
+				list.add(temp);
+			}
+			return list;
+		}
+	}
+	
 	@Override
 	public synchronized boolean deleteProdotto(int idProdotto) throws SQLException {
 		String sql = "DELETE FROM "+TABLE_NAME+" where id=?";

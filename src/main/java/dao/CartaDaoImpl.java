@@ -123,6 +123,8 @@ public class CartaDaoImpl implements CartaDao{
 				sql.append(" AND ");
 			sql.append(" ( nome_it LIKE ? || nome_en LIKE ? || nome_jp LIKE ? )");
 			params.add("%"+carta.getNomeIt()+"%");
+			params.add("%"+carta.getNomeIt()+"%");
+			params.add("%"+carta.getNomeIt()+"%");
 		}
 		if (!(carta.getPunteggio() == -1)) {
 			if (first) {
@@ -150,7 +152,7 @@ public class CartaDaoImpl implements CartaDao{
 				PreparedStatement ps = conn.prepareStatement(sql.toString())
 				){
 			for (int i = 0; i < params.size(); i++) {
-				ps.setString(i, params.get(i));
+				ps.setString(i+1, params.get(i));
 			}
 			try (ResultSet rs = ps.executeQuery()){
 				while(rs.next()) {
@@ -177,6 +179,8 @@ public class CartaDaoImpl implements CartaDao{
 			else 
 				sql.append(" AND ");
 			sql.append(" ( nome_it LIKE ? || nome_en LIKE ? || nome_jp LIKE ? )");
+			params.add("%"+carta.getNomeIt()+"%");
+			params.add("%"+carta.getNomeIt()+"%");
 			params.add("%"+carta.getNomeIt()+"%");
 		}
 		if (!(carta.getPunteggio() == -1)) {
@@ -207,7 +211,7 @@ public class CartaDaoImpl implements CartaDao{
 				PreparedStatement ps = conn.prepareStatement(sql.toString())
 				){
 			for (int i = 0; i < params.size(); i++) {
-				ps.setString(i, params.get(i));
+				ps.setString(i+1, params.get(i));
 			}
 			try (ResultSet rs = ps.executeQuery()){
 				while(rs.next()) {

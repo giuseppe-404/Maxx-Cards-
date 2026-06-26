@@ -17,14 +17,14 @@ public interface ProdottoCompratoDao {
 	
 	public boolean deleteProdottoCompratoByIdOrdine(int idOrdine) throws SQLException;
 	
-	public boolean updateIdOriginale(int id, int idOrdine, int idOriginale) throws SQLException;
+	public boolean changeIdOriginale(int id, int idOrdine, int idOriginale) throws SQLException;
 	
-	public boolean updatePrezzo(int id, int idOrdine, int prezzo) throws SQLException;
+	public boolean changePrezzo(int id, int idOrdine, int prezzo) throws SQLException;
 	
-	public boolean updateNome(int id, int idOrdine, String nome) throws SQLException;
+	public boolean changeNome(int id, int idOrdine, String nome) throws SQLException;
 	
-	public boolean updateQnt(int id, int idOrdine, int qnt) throws SQLException;
+	public boolean changeQnt(int id, int idOrdine, int qnt) throws SQLException;
 	
-	public boolean updateInfo(int id, int idOrdine, String info) throws SQLException;
+	public boolean changeInfo(int id, int idOrdine, String info) throws SQLException;
 	
 }

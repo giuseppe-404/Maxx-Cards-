@@ -96,7 +96,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 		}
 	}
 	@Override
-	public boolean updateIdOriginale(int id, int idOrdine, int idOriginale) throws SQLException {
+	public boolean changeIdOriginale(int id, int idOrdine, int idOriginale) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+ " SET id_originale=? WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -110,7 +110,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public boolean updatePrezzo(int id, int idOrdine, int prezzo) throws SQLException {
+	public boolean changePrezzo(int id, int idOrdine, int prezzo) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+ " SET prezzo=? WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -123,7 +123,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public boolean updateNome(int id, int idOrdine, String nome) throws SQLException {
+	public boolean changeNome(int id, int idOrdine, String nome) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+ " SET nome=? WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -136,7 +136,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public boolean updateQnt(int id, int idOrdine, int qnt) throws SQLException {
+	public boolean changeQnt(int id, int idOrdine, int qnt) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+ " SET qnt=? WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -149,7 +149,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	}
 
 	@Override
-	public boolean updateInfo(int id, int idOrdine, String info) throws SQLException {
+	public boolean changeInfo(int id, int idOrdine, String info) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+ " SET info=? WHERE id=? and id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

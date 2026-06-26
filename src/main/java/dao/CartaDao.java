@@ -11,15 +11,15 @@ public interface CartaDao {
 	
 	public boolean deleteCarta(int id) throws SQLException;
 	
-	public CartaBean retriveByKey(int id) throws SQLException;
+	public CartaBean retrieveByKey(int id) throws SQLException;
 	
 	public List<CartaBean> retrieveAll() throws SQLException;
 	
 	public List<CartaBean> retrieveAll(int limit, int page) throws SQLException;
 	
-	public List<CartaBean> retriveFiltered(CartaBean carta) throws SQLException;
+	public List<CartaBean> retrieveFiltered(CartaBean carta) throws SQLException;
 	
-	public List<CartaBean> retriveFiltered(CartaBean carta, int limit, int page) throws SQLException;
+	public List<CartaBean> retrieveFiltered(CartaBean carta, int limit, int page) throws SQLException;
 	
 	public boolean changeId(CartaBean carta, int originalId) throws SQLException;
 	

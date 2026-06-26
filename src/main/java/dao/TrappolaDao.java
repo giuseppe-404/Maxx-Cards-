@@ -11,11 +11,11 @@ public interface TrappolaDao extends CartaDao{
 	
 	public boolean deleteTrappola(int id) throws SQLException;
 	
-	public TrappolaBean retriveByKey(int id) throws SQLException;
+	public TrappolaBean retrieveByKey(int id) throws SQLException;
 	
-	public List<TrappolaBean> retriveFiltered(TrappolaBean trappola) throws SQLException;
+	public List<TrappolaBean> retrieveFiltered(TrappolaBean trappola) throws SQLException;
 		
-	public List<TrappolaBean> retriveFiltered(TrappolaBean trappola, int limit, int page) throws SQLException;
+	public List<TrappolaBean> retrieveFiltered(TrappolaBean trappola, int limit, int page) throws SQLException;
 		
 	public boolean changeTipologia(TrappolaBean trappola) throws SQLException;
 }

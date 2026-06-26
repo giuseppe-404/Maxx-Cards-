@@ -9,6 +9,8 @@ public class TrappolaBean extends CartaBean implements Serializable{
 	private String tipologia;
 	
 	public TrappolaBean() {
+		super();
+		tipologia="";
 	}
 
 	public TrappolaBean(int id, int punteggio, String nomeIt, String nomeEn, String nomeJp, String testo, String pathImg, String mimeType,

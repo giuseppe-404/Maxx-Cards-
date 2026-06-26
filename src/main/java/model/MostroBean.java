@@ -13,16 +13,26 @@ public class MostroBean extends CartaBean implements Serializable{
 	private int atk;
 	private int def;
 	private String categoria;
-	private boolean tuner;
+	private int tuner;
 	private BitSet frecceLink;
 	private int scalaPendulum;
 	
 	public MostroBean() {
+		super();
+		this.tipologia = "";
+		this.livello = 0;
+		this.attributo = "";
+		this.atk = -2;
+		this.def = -2;
+		this.categoria = "";
+		this.tuner = -1;
+		this.frecceLink = null;
+		this.scalaPendulum = -1;
 	}
 	
 	public MostroBean(int id, int punteggio, String nomeIt, String nomeEn, String nomeJp, String testo, String pathImg, String mimeType, 
 			String tipologia, int livello, String attributo, int atk, int def, String categoria,
-			boolean tuner, BitSet frecce_link, int scala_pendulum) {
+			int tuner, BitSet frecce_link, int scala_pendulum) {
 		super(id, punteggio, nomeIt, nomeEn, nomeJp, testo, pathImg, mimeType);
 		this.tipologia = tipologia;
 		this.livello = livello;
@@ -71,10 +81,10 @@ public class MostroBean extends CartaBean implements Serializable{
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-	public boolean isTuner() {
+	public int getTuner() {
 		return tuner;
 	}
-	public void setTuner(boolean tuner) {
+	public void setTuner(int tuner) {
 		this.tuner = tuner;
 	}
 	public BitSet getFrecceLink() {

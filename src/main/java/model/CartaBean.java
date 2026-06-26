@@ -16,6 +16,14 @@ public class CartaBean implements Serializable{
 	private String mimeType;
 	
 	public CartaBean() {
+		id=0;
+		punteggio=-1;
+		nomeIt="";
+		nomeEn="";
+		nomeJp="";
+		testo="";
+		pathImg="";
+		mimeType="";
 	}
 	
 	public CartaBean(int id, int punteggio, String nomeIt, String nomeEn, String nomeJp, String testo, String pathImg,

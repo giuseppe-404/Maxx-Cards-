@@ -9,6 +9,8 @@ public class MagiaBean extends CartaBean implements Serializable{
 	private String tipologia;
 	
 	public MagiaBean() {
+		super();
+		tipologia="";
 	}
 
 	public MagiaBean(int id, int punteggio, String nomeIt, String nomeEn, String nomeJp, String testo, String pathImg, String mimeType,

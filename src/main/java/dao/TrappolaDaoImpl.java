@@ -257,7 +257,7 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
         		PreparedStatement ps = conn.prepareStatement(sql)
         		) {
         	ps.setString(1, Trappola.getTipologia());
-        	ps.setInt(1, Trappola.getId());
+        	ps.setInt(2, Trappola.getId());
 			
 			int result = ps.executeUpdate();
 			return result != 0;

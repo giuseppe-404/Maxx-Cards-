@@ -257,7 +257,7 @@ public class MagiaDaoImpl extends CartaDaoImpl implements MagiaDao{
         		PreparedStatement ps = conn.prepareStatement(sql)
         		) {
         	ps.setString(1, magia.getTipologia());
-        	ps.setInt(1, magia.getId());
+        	ps.setInt(2, magia.getId());
 			
 			int result = ps.executeUpdate();
 			return result != 0;

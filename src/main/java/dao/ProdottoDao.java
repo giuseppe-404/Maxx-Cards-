@@ -7,7 +7,7 @@ import model.ProdottoBean;
 
 public interface ProdottoDao {
 	
-	public void saveProdotto(ProdottoBean prodotto) throws SQLException;
+	public boolean saveProdotto(ProdottoBean prodotto) throws SQLException;
 	
 	public ProdottoBean retrieveByKey(int idProdotto) throws SQLException;
 	

@@ -20,7 +20,7 @@ public class ProdottoDaoImpl implements ProdottoDao {
 	}
 	
 	@Override
-	public synchronized void saveProdotto(ProdottoBean prodotto) throws SQLException {
+	public synchronized boolean saveProdotto(ProdottoBean prodotto) throws SQLException {
 		String sql = "INSERT INTO "+TABLE_NAME+"(id,nome,qnt,prezzo,descrizione,sconto,path_img,mime_type)"
 				+ "VALUES(?,?,?,?,?,?,?,?)";
 		try(Connection connection = ds.getConnection();
@@ -33,7 +33,8 @@ public class ProdottoDaoImpl implements ProdottoDao {
 			ps.setInt(6, prodotto.getSconto());
 			ps.setString(7, prodotto.getPathImg());
 			ps.setString(8, prodotto.getMimeType());
-			ps.executeQuery();
+			int rowUpdated= ps.executeUpdate();
+			return rowUpdated != 0;
 		}
 	}
 

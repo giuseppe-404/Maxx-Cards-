@@ -54,40 +54,8 @@ public class ProdottoDaoImpl implements ProdottoDao {
 	@Override
 	public synchronized List<ProdottoBean> retrieveFiltered(ProdottoBean prodotto) throws SQLException {
 		StringBuilder sql = new StringBuilder("SELECT * FROM "+TABLE_NAME+" ");
-		boolean primo=true;
 		ArrayList<String> attributi = new ArrayList<>();
-		if(!prodotto.getNome().equals("")) {
-			if(primo) {
-				primo = false;
-				sql.append("WHERE ");
-			}else sql.append(" AND ");
-			sql.append(" nome LIKE ? ");
-			attributi.add("%"+prodotto.getNome()+"%");
-		}
-		if(prodotto.getQnt() < 0) {
-			if(primo) {
-				primo = false;
-				sql.append("WHERE ");
-			}else sql.append(" AND ");
-			sql.append(" qnt=? ");
-			attributi.add(Integer.toString(prodotto.getQnt()));
-		}
-		if(prodotto.getPrezzo() < 0) {
-			if(primo) {
-				primo = false;
-				sql.append("WHERE ");
-			}else sql.append(" AND ");
-			sql.append(" (prezzo*(100-sconto)/100)<=? ");
-			attributi.add(Integer.toString(prodotto.getPrezzo()));
-		}
-		if(!prodotto.getDescrizione().equals("")) {
-			if(primo) {
-				primo = false;
-				sql.append("WHERE ");
-			}else sql.append(" AND ");
-			sql.append(" descrizione LIKE ? ");
-			attributi.add("%"+prodotto.getDescrizione()+"%");
-		}
+		buildProdottoFilter(sql, attributi, prodotto);
 		sql.append(";");
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql.toString())) {
@@ -107,40 +75,8 @@ public class ProdottoDaoImpl implements ProdottoDao {
 	@Override
 	public synchronized List<ProdottoBean> retrieveFiltered(ProdottoBean prodotto,int page, int limit) throws SQLException {
 		StringBuilder sql = new StringBuilder("SELECT * FROM "+TABLE_NAME+" ");
-		boolean primo=true;
 		ArrayList<String> attributi = new ArrayList<>();
-		if(!prodotto.getNome().equals("")) {
-			if(primo) {
-				primo = false;
-				sql.append("WHERE ");
-			}else sql.append(" AND ");
-			sql.append(" nome LIKE ? ");
-			attributi.add("%"+prodotto.getNome()+"%");
-		}
-		if(prodotto.getQnt() < 0) {
-			if(primo) {
-				primo = false;
-				sql.append("WHERE ");
-			}else sql.append(" AND ");
-			sql.append(" qnt=? ");
-			attributi.add(Integer.toString(prodotto.getQnt()));
-		}
-		if(prodotto.getPrezzo() < 0) {
-			if(primo) {
-				primo = false;
-				sql.append("WHERE ");
-			}else sql.append(" AND ");
-			sql.append(" (prezzo*(100-sconto)/100)<=? ");
-			attributi.add(Integer.toString(prodotto.getPrezzo()));
-		}
-		if(!prodotto.getDescrizione().equals("")) {
-			if(primo) {
-				primo = false;
-				sql.append("WHERE ");
-			}else sql.append(" AND ");
-			sql.append(" descrizione LIKE ? ");
-			attributi.add("%"+prodotto.getDescrizione()+"%");
-		}
+		buildProdottoFilter(sql, attributi, prodotto);
 		sql.append("LIMIT "+limit+" OFFSET "+page*limit+" ;");
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql.toString())) {
@@ -150,7 +86,8 @@ public class ProdottoDaoImpl implements ProdottoDao {
 				ResultSet rs = ps.executeQuery();
 				List<ProdottoBean> list = new ArrayList<>();
 				while(rs.next()) {
-					ProdottoBean temp = new ProdottoBean(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getString(7),rs.getString(8));
+					ProdottoBean temp = null;
+					fillBean(temp,rs);
 					list.add(temp);
 				}
 				return list;
@@ -165,7 +102,8 @@ public class ProdottoDaoImpl implements ProdottoDao {
 			ResultSet rs = ps.executeQuery();
 			List<ProdottoBean> list = new ArrayList<>();
 			while(rs.next()) {
-				ProdottoBean temp = new ProdottoBean(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getString(7),rs.getString(8));
+				ProdottoBean temp = null;
+				fillBean(temp,rs);
 				list.add(temp);
 			}
 			return list;
@@ -179,7 +117,8 @@ public class ProdottoDaoImpl implements ProdottoDao {
 			ResultSet rs = ps.executeQuery();
 			List<ProdottoBean> list = new ArrayList<>();
 			while(rs.next()) {
-				ProdottoBean temp = new ProdottoBean(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getString(7),rs.getString(8));
+				ProdottoBean temp = null;
+				fillBean(temp,rs);
 				list.add(temp);
 			}
 			return list;
@@ -269,5 +208,54 @@ public class ProdottoDaoImpl implements ProdottoDao {
 			return rowUpdated != 0;
 		}
 	}
+	
+	protected void fillBean(ProdottoBean prodotto, ResultSet rs) throws SQLException{
+		prodotto.setId(rs.getInt(1));
+		prodotto.setNome(rs.getString(2));
+		prodotto.setQnt(rs.getInt(3));
+		prodotto.setPrezzo(rs.getInt(4));
+		prodotto.setDescrizione(rs.getString(5));
+		prodotto.setSconto(rs.getInt(6));
+		prodotto.setPathImg(rs.getString(7));
+		prodotto.setMimeType(rs.getString(8));
+	}
 
+	protected boolean buildProdottoFilter(StringBuilder filter, ArrayList<String> attributi, ProdottoBean prodotto) {
+		boolean primo=true;
+		if(!prodotto.getNome().equals("")) {
+			if(primo) {
+				primo = false;
+				filter.append("WHERE ");
+			}else filter.append(" AND ");
+			filter.append(" nome LIKE ? ");
+			attributi.add("%"+prodotto.getNome()+"%");
+		}
+		if(prodotto.getQnt() < 0) {
+			if(primo) {
+				primo = false;
+				filter.append("WHERE ");
+			}else filter.append(" AND ");
+			filter.append(" qnt=? ");
+			attributi.add(Integer.toString(prodotto.getQnt()));
+		}
+		if(prodotto.getPrezzo() < 0) {
+			if(primo) {
+				primo = false;
+				filter.append("WHERE ");
+			}else filter.append(" AND ");
+			filter.append(" (prezzo*(100-sconto)/100)<=? ");
+			attributi.add(Integer.toString(prodotto.getPrezzo()));
+		}
+		if(!prodotto.getDescrizione().equals("")) {
+			if(primo) {
+				primo = false;
+				filter.append("WHERE ");
+			}else filter.append(" AND ");
+			filter.append(" descrizione LIKE ? ");
+			attributi.add("%"+prodotto.getDescrizione()+"%");
+		}
+		return primo;
+		
+	}
+	
 }

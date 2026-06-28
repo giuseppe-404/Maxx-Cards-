@@ -10,6 +10,7 @@ public class MostroBean extends CartaBean implements Serializable{
 	private String tipologia;
 	private int livello;
 	private String attributo;
+	private String tipo;
 	private int atk;
 	private int def;
 	private String categoria;
@@ -22,6 +23,7 @@ public class MostroBean extends CartaBean implements Serializable{
 		this.tipologia = "";
 		this.livello = 0;
 		this.attributo = "";
+		this.tipo = "";
 		this.atk = -2;
 		this.def = -2;
 		this.categoria = "";
@@ -31,12 +33,13 @@ public class MostroBean extends CartaBean implements Serializable{
 	}
 	
 	public MostroBean(int id, int punteggio, String nomeIt, String nomeEn, String nomeJp, String testo, String pathImg, String mimeType, 
-			String tipologia, int livello, String attributo, int atk, int def, String categoria,
+			String tipologia, int livello, String attributo, String tipo, int atk, int def, String categoria,
 			int tuner, BitSet frecce_link, int scala_pendulum) {
 		super(id, punteggio, nomeIt, nomeEn, nomeJp, testo, pathImg, mimeType);
 		this.tipologia = tipologia;
 		this.livello = livello;
 		this.attributo = attributo;
+		this.tipo = tipo;
 		this.atk = atk;
 		this.def = def;
 		this.categoria = categoria;
@@ -62,6 +65,12 @@ public class MostroBean extends CartaBean implements Serializable{
 	}
 	public void setAttributo(String attributo) {
 		this.attributo = attributo;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	public int getAtk() {
 		return atk;

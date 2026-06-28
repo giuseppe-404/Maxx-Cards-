@@ -24,6 +24,8 @@ public interface MostroDao extends CartaDao{
 	
 	public boolean changeAttributo(MostroBean mostro) throws SQLException;
 	
+	public boolean changeTipo(MostroBean mostro) throws SQLException;
+	
 	public boolean changeAtk(MostroBean mostro) throws SQLException;
 	
 	public boolean changeDef(MostroBean mostro) throws SQLException;

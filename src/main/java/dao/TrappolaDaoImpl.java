@@ -15,7 +15,7 @@ import model.TrappolaBean;
 public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 
 	private static final String CARTA_NAME = "carta";
-	private static final String TRAPPOLA_NAME = "Trappola";
+	private static final String TRAPPOLA_NAME = "trappola";
 	private DataSource ds;
 	
 	public TrappolaDaoImpl(DataSource ds) {
@@ -44,8 +44,8 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 	
 	@Override
 	//Salva solo l'entità Trappola associata ad un carta, se la carta non esiste return false
-	public synchronized boolean saveTrappola(TrappolaBean Trappola) throws SQLException {
-		CartaBean carta = super.retrieveByKey(Trappola.getId());
+	public synchronized boolean saveTrappola(TrappolaBean trappola) throws SQLException {
+		CartaBean carta = super.retrieveByKey(trappola.getId());
 		if (carta.getId() == 0)
 			return false;
 		String sql = "INSERT INTO " + TRAPPOLA_NAME + " (id, tipologia) VALUES (?, ?)";
@@ -53,8 +53,8 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 				Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
 				){
-			ps.setInt(1, Trappola.getId());
-			ps.setString(2, Trappola.getTipologia());
+			ps.setInt(1, trappola.getId());
+			ps.setString(2, trappola.getTipologia());
 			int result = ps.executeUpdate();
 			return result != 0;
 		}
@@ -79,7 +79,7 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 	
 	@Override
 	public synchronized TrappolaBean retrieveByKey(int id) throws SQLException {
-		TrappolaBean Trappola = new TrappolaBean();
+		TrappolaBean trappola = new TrappolaBean();
 		String sql = "SELECT " + CARTA_NAME + ".*, tipologia FROM " + CARTA_NAME + " JOIN " + TRAPPOLA_NAME + " ON " + CARTA_NAME + ".id = " + TRAPPOLA_NAME + ".id WHERE id = ?";
 		try( 
 				Connection conn = ds.getConnection();
@@ -88,11 +88,11 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 			ps.setInt(1, id);
 			try (ResultSet rs = ps.executeQuery(sql)){
 				if (rs.next()) {
-					fillBean(Trappola, rs);
+					fillBean(trappola, rs);
 				}
 			}
 		}
-		return Trappola;
+		return trappola;
 	}
 	
 	@Override
@@ -164,12 +164,12 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 	}
 	
 	@Override
-	public synchronized List<TrappolaBean> retrieveFiltered(TrappolaBean Trappola) throws SQLException {
+	public synchronized List<TrappolaBean> retrieveFiltered(TrappolaBean trappola) throws SQLException {
 		ArrayList<TrappolaBean> list = new ArrayList<TrappolaBean>();
 		StringBuilder sql = new StringBuilder("SELECT " + CARTA_NAME + ".*, tipologia FROM " + CARTA_NAME + " JOIN " + TRAPPOLA_NAME + " ON " + CARTA_NAME + ".id = " + TRAPPOLA_NAME + ".id ");
 		ArrayList<String> params = new ArrayList<String>();
 		
-		buildCartaFilter(sql, params, Trappola);
+		buildCartaFilter(sql, params, trappola);
 				
 		try(
 				Connection conn = ds.getConnection();
@@ -221,12 +221,12 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 	}
 
 	@Override
-	public synchronized List<TrappolaBean> retrieveFiltered(TrappolaBean Trappola, int limit, int page) throws SQLException {
+	public synchronized List<TrappolaBean> retrieveFiltered(TrappolaBean trappola, int limit, int page) throws SQLException {
 		ArrayList<TrappolaBean> list = new ArrayList<TrappolaBean>();
 		StringBuilder sql = new StringBuilder("SELECT " + CARTA_NAME + ".*, tipologia FROM " + CARTA_NAME + " JOIN " + TRAPPOLA_NAME + " ON " + CARTA_NAME + ".id = " + TRAPPOLA_NAME + ".id ");
 		ArrayList<String> params = new ArrayList<String>();
 		
-		buildCartaFilter(sql, params, Trappola);
+		buildCartaFilter(sql, params, trappola);
 		
 		sql.append(" LIMIT " + limit + " OFFSET " + page*limit);
 		
@@ -250,28 +250,28 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 	}
 
 	@Override
-	public synchronized boolean changeTipologia(TrappolaBean Trappola) throws SQLException {
+	public synchronized boolean changeTipologia(TrappolaBean trappola) throws SQLException {
 		String sql = "UPDATE " + TRAPPOLA_NAME + " SET tipologia = ? WHERE id = ? ";
         try (
         		Connection conn = ds.getConnection();
         		PreparedStatement ps = conn.prepareStatement(sql)
         		) {
-        	ps.setString(1, Trappola.getTipologia());
-        	ps.setInt(2, Trappola.getId());
+        	ps.setString(1, trappola.getTipologia());
+        	ps.setInt(2, trappola.getId());
 			
 			int result = ps.executeUpdate();
 			return result != 0;
         }
 	}
 
-	private void fillBean(TrappolaBean Trappola, ResultSet rs) throws SQLException {
-		super.fillBean(Trappola, rs);
-		Trappola.setTipologia(rs.getString("tipologia"));
+	private void fillBean(TrappolaBean trappola, ResultSet rs) throws SQLException {
+		super.fillBean(trappola, rs);
+		trappola.setTipologia(rs.getString("tipologia"));
 	}
 	
-	protected boolean buildCartaFilter(StringBuilder filter, ArrayList<String> params, TrappolaBean Trappola) {
-		boolean first = super.buildCartaFilter(filter, params, Trappola);
-		if (!Trappola.getTipologia().equals("")) {
+	protected boolean buildCartaFilter(StringBuilder filter, ArrayList<String> params, TrappolaBean trappola) {
+		boolean first = super.buildCartaFilter(filter, params, trappola);
+		if (!trappola.getTipologia().equals("")) {
 			if (first) {
 				first = false;
 				filter.append(" WHERE ");
@@ -279,7 +279,7 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 			else 
 				filter.append(" AND ");
 			filter.append(" tipologia LIKE ? ");
-			params.add("%"+Trappola.getTipologia()+"%");
+			params.add("%"+trappola.getTipologia()+"%");
 		}
 		return first;
 	}

@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import model.ProdottoCompratoBean;
 
 public interface ProdottoCompratoDao {
@@ -17,14 +16,14 @@ public interface ProdottoCompratoDao {
 	
 	public boolean deleteProdottoCompratoByIdOrdine(int idOrdine) throws SQLException;
 	
-	public boolean changeIdOriginale(int id, int idOrdine, int idOriginale) throws SQLException;
+	public boolean changeIdOriginale(ProdottoCompratoBean prodotto) throws SQLException;
 	
-	public boolean changePrezzo(int id, int idOrdine, int prezzo) throws SQLException;
+	public boolean changePrezzo(ProdottoCompratoBean prodotto) throws SQLException;
 	
-	public boolean changeNome(int id, int idOrdine, String nome) throws SQLException;
+	public boolean changeNome(ProdottoCompratoBean prodotto) throws SQLException;
 	
-	public boolean changeQnt(int id, int idOrdine, int qnt) throws SQLException;
+	public boolean changeQnt(ProdottoCompratoBean prodotto) throws SQLException;
 	
-	public boolean changeInfo(int id, int idOrdine, String info) throws SQLException;
+	public boolean changeInfo(ProdottoCompratoBean prodotto) throws SQLException;
 	
 }

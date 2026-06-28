@@ -9,15 +9,15 @@ public interface OrdineDao {
 	
 	public boolean createOrdine(OrdineBean ordine) throws SQLException;
 	
-	public boolean changeStato(int idOrdine, String stato) throws SQLException;
+	public boolean changeStato(OrdineBean ordine) throws SQLException;
 	
-	public boolean changeDataAcquisto(int idOrdine, Date acquisto) throws SQLException;
+	public boolean changeDataAcquisto(OrdineBean ordine) throws SQLException;
 	
-	public boolean changeDataConsegna(int idOrdine, Date consegna) throws SQLException;
+	public boolean changeDataConsegna(OrdineBean ordine) throws SQLException;
 	
-	public boolean changeMetodoPagamento(int idOrdine, int idMetodo) throws SQLException;
+	public boolean changeMetodoPagamento(OrdineBean ordine) throws SQLException;
 	
-	public boolean changeInfoSped(int idOrdine, int idInfoSped) throws SQLException;
+	public boolean changeInfoSped(OrdineBean ordine) throws SQLException;
 	
 	public boolean deleteOrdine(int idOrdine) throws SQLException;
 	

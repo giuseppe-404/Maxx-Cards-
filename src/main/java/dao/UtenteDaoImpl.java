@@ -50,12 +50,12 @@ public class UtenteDaoImpl implements UtenteDao{
 	}
 
 	@Override
-	public synchronized boolean changeTheme(int id, boolean darkTheme) throws SQLException {
+	public synchronized boolean changeTheme(UtenteBean utente) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET dark_theme=? WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setBoolean(1, darkTheme);
-			ps.setInt(2, id);
+			ps.setBoolean(1, utente.isDarkTheme());
+			ps.setInt(2, utente.getId());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated!=0;
 		}
@@ -72,12 +72,12 @@ public class UtenteDaoImpl implements UtenteDao{
 		}
 	}
 	
-	public synchronized boolean changePassword(int id,String pwd) throws SQLException {
+	public synchronized boolean changePassword(UtenteBean utente) throws SQLException {
 		String sql = "UPDATE "+ TABLE_NAME +" SET pwd=? where id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1, pwd);
-			ps.setInt(2, id);
+			ps.setString(1, utente.getPwd());
+			ps.setInt(2, utente.getId());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated!=0;
 		}

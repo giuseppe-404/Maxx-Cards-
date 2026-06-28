@@ -14,9 +14,9 @@ public interface CSetDao {
 	
 	public boolean deleteCSet(int id) throws SQLException;
 	
-	public boolean changeNome(int id, String nome) throws SQLException;
+	public boolean changeNome(CSetBean set) throws SQLException;
 	
-	public boolean changeReleaseDate(int id, Date releaseDate) throws SQLException;
+	public boolean changeReleaseDate(CSetBean set) throws SQLException;
 	
 	public List<CSetBean> retrieveAll() throws SQLException;
 	

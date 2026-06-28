@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,60 +37,60 @@ public class OrdineDaoImpl implements OrdineDao{
 	}
 
 	@Override
-	public synchronized boolean changeStato(int idOrdine, String stato) throws SQLException {
+	public synchronized boolean changeStato(OrdineBean ordine) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET stato=? where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1,stato);
-			ps.setInt(2, idOrdine);
+			ps.setString(1,ordine.getStato());
+			ps.setInt(2, ordine.getIdOrdine());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changeDataAcquisto(int idOrdine, Date acquisto) throws SQLException {
+	public synchronized boolean changeDataAcquisto(OrdineBean ordine) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET data_acquisto=? where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setDate(1,acquisto);
-			ps.setInt(2, idOrdine);
+			ps.setDate(1,ordine.getDataAcquisto());
+			ps.setInt(2, ordine.getIdOrdine());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changeDataConsegna(int idOrdine, Date consegna) throws SQLException {
+	public synchronized boolean changeDataConsegna(OrdineBean ordine) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET data_consegna=? where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setDate(1,consegna);
-			ps.setInt(2, idOrdine);
+			ps.setDate(1,ordine.getDataConsegna());
+			ps.setInt(2, ordine.getIdOrdine());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changeMetodoPagamento(int idOrdine, int idMetodo) throws SQLException {
+	public synchronized boolean changeMetodoPagamento(OrdineBean ordine) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET id_metodo=? where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1,idMetodo);
-			ps.setInt(2, idOrdine);
+			ps.setInt(1,ordine.getIdMetodo());
+			ps.setInt(2, ordine.getIdOrdine());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changeInfoSped(int idOrdine, int idInfoSped) throws SQLException {
+	public synchronized boolean changeInfoSped(OrdineBean ordine) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET id_infosped=? where id_ordine=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1,idInfoSped);
-			ps.setInt(2, idOrdine);
+			ps.setInt(1,ordine.getIdInfoSped());
+			ps.setInt(2, ordine.getIdOrdine());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}

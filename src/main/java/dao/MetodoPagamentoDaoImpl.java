@@ -85,13 +85,13 @@ public class MetodoPagamentoDaoImpl implements MetodoPagamentoDao{
 		}
 	}
 	@Override
-	public synchronized boolean updateMetodoPagamento(int id, int idUtente, String met) throws SQLException{
+	public synchronized boolean updateMetodoPagamento(MetodoPagamentoBean met) throws SQLException{
 		String sql = "UPDATE "+TABLE_NAME+" set metodo=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1,met);
-			ps.setInt(2,id);
-			ps.setInt(3,idUtente);
+			ps.setString(1,met.getMetodo());
+			ps.setInt(2, met.getId());
+			ps.setInt(3, met.getIdUtente());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}

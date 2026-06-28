@@ -10,11 +10,11 @@ public interface UtenteDao {
 	
 	public UtenteBean retrieveByEmail(String email) throws SQLException;
 	
-	public boolean changeTheme(int id, boolean darkTheme) throws SQLException;
+	public boolean changeTheme(UtenteBean utente) throws SQLException;
 	
 	public boolean deleteAccount(int id) throws SQLException;
 	
-	public boolean changePassword(int id, String pwd) throws SQLException;
+	public boolean changePassword(UtenteBean utente) throws SQLException;
 	
 	public boolean makeAdmin(String email, boolean isAdmin) throws SQLException;
 	

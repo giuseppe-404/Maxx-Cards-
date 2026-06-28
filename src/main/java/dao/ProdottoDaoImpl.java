@@ -138,73 +138,73 @@ public class ProdottoDaoImpl implements ProdottoDao {
 	}
 
 	@Override
-	public synchronized boolean changeNome(int idProdotto, String nome) throws SQLException {
+	public synchronized boolean changeNome(ProdottoBean prodotto) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET nome=? WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1, nome);
-			ps.setInt(2, idProdotto);
+			ps.setString(1, prodotto.getNome());
+			ps.setInt(2, prodotto.getId());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changeQnt(int idProdotto, int qnt) throws SQLException {
+	public synchronized boolean changeQnt(ProdottoBean prodotto) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET qnt=? WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, qnt);
-			ps.setInt(2, idProdotto);
+			ps.setInt(1, prodotto.getQnt());
+			ps.setInt(2, prodotto.getId());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changePrezzo(int idProdotto, int prezzo) throws SQLException {
+	public synchronized boolean changePrezzo(ProdottoBean prodotto) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET prezzo=? WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, prezzo);
-			ps.setInt(2, idProdotto);
+			ps.setInt(1, prodotto.getPrezzo());
+			ps.setInt(2, prodotto.getId());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changeDescrizione(int idProdotto, String descrizione) throws SQLException {
+	public synchronized boolean changeDescrizione(ProdottoBean prodotto) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET descrizione=? WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1, descrizione);
-			ps.setInt(2, idProdotto);
+			ps.setString(1, prodotto.getDescrizione());
+			ps.setInt(2, prodotto.getId());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changeSconto(int idProdotto, int sconto) throws SQLException {
+	public synchronized boolean changeSconto(ProdottoBean prodotto) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET sconto=? WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, sconto);
-			ps.setInt(2, idProdotto);
+			ps.setInt(1, prodotto.getSconto());
+			ps.setInt(2, prodotto.getId());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changeImage(int idProdotto, String path, String mime) throws SQLException {
+	public synchronized boolean changeImage(ProdottoBean prodotto) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET path_img=?, mime_type=? WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1, path);
-			ps.setString(2, mime);
-			ps.setInt(3, idProdotto);
+			ps.setString(1, prodotto.getPathImg());
+			ps.setString(2, prodotto.getMimeType());
+			ps.setInt(3, prodotto.getId());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}

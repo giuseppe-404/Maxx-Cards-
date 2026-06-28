@@ -94,65 +94,65 @@ public class InfoSpedDaoImpl implements InfoSpedDao{
 	}
 
 	@Override
-	public synchronized boolean updateNome(int id, int idUtente, String nome) throws SQLException{
+	public synchronized boolean updateNome(InfoSpedBean info) throws SQLException{
 		String sql = "UPDATE "+TABLE_NAME+" set nome=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1,nome);
-			ps.setInt(2,id);
-			ps.setInt(3,idUtente);
+			ps.setString(1,info.getNome());
+			ps.setInt(2,info.getId());
+			ps.setInt(3,info.getIdUtente());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean updateCognome(int id, int idUtente, String cognome) throws SQLException {
+	public synchronized boolean updateCognome(InfoSpedBean info) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" set cognome=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1, cognome);
-			ps.setInt(2,id);
-			ps.setInt(3,idUtente);
+			ps.setString(1, info.getCognome());
+			ps.setInt(2,info.getId());
+			ps.setInt(3,info.getIdUtente());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean updateVia(int id, int idUtente, String via) throws SQLException {
+	public synchronized boolean updateVia(InfoSpedBean info) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" set via=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1,via);
-			ps.setInt(2,id);
-			ps.setInt(3,idUtente);
+			ps.setString(1,info.getVia());
+			ps.setInt(2, info.getId());
+			ps.setInt(3, info.getIdUtente());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean updateCivico(int id, int idUtente, int civico) throws SQLException {
+	public synchronized boolean updateCivico(InfoSpedBean info) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" set civico=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1,civico);
-			ps.setInt(2,id);
-			ps.setInt(3,idUtente);
+			ps.setInt(1, info.getCivico());
+			ps.setInt(2, info.getId());
+			ps.setInt(3, info.getIdUtente());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean updateCAP(int id, int idUtente, int cap) throws SQLException {
+	public synchronized boolean updateCAP(InfoSpedBean info) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" set cap=? where id=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1,cap);
-			ps.setInt(2,id);
-			ps.setInt(3,idUtente);
+			ps.setInt(1, info.getCap());
+			ps.setInt(2, info.getId());
+			ps.setInt(3, info.getIdUtente());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}

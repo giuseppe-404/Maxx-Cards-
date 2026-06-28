@@ -173,24 +173,24 @@ public class CSetDaoImpl implements CSetDao {
 	}
 
 	@Override
-	public synchronized boolean changeNome(int id, String nome) throws SQLException {
+	public synchronized boolean changeNome(CSetBean set) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET nome=? WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setString(1, nome);
-			ps.setInt(2, id);
+			ps.setString(1, set.getNome());
+			ps.setInt(2, set.getId());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changeReleaseDate(int id, Date releaseDate) throws SQLException {
+	public synchronized boolean changeReleaseDate(CSetBean set) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET releaseDate=? WHERE id=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setDate(1, releaseDate);
-			ps.setInt(2, id);
+			ps.setDate(1, set.getReleaseDate());
+			ps.setInt(2, set.getId());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}

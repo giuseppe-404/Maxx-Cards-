@@ -21,16 +21,16 @@ public interface ProdottoDao {
 	
 	public boolean deleteProdotto(int idProdotto) throws SQLException;
 	
-	public boolean changeNome(int idProdotto, String nome) throws SQLException;
+	public boolean changeNome(ProdottoBean prodotto) throws SQLException;
 	
-	public boolean changeQnt(int idProdotto, int qnt) throws SQLException;
+	public boolean changeQnt(ProdottoBean prodotto) throws SQLException;
 	
-	public boolean changePrezzo(int idProdotto, int prezzo) throws SQLException;
+	public boolean changePrezzo(ProdottoBean prodotto) throws SQLException;
 	
-	public boolean changeDescrizione(int idProdotto, String descrizione) throws SQLException;
+	public boolean changeDescrizione(ProdottoBean prodotto) throws SQLException;
 	
-	public boolean changeSconto(int idProdotto, int sconto) throws SQLException;
+	public boolean changeSconto(ProdottoBean prodotto) throws SQLException;
 	
-	public boolean changeImage(int idProdotto, String path, String mime) throws SQLException;
+	public boolean changeImage(ProdottoBean prodotto) throws SQLException;
 	
 }

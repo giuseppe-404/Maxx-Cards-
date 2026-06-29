@@ -338,14 +338,14 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 			st.append(" quality = ? ");
 			attribute.add(carta.getQuality());
 		}
-		if(carta.getIdSet() == 0) {
+		if(carta.getIdSet() != 0) {
 			if(primo) {
 				st.append(" WHERE ");
 			}else st.append(" AND "); 
 			st.append(" id_set = ? ");
 			attribute.add(Integer.toString(carta.getIdSet()));
 		}
-		if(carta.getIdCarta() == 0) {
+		if(carta.getIdCarta() != 0) {
 			if(primo) {
 				st.append(" WHERE ");
 			}else st.append(" AND ");

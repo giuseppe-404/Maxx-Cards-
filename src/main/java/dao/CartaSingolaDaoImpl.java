@@ -85,7 +85,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 
 	public synchronized List<CartaSingolaBean> retrieveFiltered(CartaSingolaBean carta) throws SQLException{
 		List<CartaSingolaBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, quality, id_set, id_carta FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -109,7 +109,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 	
 	public synchronized List<CartaSingolaBean> retrieveFiltered(CartaSingolaBean carta, int page, int limit) throws SQLException{
 		List<CartaSingolaBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, quality, id_set, id_carta FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -134,7 +134,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 	@Override
 	public synchronized List<ProdottoYGOBean> retrieveFiltered(ProdottoYGOBean prodotto) throws SQLException {
 		List<ProdottoYGOBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, quality, id_set, id_carta FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -159,7 +159,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 	@Override
 	public synchronized List<ProdottoYGOBean> retrieveFiltered(ProdottoYGOBean prodotto, int page, int limit) throws SQLException {
 		List<ProdottoYGOBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, quality, id_set, id_carta FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -183,7 +183,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 
 	public synchronized List<ProdottoBean> retrieveFiltered(ProdottoBean prodotto) throws SQLException {
 		List<ProdottoBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, quality, id_set, id_carta FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -207,7 +207,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 	
 	public synchronized List<ProdottoBean> retrieveFiltered(ProdottoBean prodotto, int page, int limit) throws SQLException{
 		List<ProdottoBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, quality, id_set, id_carta FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -232,7 +232,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 	@Override
 	public synchronized List<ProdottoBean> retrieveAll(int page, int limit) throws SQLException {
 		List<ProdottoBean> list = new ArrayList<>();
-		String sql = "SELECT * FROM "
+		String sql = "SELECT "+SUPER_NAME+".*, lingua, quality, id_set, id_carta FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id LIMIT "+ limit+ " OFFSET "+page*limit;
 		try(Connection connection = ds.getConnection();
@@ -251,7 +251,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 	@Override
 	public synchronized List<ProdottoBean> retrieveAll() throws SQLException {
 		List<ProdottoBean> list = new ArrayList<>();
-		String sql = "SELECT * FROM "
+		String sql = "SELECT "+SUPER_NAME+".*, lingua, quality, id_set, id_carta FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id";
 		try(Connection connection = ds.getConnection();
@@ -270,7 +270,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 	@Override
 	public synchronized CartaSingolaBean retrieveByKey(int id) throws SQLException {
 		CartaSingolaBean carta = new CartaSingolaBean();
-		String sql = "SELECT * FROM "
+		String sql = "SELECT "+SUPER_NAME+".*, lingua, quality, id_set, id_carta FROM " 
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id WHERE "
 						+ " id = ?";

@@ -85,7 +85,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	@Override
 	public synchronized List<ProdottoYGOBean> retrieveFiltered(ProdottoYGOBean prod) throws SQLException {
 		List<ProdottoYGOBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -110,7 +110,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	@Override
 	public synchronized List<ProdottoYGOBean> retrieveFiltered(ProdottoYGOBean prod, int page, int limit) throws SQLException {
 		List<ProdottoYGOBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -135,7 +135,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	@Override
 	public synchronized List<ProdottoBean> retrieveFiltered(ProdottoBean prodotto, int page, int limit) throws SQLException{
 		List<ProdottoBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -159,7 +159,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	
 	public synchronized List<ProdottoBean> retrieveFiltered ( ProdottoBean prodotto) throws SQLException {
 		List<ProdottoBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -184,7 +184,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	@Override
 	public synchronized List<ConfezionatoBean> retrieveFiltered(ConfezionatoBean confezionato) throws SQLException {
 		List<ConfezionatoBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();
@@ -210,7 +210,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	public synchronized List<ConfezionatoBean> retrieveFiltered(ConfezionatoBean confezionato, int page, int limit)
 			throws SQLException {
 		List<ConfezionatoBean> list = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM "
+		StringBuilder sql = new StringBuilder(" SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ");
 		ArrayList<String> attribute = new ArrayList<>();

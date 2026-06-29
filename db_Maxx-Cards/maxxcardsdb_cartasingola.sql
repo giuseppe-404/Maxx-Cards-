@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: maxxcardsdb
+-- Host: localhost    Database: maxxcardsdb
 -- ------------------------------------------------------
 -- Server version	8.0.44
 
@@ -26,21 +26,15 @@ CREATE TABLE `cartasingola` (
   `id` int NOT NULL,
   `quality` enum('Poor','Played','Light Played','Good','Excellent','Near Mint','Mint') NOT NULL,
   `id_set` int DEFAULT NULL,
+  `id_carta` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_set` (`id_set`),
+  KEY `cartasingola_ibfk_3` (`id_carta`),
   CONSTRAINT `cartasingola_ibfk_1` FOREIGN KEY (`id_set`) REFERENCES `cset` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `cartasingola_ibfk_2` FOREIGN KEY (`id`) REFERENCES `prodottoygo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `cartasingola_ibfk_2` FOREIGN KEY (`id`) REFERENCES `prodottoygo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `cartasingola_ibfk_3` FOREIGN KEY (`id_carta`) REFERENCES `carta` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `cartasingola`
---
-
-LOCK TABLES `cartasingola` WRITE;
-/*!40000 ALTER TABLE `cartasingola` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cartasingola` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -51,4 +45,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 18:00:50
+-- Dump completed on 2026-06-29 17:49:38

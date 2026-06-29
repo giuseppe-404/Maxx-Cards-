@@ -322,14 +322,14 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 		}
 	}
 
-	public synchronized void fillBean(CartaSingolaBean carta, ResultSet rs) throws SQLException {
+	protected synchronized void fillBean(CartaSingolaBean carta, ResultSet rs) throws SQLException {
 		super.fillBean(carta, rs);
 		carta.setQuality(rs.getString("quality"));
 		carta.setIdSet(rs.getInt("id_set"));
 		carta.setIdCarta(rs.getInt("id_carta"));
 	}
 	
-	public synchronized boolean buildProdottoFilter(StringBuilder st, ArrayList<String> attribute, CartaSingolaBean carta) {
+	protected synchronized boolean buildProdottoFilter(StringBuilder st, ArrayList<String> attribute, CartaSingolaBean carta) {
 		boolean primo = super.buildProdottoFilter(st, attribute, carta);
 		if(!carta.getQuality().equals("")) {
 			if(primo) {

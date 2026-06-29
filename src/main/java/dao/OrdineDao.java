@@ -1,6 +1,5 @@
 package dao;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import model.OrdineBean;

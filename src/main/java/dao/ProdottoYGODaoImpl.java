@@ -41,7 +41,7 @@ public class ProdottoYGODaoImpl extends ProdottoDaoImpl implements ProdottoYGODa
 
 	public synchronized boolean saveProdottoYGO(ProdottoYGOBean prodotto) throws SQLException {
 		ProdottoBean prod = super.retrieveByKey(prodotto.getId());
-		if (prod.getId() ==  0) return false;
+		if (prod == null) return false;
 		String sql = "INSERT INTO "+TABLE_NAME+"(id,lingua) VALUES (?,?);";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

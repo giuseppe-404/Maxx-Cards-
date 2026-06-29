@@ -67,8 +67,10 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, confezionato.getId());
 			ps.setInt(2, confezionato.getIdSet());
+			int rowUpdated = ps.executeUpdate();
+			return rowUpdated != 0;
 		}
-		return false;
+		
 	}
 
 	@Override

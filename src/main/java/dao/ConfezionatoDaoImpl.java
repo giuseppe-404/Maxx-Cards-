@@ -237,7 +237,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	@Override
 	public synchronized List<ProdottoBean> retrieveAll() throws SQLException {
 		List<ProdottoBean> list = new ArrayList<>();
-		String sql = "SELECT * FROM "
+		String sql = "SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id ";
 		try(Connection connection = ds.getConnection();
@@ -256,7 +256,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	@Override
 	public synchronized List<ProdottoBean> retrieveAll(int page, int limit) throws SQLException{
 		List<ProdottoBean> list = new ArrayList<>();
-		String sql = "SELECT * FROM "
+		String sql = "SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id LIMIT "+ limit+ " OFFSET "+page*limit;
 		try(Connection connection = ds.getConnection();
@@ -274,7 +274,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	
 	public synchronized ConfezionatoBean retrieveByKey(int id) throws SQLException{
 		ConfezionatoBean conf = new ConfezionatoBean();
-		String sql = "SELECT * FROM "
+		String sql = "SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id WHERE "
 						+ " id = ?";

@@ -20,7 +20,7 @@ public class WantsDaoImpl implements WantsDao {
 	}
 
 	@Override
-	public boolean saveWants(WantsBean wants) throws SQLException {
+	public synchronized boolean saveWants(WantsBean wants) throws SQLException {
 		String sql ="INSERT into "+TABLE_NAME+"(id_utente,id_prodotto) VALUES (?.?);";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -33,7 +33,7 @@ public class WantsDaoImpl implements WantsDao {
 	}
 
 	@Override
-	public boolean deleteWants(int idUser, int idProd) throws SQLException {
+	public synchronized boolean deleteWants(int idUser, int idProd) throws SQLException {
 		String sql = "DELETE from "+TABLE_NAME+" where id_prodotto=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -45,7 +45,7 @@ public class WantsDaoImpl implements WantsDao {
 	}
 
 	@Override
-	public boolean deleteByIdUser(int idUser) throws SQLException {
+	public synchronized boolean deleteByIdUser(int idUser) throws SQLException {
 		String sql = "SET SQL_SAFE_UPDATES = 0; DELETE FROM "+TABLE_NAME+" WHERE id_utente=?; SET SQL_SAFE_UPDATE = 1;";
 		try (Connection connection = ds.getConnection()){
 			connection.setAutoCommit(false);
@@ -61,7 +61,7 @@ public class WantsDaoImpl implements WantsDao {
 	
 
 	@Override
-	public List<WantsBean> retrieveByIdUtente(int idUtente) throws SQLException {
+	public synchronized List<WantsBean> retrieveByIdUtente(int idUtente) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+" where id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -75,7 +75,7 @@ public class WantsDaoImpl implements WantsDao {
 		}
 	}
 
-	public WantsBean retrieveByKey(int idUser, int idProdotto) throws SQLException{
+	public synchronized WantsBean retrieveByKey(int idUser, int idProdotto) throws SQLException{
 		String sql = "SELECT * from "+TABLE_NAME+ " where id_prodotto=? and id_utente=?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

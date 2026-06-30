@@ -34,7 +34,7 @@ public class CSetDaoImpl implements CSetDao {
 	}
 
 	@Override
-	public synchronized CSetBean retrieveCSet(int id) throws SQLException {
+	public synchronized CSetBean retrieveByKey(int id) throws SQLException {
 		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE id=?;";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

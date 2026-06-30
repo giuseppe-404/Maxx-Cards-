@@ -10,7 +10,7 @@ public interface CSetDao {
 	
 	public void saveCSet(CSetBean set) throws SQLException;
 	
-	public CSetBean retrieveCSet(int id) throws SQLException;
+	public CSetBean retrieveByKey(int id) throws SQLException;
 	
 	public boolean deleteCSet(int id) throws SQLException;
 	

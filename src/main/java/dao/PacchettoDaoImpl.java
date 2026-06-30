@@ -365,7 +365,6 @@ public class PacchettoDaoImpl extends ConfezionatoDaoImpl implements PacchettoDa
 	
 	protected synchronized void fillBean(PacchettoBean bean, ResultSet rs) throws SQLException {
 		super.fillBean(bean,rs);
-		bean.setId(rs.getInt("id"));
 		
 	}
 	

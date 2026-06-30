@@ -62,11 +62,10 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	public synchronized boolean saveConfezionato(ConfezionatoBean confezionato) throws SQLException {
 		ProdottoYGOBean prod = super.retrieveByKey(confezionato.getId());
 		if(prod == null) return false;
-		String sql = "INSERT INTO "+TABLE_NAME+"(id,id_set) VALUES (?,?);";
+		String sql = "INSERT INTO "+TABLE_NAME+"(id_set) VALUES (?);";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, confezionato.getId());
-			ps.setInt(2, confezionato.getIdSet());
+			ps.setInt(1, confezionato.getIdSet());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}

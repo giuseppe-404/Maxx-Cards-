@@ -365,7 +365,6 @@ public class TinDaoImpl extends ConfezionatoDaoImpl implements TinDao{
 	
 	protected synchronized void fillBean(TinBean bean, ResultSet rs) throws SQLException {
 		super.fillBean(bean,rs);
-		bean.setId(rs.getInt("id"));
 		
 	}
 	

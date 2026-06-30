@@ -365,7 +365,6 @@ public class BoxDaoImpl extends ConfezionatoDaoImpl implements BoxDao{
 	
 	protected synchronized void fillBean(BoxBean bean, ResultSet rs) throws SQLException {
 		super.fillBean(bean,rs);
-		bean.setId(rs.getInt("id"));
 		
 	}
 	

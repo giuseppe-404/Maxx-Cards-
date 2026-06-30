@@ -11,7 +11,7 @@ public interface ConfezionatoDao extends ProdottoYGODao{
 	
 	public boolean deleteConfezionato(int id) throws SQLException;
 	
-	public ConfezionatoBean retrieveByKey(int id ) throws SQLException;
+	public ConfezionatoBean retrieveByKey(int id) throws SQLException;
 	
 	public List<ConfezionatoBean> retrieveFiltered(ConfezionatoBean confezionato) throws SQLException;
 	

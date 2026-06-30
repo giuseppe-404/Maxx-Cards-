@@ -365,7 +365,6 @@ public class StructureDeckDaoImpl extends ConfezionatoDaoImpl implements Structu
 	
 	protected synchronized void fillBean(StructureDeckBean bean, ResultSet rs) throws SQLException {
 		super.fillBean(bean,rs);
-		bean.setId(rs.getInt("id"));
 		
 	}
 	

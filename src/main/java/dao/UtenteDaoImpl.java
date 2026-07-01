@@ -32,7 +32,20 @@ public class UtenteDaoImpl implements UtenteDao{
 			return rowAdded != 0;
 		}		
 	}
-
+	
+	public synchronized UtenteBean retrieveByKey(int id) throws SQLException{
+		String sql = "SELECT * from "+TABLE_NAME+" where id=?";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				UtenteBean utente = new UtenteBean(rs.getInt(1),rs.getBytes(2),rs.getString(3),rs.getString(4),rs.getBoolean(5));
+				return utente;
+			} return null;
+		}
+	}
+	
 	@Override
 	public synchronized UtenteBean retrieveByEmail(String email) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+" where email=?";

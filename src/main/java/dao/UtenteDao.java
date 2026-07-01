@@ -8,6 +8,8 @@ import model.UtenteBean;
 public interface UtenteDao {
 	public boolean createUtente(UtenteBean utente) throws SQLException;
 	
+	public UtenteBean retrieveByKey(int id) throws SQLException;
+	
 	public UtenteBean retrieveByEmail(String email) throws SQLException;
 	
 	public boolean changeTheme(UtenteBean utente) throws SQLException;

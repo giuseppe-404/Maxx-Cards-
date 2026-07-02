@@ -9,6 +9,10 @@ public interface CartaSingolaDao extends ProdottoYGODao{
 	
 	public boolean saveCartaSingola(CartaSingolaBean carta) throws SQLException;
 	
+	public boolean saveProdottoYGO(CartaSingolaBean carta) throws SQLException;
+	
+	public boolean saveProdotto(CartaSingolaBean carta) throws SQLException;
+	
 	public boolean deleteCartaSingola(int id) throws SQLException;
 	
 	public CartaSingolaBean retrieveByKey(int id) throws SQLException;

@@ -18,4 +18,9 @@ public interface ConfezionatoDao extends ProdottoYGODao{
 	public List<ConfezionatoBean> retrieveFiltered(ConfezionatoBean confezionato, int page, int limit) throws SQLException;
 	
 	public boolean changeIdSet(ConfezionatoBean confezionato) throws SQLException;
+	
+	public boolean saveProdotto(ConfezionatoBean prodotto) throws SQLException;
+	
+	public boolean saveProdottoYGO(ConfezionatoBean prodotto) throws SQLException;
 }
+

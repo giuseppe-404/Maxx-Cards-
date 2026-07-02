@@ -23,20 +23,11 @@ public class ProdottoYGODaoImpl extends ProdottoDaoImpl implements ProdottoYGODa
 	}
 	
 	@Override
-	public synchronized boolean saveProdotto(ProdottoBean prodotto) throws SQLException {
-		if(prodotto instanceof ProdottoYGOBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdotto(prodotto);
-					return saveProdottoYGO((ProdottoYGOBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdotto(ProdottoYGOBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){	
+			super.saveProdotto((ProdottoBean)prodotto);
+		    return saveProdottoYGO(prodotto);
 		}
-		else return false;
 	}
 
 	public synchronized boolean saveProdottoYGO(ProdottoYGOBean prodotto) throws SQLException {
@@ -47,6 +38,7 @@ public class ProdottoYGODaoImpl extends ProdottoDaoImpl implements ProdottoYGODa
 				PreparedStatement ps = connection.prepareStatement(sql)){
 					ps.setInt(1, prodotto.getId());
 					ps.setString(2, prodotto.getLingua());
+					System.out.println(ps.toString());
 					int rowUpdated = ps.executeUpdate();
 					return rowUpdated != 0;
 		}
@@ -66,7 +58,8 @@ public class ProdottoYGODaoImpl extends ProdottoDaoImpl implements ProdottoYGODa
 	@Override
 	public synchronized ProdottoYGOBean retrieveByKey(int id) throws SQLException {
 		ProdottoYGOBean prod = new ProdottoYGOBean();
-		String sql = "SELECT "+SUPER_NAME+ ".*, lingua FROM " + SUPER_NAME+ " JOIN "+TABLE_NAME+ " ON " + SUPER_NAME + ".id = " +TABLE_NAME+ ".id WHERE id = ?";
+		String sql = "SELECT "+SUPER_NAME+ ".*, lingua FROM " + SUPER_NAME+ " JOIN "+TABLE_NAME+ " ON " + SUPER_NAME + ".id = " +TABLE_NAME+ ".id WHERE "
+		+TABLE_NAME+".id = ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1,id);

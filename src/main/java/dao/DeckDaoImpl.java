@@ -25,37 +25,26 @@ public class DeckDaoImpl extends ProdottoYGODaoImpl implements DeckDao{
 	}
 	
 	@Override
-	public synchronized boolean saveProdottoYGO(ProdottoYGOBean prodotto) throws SQLException {
-		if(prodotto instanceof DeckBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdottoYGO(prodotto);
-					return saveDeck((DeckBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdottoYGO(DeckBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveProdottoYGO(prodotto);
+			return saveDeck(prodotto);
 		}
-		else return false;
 	}
 	
 	@Override
-	public synchronized boolean saveProdotto(ProdottoBean prodotto) throws SQLException {
-		if(prodotto instanceof DeckBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdotto(prodotto);
-					return saveDeck((DeckBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdotto(DeckBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveProdotto(prodotto);
+			return saveDeck(prodotto);
 		}
-		else return false;
+	}
+	@Override
+	public synchronized boolean saveConfezionato(DeckBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveConfezionato(prodotto);
+			return saveDeck(prodotto);
+		}
 	}
 	
 	@Override

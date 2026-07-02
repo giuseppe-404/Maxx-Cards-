@@ -25,47 +25,32 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	}
 	
 	@Override
-	public synchronized boolean saveProdottoYGO(ProdottoYGOBean prodotto) throws SQLException {
-		if(prodotto instanceof ConfezionatoBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdottoYGO(prodotto);
-					return saveConfezionato((ConfezionatoBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdottoYGO(ConfezionatoBean prodotto) throws SQLException {
+		
+		try(Connection connection = ds.getConnection()){
+				saveProdottoYGO(prodotto);
+				return saveConfezionato(prodotto);
 		}
-		else return false;
 	}
 	
 	@Override
-	public synchronized boolean saveProdotto(ProdottoBean prodotto) throws SQLException {
-		if(prodotto instanceof ConfezionatoBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdotto(prodotto);
-					return saveConfezionato((ConfezionatoBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdotto(ConfezionatoBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+				saveProdotto((ProdottoYGOBean)prodotto);
+				return saveConfezionato(prodotto);
 		}
-		else return false;
 	}
-	
+
 	@Override
 	public synchronized boolean saveConfezionato(ConfezionatoBean confezionato) throws SQLException {
 		ProdottoYGOBean prod = super.retrieveByKey(confezionato.getId());
 		if(prod == null) return false;
-		String sql = "INSERT INTO "+TABLE_NAME+"(id_set) VALUES (?);";
+		String sql = "INSERT INTO "+TABLE_NAME+"(id,id_set) VALUES (?,?);";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, confezionato.getIdSet());
+			ps.setInt(1, confezionato.getId());
+			ps.setInt(2, confezionato.getIdSet());
+			System.out.println(ps.toString());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
@@ -275,8 +260,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 		ConfezionatoBean conf = new ConfezionatoBean();
 		String sql = "SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
-				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id WHERE "
-						+ " id = ?";
+				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id WHERE "+TABLE_NAME+ ".id = ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, id);

@@ -7,6 +7,12 @@ import model.TinBean;
 
 public interface TinDao extends ConfezionatoDao {
 	
+	public boolean saveProdotto(TinBean tin) throws SQLException;
+	
+	public boolean saveProdottoYGO(TinBean tin) throws SQLException;
+	
+	public boolean saveConfezionato(TinBean tin) throws SQLException;
+	
 	public boolean saveTin(TinBean tin) throws SQLException;
 	
 	public boolean deleteTin(int id) throws SQLException;

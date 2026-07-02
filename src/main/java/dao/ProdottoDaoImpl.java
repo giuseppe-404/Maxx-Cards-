@@ -33,6 +33,7 @@ public class ProdottoDaoImpl implements ProdottoDao {
 			ps.setInt(6, prodotto.getSconto());
 			ps.setString(7, prodotto.getPathImg());
 			ps.setString(8, prodotto.getMimeType());
+			System.out.println(ps.toString());
 			int rowUpdated= ps.executeUpdate();
 			return rowUpdated != 0;
 		}
@@ -129,6 +130,7 @@ public class ProdottoDaoImpl implements ProdottoDao {
 	@Override
 	public synchronized boolean deleteProdotto(int idProdotto) throws SQLException {
 		String sql = "DELETE FROM "+TABLE_NAME+" where id=?";
+		
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, idProdotto);

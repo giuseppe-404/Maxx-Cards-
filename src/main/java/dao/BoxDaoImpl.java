@@ -40,54 +40,27 @@ public class BoxDaoImpl extends ConfezionatoDaoImpl implements BoxDao{
 	}
 	
 	@Override
-	public synchronized boolean saveProdotto(ProdottoBean prodotto) throws SQLException {
-		if(prodotto instanceof ConfezionatoBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdotto(prodotto);
-					return saveBox((BoxBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdotto(BoxBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveProdotto(prodotto);
+			return saveBox(prodotto);
 		}
-		else return false;
-	}
-
-	@Override
-	public synchronized boolean saveProdottoYGO(ProdottoYGOBean prodotto) throws SQLException {
-		if(prodotto instanceof BoxBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdottoYGO(prodotto);
-					return saveBox((BoxBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
-		}
-		else return false;
 	}
 	
 	@Override
-	public synchronized boolean saveConfezionato(ConfezionatoBean prodotto) throws SQLException{
-		if(prodotto instanceof BoxBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveConfezionato(prodotto);
-					return saveBox((BoxBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdottoYGO(BoxBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveProdottoYGO(prodotto);
+			return saveBox(prodotto);
 		}
-		else return false;
+	}
+	
+	@Override
+	public synchronized boolean saveConfezionato(BoxBean prodotto) throws SQLException{
+		try(Connection connection = ds.getConnection()){
+			saveConfezionato(prodotto);
+			return saveConfezionato(prodotto);
+		}
 	}
 	
 	@Override

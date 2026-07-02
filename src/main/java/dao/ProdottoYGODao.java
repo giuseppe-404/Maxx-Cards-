@@ -6,6 +6,8 @@ import model.ProdottoYGOBean;
 
 public interface ProdottoYGODao extends ProdottoDao{
 	
+	public boolean saveProdotto(ProdottoYGOBean prodotto) throws SQLException;
+	
 	public boolean saveProdottoYGO (ProdottoYGOBean prodotto) throws SQLException;
 	
 	public boolean deleteProdottoYGO (int id) throws SQLException;

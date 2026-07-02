@@ -25,37 +25,19 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 	}
 	
 	@Override
-	public synchronized boolean saveProdottoYGO(ProdottoYGOBean prodotto) throws SQLException {
-		if(prodotto instanceof CartaSingolaBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdottoYGO(prodotto);
-					return saveCartaSingola((CartaSingolaBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdottoYGO(CartaSingolaBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveProdottoYGO(prodotto);
+			return saveCartaSingola(prodotto);
 		}
-		else return false;
 	}
 
 	@Override
-	public synchronized boolean saveProdotto(ProdottoBean prodotto) throws SQLException {
-		if(prodotto instanceof CartaSingolaBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdotto(prodotto);
-					return saveCartaSingola((CartaSingolaBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdotto(CartaSingolaBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveProdottoYGO(prodotto);
+			return saveCartaSingola(prodotto);
 		}
-		else return false;
 	}
 	
 	@Override

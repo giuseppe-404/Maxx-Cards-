@@ -7,6 +7,12 @@ import model.StructureDeckBean;
 
 public interface StructureDeckDao extends ConfezionatoDao {
 	
+	public boolean saveProdotto(StructureDeckBean sdeck) throws SQLException;
+	
+	public boolean saveProdottoYGO(StructureDeckBean sdeck) throws SQLException;
+	
+	public boolean saveConfezionato(StructureDeckBean sdeck) throws SQLException;
+	
 	public boolean saveStructureDeck(StructureDeckBean sdeck) throws SQLException;
 	
 	public boolean deleteStructureDeck(int id) throws SQLException;

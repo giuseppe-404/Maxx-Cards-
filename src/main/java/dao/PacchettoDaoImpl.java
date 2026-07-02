@@ -40,54 +40,27 @@ public class PacchettoDaoImpl extends ConfezionatoDaoImpl implements PacchettoDa
 	}
 	
 	@Override
-	public synchronized boolean saveProdotto(ProdottoBean prodotto) throws SQLException {
-		if(prodotto instanceof ConfezionatoBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdotto(prodotto);
-					return savePacchetto((PacchettoBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdotto(PacchettoBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveProdotto(prodotto);
+			return savePacchetto(prodotto);
 		}
-		else return false;
-	}
-
-	@Override
-	public synchronized boolean saveProdottoYGO(ProdottoYGOBean prodotto) throws SQLException {
-		if(prodotto instanceof PacchettoBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdottoYGO(prodotto);
-					return savePacchetto((PacchettoBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
-		}
-		else return false;
 	}
 	
 	@Override
-	public synchronized boolean saveConfezionato(ConfezionatoBean prodotto) throws SQLException{
-		if(prodotto instanceof PacchettoBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveConfezionato(prodotto);
-					return savePacchetto((PacchettoBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdottoYGO(PacchettoBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveProdottoYGO(prodotto);
+			return savePacchetto(prodotto);
 		}
-		else return false;
+	}
+	
+	@Override
+	public synchronized boolean saveConfezionato(PacchettoBean prodotto) throws SQLException{
+		try(Connection connection = ds.getConnection()){
+			saveConfezionato(prodotto);
+			return saveConfezionato(prodotto);
+		}
 	}
 	
 	@Override

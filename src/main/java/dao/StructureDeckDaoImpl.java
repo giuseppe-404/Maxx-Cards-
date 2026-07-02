@@ -40,54 +40,27 @@ public class StructureDeckDaoImpl extends ConfezionatoDaoImpl implements Structu
 	}
 	
 	@Override
-	public synchronized boolean saveProdotto(ProdottoBean prodotto) throws SQLException {
-		if(prodotto instanceof ConfezionatoBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdotto(prodotto);
-					return saveStructureDeck((StructureDeckBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdotto(StructureDeckBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveProdotto(prodotto);
+			return saveStructureDeck(prodotto);
 		}
-		else return false;
-	}
-
-	@Override
-	public synchronized boolean saveProdottoYGO(ProdottoYGOBean prodotto) throws SQLException {
-		if(prodotto instanceof StructureDeckBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveProdottoYGO(prodotto);
-					return saveStructureDeck((StructureDeckBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
-		}
-		else return false;
 	}
 	
 	@Override
-	public synchronized boolean saveConfezionato(ConfezionatoBean prodotto) throws SQLException{
-		if(prodotto instanceof StructureDeckBean) {
-			try(Connection connection = ds.getConnection()){
-				connection.setAutoCommit(false);
-				try {
-					super.saveConfezionato(prodotto);
-					return saveStructureDeck((StructureDeckBean)prodotto);
-				}
-				finally {
-					connection.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveProdottoYGO(StructureDeckBean prodotto) throws SQLException {
+		try(Connection connection = ds.getConnection()){
+			saveProdottoYGO(prodotto);
+			return saveStructureDeck(prodotto);
 		}
-		else return false;
+	}
+	
+	@Override
+	public synchronized boolean saveConfezionato(StructureDeckBean prodotto) throws SQLException{
+		try(Connection connection = ds.getConnection()){
+			saveConfezionato(prodotto);
+			return saveConfezionato(prodotto);
+		}
 	}
 	
 	@Override

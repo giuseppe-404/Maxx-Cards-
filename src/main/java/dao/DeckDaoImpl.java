@@ -265,8 +265,7 @@ public class DeckDaoImpl extends ProdottoYGODaoImpl implements DeckDao{
 		DeckBean deck = new DeckBean();
 		String sql = "SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
-				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id WHERE "
-						+ " id = ?";
+				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id WHERE "+TABLE_NAME+ ".id = ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, id);

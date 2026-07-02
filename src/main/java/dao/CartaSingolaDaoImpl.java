@@ -254,8 +254,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 		CartaSingolaBean carta = new CartaSingolaBean();
 		String sql = "SELECT "+SUPER_NAME+".*, lingua, quality, id_set, id_carta FROM " 
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
-				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id WHERE "
-						+ " id = ?";
+				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id WHERE "+TABLE_NAME+ ".id = ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, id);

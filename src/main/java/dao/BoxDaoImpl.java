@@ -322,8 +322,7 @@ public class BoxDaoImpl extends ConfezionatoDaoImpl implements BoxDao{
 		String sql = "SELECT "+SUPER_NAME+".*, lingua, id_set FROM "
 				+ SUPER_NAME + " JOIN " + MIDDLE_NAME + " ON " + SUPER_NAME + ".id = " + MIDDLE_NAME + 
 				".id JOIN " + TABLE_NAME + " ON " + SUPER_NAME + ".id = " + TABLE_NAME + ".id JOIN "+BEAN_NAME+" ON "+SUPER_NAME+" .id = "+
-				BEAN_NAME+".id WHERE "
-						+ " id = ?";
+				BEAN_NAME+".id WHERE "+BEAN_NAME+ ".id = ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, id);

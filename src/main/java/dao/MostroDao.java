@@ -1,12 +1,13 @@
 package dao;
 
 import java.sql.SQLException;
-import java.util.BitSet;
 import java.util.List;
 
 import model.MostroBean;
 
 public interface MostroDao extends CartaDao{
+	
+	public boolean saveCarta(MostroBean mostro) throws SQLException;
 
 	public boolean saveMostro(MostroBean mostro) throws SQLException;
 	

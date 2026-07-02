@@ -54,7 +54,7 @@ public class TipoDaoImpl implements TipoDao {
 				PreparedStatement ps = conn.prepareStatement(sql);
 				){
 			ps.setString(1, id);
-			try (ResultSet rs = ps.executeQuery(sql)){
+			try (ResultSet rs = ps.executeQuery()){
 				if (rs.next()) {
 					tipo.setTipo(rs.getString("tipo"));
 				}

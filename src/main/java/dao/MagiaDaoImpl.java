@@ -25,21 +25,11 @@ public class MagiaDaoImpl extends CartaDaoImpl implements MagiaDao{
 
 	@Override
 	//Consentito solo se carta è un'istanza di MagiaBean, altrimenti return false
-	public synchronized boolean saveCarta(CartaBean carta) throws SQLException {
-		if(carta instanceof MagiaBean) {
-			try (Connection conn = ds.getConnection()){
-				conn.setAutoCommit(false);
-				try {
-					super.saveCarta(carta);
-					return saveMagia((MagiaBean) carta);
-				}
-				finally {
-					conn.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveCarta(MagiaBean magia) throws SQLException {
+		try (Connection conn = ds.getConnection()){	
+			saveCarta((CartaBean)magia);
+			return saveMagia(magia);
 		}
-		else
-			return false;
 	}
 	
 	@Override
@@ -80,13 +70,13 @@ public class MagiaDaoImpl extends CartaDaoImpl implements MagiaDao{
 	@Override
 	public synchronized MagiaBean retrieveByKey(int id) throws SQLException {
 		MagiaBean magia = new MagiaBean();
-		String sql = "SELECT " + CARTA_NAME + ".*, tipologia FROM " + CARTA_NAME + " JOIN " + MAGIA_NAME + " ON " + CARTA_NAME + ".id = " + MAGIA_NAME + ".id WHERE id = ?";
+		String sql = "SELECT " + CARTA_NAME + ".*, tipologia FROM " + CARTA_NAME + " JOIN " + MAGIA_NAME + " ON " + CARTA_NAME + ".id = " + MAGIA_NAME + ".id WHERE " + MAGIA_NAME + ".id = ?";
 		try( 
 				Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
 				){
 			ps.setInt(1, id);
-			try (ResultSet rs = ps.executeQuery(sql)){
+			try (ResultSet rs = ps.executeQuery()){
 				if (rs.next()) {
 					fillBean(magia, rs);
 				}

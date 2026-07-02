@@ -25,21 +25,11 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 
 	@Override
 	//Consentito solo se carta è un'istanza di TrappolaBean, altrimenti return false
-	public synchronized boolean saveCarta(CartaBean carta) throws SQLException {
-		if(carta instanceof TrappolaBean) {
-			try (Connection conn = ds.getConnection()){
-				conn.setAutoCommit(false);
-				try {
-					super.saveCarta(carta);
-					return saveTrappola((TrappolaBean) carta);
-				}
-				finally {
-					conn.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveCarta(TrappolaBean trappola) throws SQLException {
+		try (Connection conn = ds.getConnection()){
+			super.saveCarta((CartaBean) trappola);
+			return saveTrappola(trappola);
 		}
-		else
-			return false;
 	}
 	
 	@Override
@@ -80,13 +70,13 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 	@Override
 	public synchronized TrappolaBean retrieveByKey(int id) throws SQLException {
 		TrappolaBean trappola = new TrappolaBean();
-		String sql = "SELECT " + CARTA_NAME + ".*, tipologia FROM " + CARTA_NAME + " JOIN " + TRAPPOLA_NAME + " ON " + CARTA_NAME + ".id = " + TRAPPOLA_NAME + ".id WHERE id = ?";
+		String sql = "SELECT " + CARTA_NAME + ".*, tipologia FROM " + CARTA_NAME + " JOIN " + TRAPPOLA_NAME + " ON " + CARTA_NAME + ".id = " + TRAPPOLA_NAME + ".id WHERE " + TRAPPOLA_NAME + ".id = ?";
 		try( 
 				Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
 				){
 			ps.setInt(1, id);
-			try (ResultSet rs = ps.executeQuery(sql)){
+			try (ResultSet rs = ps.executeQuery()){
 				if (rs.next()) {
 					fillBean(trappola, rs);
 				}

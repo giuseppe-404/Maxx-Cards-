@@ -18,7 +18,6 @@ public class InfoSpedBean implements Serializable{
 
 	
 	public InfoSpedBean(int id, int idUtente, String nome, String cognome, String via, int civico, int cap) {
-		super();
 		this.id = id;
 		this.idUtente = idUtente;
 		this.nome = nome;

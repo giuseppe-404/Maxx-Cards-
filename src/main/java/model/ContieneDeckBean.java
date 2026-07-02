@@ -8,6 +8,14 @@ public class ContieneDeckBean implements Serializable {
 	private int idCarta;
 	private int qnt;
 	
+	public ContieneDeckBean() {}
+	
+	public ContieneDeckBean(int idDeck, int idCarta, int qnt) {
+		this.idDeck = idDeck;
+		this.idCarta = idCarta;
+		this.qnt = qnt;
+	}
+	
 	public int getIdDeck() {
 		return idDeck;
 	}

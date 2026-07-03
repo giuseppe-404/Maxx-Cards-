@@ -20,7 +20,7 @@ public class ProdottiHomeDaoImpl implements ProdottiHomeDao {
 	}
 	
 	@Override
-	public boolean saveProdottiHome(ProdottiHomeBean prod) throws SQLException {
+	public synchronized boolean saveProdottiHome(ProdottiHomeBean prod) throws SQLException {
 		String sql = "INSERTO INTO "+TABLE_NAME+"(id) VALUES (?)";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -31,7 +31,7 @@ public class ProdottiHomeDaoImpl implements ProdottiHomeDao {
 	}
 
 	@Override
-	public boolean deleteProdottiHome(int id) throws SQLException {
+	public synchronized boolean deleteProdottiHome(int id) throws SQLException {
 		String sql = "DELETE FROM "+TABLE_NAME+" WHERE id = ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -42,7 +42,7 @@ public class ProdottiHomeDaoImpl implements ProdottiHomeDao {
 	}
 
 	@Override
-	public List<Integer> retrieveAll() throws SQLException {
+	public synchronized List<Integer> retrieveAll() throws SQLException {
 		List<Integer> array = new ArrayList<>();
 		String sql = "SELECT * FROM "+TABLE_NAME;
 		try(Connection connection = ds.getConnection();

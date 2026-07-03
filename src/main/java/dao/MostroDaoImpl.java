@@ -19,30 +19,18 @@ public class MostroDaoImpl extends CartaDaoImpl implements MostroDao {
 	private static final String MOSTRO_NAME = "mostro";
 	private static final int BITSET_SIZE = 8;
 	private DataSource ds;
-	private ArrayList<String> listaTipi;
 	
 	public MostroDaoImpl(DataSource ds) {
 		super(ds);
 		this.ds=ds;
 	}
-
+	
 	@Override
-	//Consentito solo se carta è un'istanza di MostroBean, altrimenti return false
-	public synchronized boolean saveCarta(CartaBean carta) throws SQLException {
-		if(carta instanceof MostroBean) {
-			try (Connection conn = ds.getConnection()){
-				conn.setAutoCommit(false);
-				try {
-					super.saveCarta(carta);
-					return saveMostro((MostroBean) carta);
-				}
-				finally {
-					conn.setAutoCommit(true);
-				}
-			}
+	public synchronized boolean saveCarta(MostroBean mostro) throws SQLException {
+		try (Connection conn = ds.getConnection()){
+			super.saveCarta((CartaBean) mostro);
+			return saveMostro(mostro);
 		}
-		else
-			return false;
 	}
 	
 	@Override
@@ -51,7 +39,7 @@ public class MostroDaoImpl extends CartaDaoImpl implements MostroDao {
 		if (carta.getId() == 0)
 			return false;
 		
-		String sql = "INSERT INTO " + MOSTRO_NAME + " (id, tipologia, livello, attributo, tipo, ATK, DEF, categoria, tuner, frecce_link, scale_pendulum) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO " + MOSTRO_NAME + " (id, tipologia, livello, attributo, tipo, ATK, DEF, categoria, tuner, frecce_link, scala_pendulum) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try( 
 				Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -88,13 +76,13 @@ public class MostroDaoImpl extends CartaDaoImpl implements MostroDao {
 	public synchronized MostroBean retrieveByKey(int id) throws SQLException {
 		MostroBean mostro = new MostroBean();
 		String sql = "SELECT " + CARTA_NAME + ".*, tipologia, livello, attributo, tipo, ATK, DEF, categoria, tuner, frecce_link, scala_pendulum FROM " + 
-					CARTA_NAME + " JOIN " + MOSTRO_NAME + " ON " + CARTA_NAME + ".id = " + MOSTRO_NAME + ".id WHERE id = ?";
+					CARTA_NAME + " JOIN " + MOSTRO_NAME + " ON " + CARTA_NAME + ".id = " + MOSTRO_NAME + ".id WHERE " + MOSTRO_NAME + ".id = ?";
 		try( 
 				Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
 				){
 			ps.setInt(1, id);
-			try (ResultSet rs = ps.executeQuery(sql)){
+			try (ResultSet rs = ps.executeQuery()){
 				if (rs.next()) {
 					fillBean(mostro, rs);
 				}
@@ -536,15 +524,17 @@ public class MostroDaoImpl extends CartaDaoImpl implements MostroDao {
 			filter.append(" tuner = ? ");
 			params.add(Boolean.toString(mostro.getTuner() > 0));
 		}
-		if (!(mostro.getFrecceLink() == null)) {
+		if (!(mostro.getFrecceLink() == null || bitSetToInt(mostro.getFrecceLink()) == 0)) {
 			if (first) {
 				first = false;
 				filter.append(" WHERE ");
 			}
 			else 
 				filter.append(" AND ");
-			filter.append(" frecce_link = ? ");
-			params.add(Integer.toString(bitSetToInt(mostro.getFrecceLink())));
+			filter.append(" ( frecce_link & ? ) = ? ");			
+			String frecceLink = Integer.toString(bitSetToInt(mostro.getFrecceLink()));
+			params.add(frecceLink);
+			params.add(frecceLink);
 		}
 		if (!(mostro.getScalaPendulum() <= -2)) {
 			if (first) {

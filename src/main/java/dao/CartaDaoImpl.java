@@ -23,20 +23,21 @@ public class CartaDaoImpl implements CartaDao{
 	
 	@Override
 	public synchronized boolean saveCarta(CartaBean carta) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + " (id, nome_it, nome_en, nome_jp, testo, path_img, mime_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO " + TABLE_NAME + " (id, punteggio, nome_it, nome_en, nome_jp, testo, path_img, mime_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try( 
 				Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
 				){
 			ps.setInt(1, carta.getId());
-			ps.setString(2, carta.getNomeIt());
-			ps.setString(3, carta.getNomeEn());
-			ps.setString(4, carta.getNomeJp());
-			ps.setString(5, carta.getTesto());
-			ps.setString(6, carta.getPathImg());
-			ps.setString(7, carta.getMimeType());
-			int result = ps.executeUpdate();
-			return result != 0;
+			ps.setInt(2, carta.getPunteggio());
+			ps.setString(3, carta.getNomeIt());
+			ps.setString(4, carta.getNomeEn());
+			ps.setString(5, carta.getNomeJp());
+			ps.setString(6, carta.getTesto());
+			ps.setString(7, carta.getPathImg());
+			ps.setString(8, carta.getMimeType());
+			int results = ps.executeUpdate();
+			return results != 0;
 		}		
 	}
 
@@ -62,7 +63,7 @@ public class CartaDaoImpl implements CartaDao{
 				PreparedStatement ps = conn.prepareStatement(sql);
 				){
 			ps.setInt(1, id);
-			try (ResultSet rs = ps.executeQuery(sql)){
+			try (ResultSet rs = ps.executeQuery()){
 				if (rs.next()) {
 					fillBean(carta, rs);
 				}
@@ -274,6 +275,7 @@ public class CartaDaoImpl implements CartaDao{
 
 	protected void fillBean(CartaBean carta, ResultSet rs) throws SQLException {
 		carta.setId(rs.getInt("id"));
+		carta.setPunteggio(rs.getInt("punteggio"));
 		carta.setNomeIt(rs.getString("nome_it"));
 		carta.setNomeEn(rs.getString("nome_en"));
 		carta.setNomeJp(rs.getString("nome_jp"));

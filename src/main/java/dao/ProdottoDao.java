@@ -33,4 +33,5 @@ public interface ProdottoDao {
 	
 	public boolean changeImage(ProdottoBean prodotto) throws SQLException;
 	
+	public int prodottoType(int prodotto) throws SQLException;
 }

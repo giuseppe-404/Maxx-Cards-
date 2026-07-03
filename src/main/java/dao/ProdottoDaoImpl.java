@@ -212,6 +212,37 @@ public class ProdottoDaoImpl implements ProdottoDao {
 		}
 	}
 	
+	public synchronized int prodottoType(int prodotto) throws SQLException {
+		String sql = """
+				SELECT tipo FROM prodotto LEFT JOIN
+					( SELECT id, 1 as tipo FROM cartaSingola
+					  UNION
+					  SELECT id, 2 as tipo FROM ProdottoYGO
+					  UNION
+					  SELECT id, 3 as tipo FROM confezionato
+					  UNION 
+					  SELECT id, 4 as tipo FROM pacchetto
+					  UNION 
+					  SELECT id, 5 as tipo FROM tin
+					  UNION 
+					  SELECT id, 6 as tipo FROM box
+					  UNION
+					  SELECT id, 7 as tipo FROM structure_deck
+					  UNION
+					  SELECT id, 8 as tipo FROM deck
+					 ) as tipo ON prodotto.id = ?
+				""";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setInt(1,prodotto);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			return -1;
+		}
+	}
+	
 	protected void fillBean(ProdottoBean prodotto, ResultSet rs) throws SQLException{
 		prodotto.setId(rs.getInt(1));
 		prodotto.setNome(rs.getString(2));

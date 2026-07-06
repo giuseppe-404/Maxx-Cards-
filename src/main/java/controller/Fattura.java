@@ -52,16 +52,16 @@ public class Fattura extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/vnd.ms-excel");
-		int id = (int)request.getAttribute("idOrdine");
+		response.setContentType("text/csv; charset=UTF-8");
+		int id = Integer.parseInt(request.getParameter("idOrdine"));
+		response.setHeader("Content-Disposition", "attachment; filename=\"fattura"+id+".csv\"");
 		int tot = 0;
 		try {			
 			List<ProdottoCompratoBean> prod = daoProdottoC.retrieveByIdOrdine(id);

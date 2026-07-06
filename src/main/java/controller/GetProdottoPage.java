@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.CartaSingolaBean;
 import model.ConfezionatoBean;
+import model.ProdottoBean;
 import model.ProdottoYGOBean;
 
 import java.io.IOException;
@@ -121,6 +122,12 @@ public class GetProdottoPage extends HttpServlet {
 					request.setAttribute("bean", prodotto);
 					dispatcher.forward(request, response);
 					break;
+				}
+				case 0 : {
+					ProdottoBean prodotto = daoProd.retrieveByKey(id);
+					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraProdotto.jsp");
+					request.setAttribute("bean", prodotto);
+					dispatcher.forward(request, response);
 				}
 			}
 		}catch(SQLException e) {

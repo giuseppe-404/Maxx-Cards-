@@ -25,7 +25,7 @@ import dao.ProdottoDaoImpl;
  * Servlet implementation class index
  */
 @WebServlet("/index")
-public class index extends HttpServlet {
+public class Index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProdottiHomeDao daoPH;
 	private ProdottoDao daoPR;
@@ -43,7 +43,7 @@ public class index extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public index() {
+    public Index() {
         super();
         // TODO Auto-generated constructor stub
     }

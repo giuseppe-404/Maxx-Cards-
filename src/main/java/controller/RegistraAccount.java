@@ -7,13 +7,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.UtenteBean;
+import security.SecurityPassword;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
-
-import dao.ProdottoDaoImpl;
 import dao.UtenteDao;
 import dao.UtenteDaoImpl;
 
@@ -21,7 +20,7 @@ import dao.UtenteDaoImpl;
  * Servlet implementation class registraAccount
  */
 @WebServlet("/registraAccount")
-public class registraAccount extends HttpServlet {
+public class RegistraAccount extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private UtenteDao utenteDao = null;
     
@@ -38,7 +37,7 @@ public class registraAccount extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public registraAccount() {
+    public RegistraAccount() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -58,16 +57,24 @@ public class registraAccount extends HttpServlet {
 		String email = request.getParameter("email");
 		String pwd = request.getParameter("pwd");
 		UtenteBean utente = new UtenteBean();
-		byte[] b = new byte[128];
-		utente.setAdmin(false);
-		utente.setDarkTheme(false);
-		utente.setSalt(b);
-		utente.setEmail(email);
-		utente.setPwd(pwd);
+		byte[] salt = SecurityPassword.generateSalt();
 		try {
-			utenteDao.createUtente(utente);
-		}catch(SQLException e) {
-			e.printStackTrace();
+			byte[] hashed = SecurityPassword.hashPassword(pwd,salt,10000,256);
+			String password = SecurityPassword.bytesToHex(hashed);
+			utente.setAdmin(false);
+			utente.setDarkTheme(false);
+			utente.setSalt(salt);
+			utente.setEmail(email);
+			utente.setPwd(password);
+			try {
+				utenteDao.createUtente(utente);
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}catch(Exception e) {
+			System.err.println("Errore nell'hashing della password");
 		}
+		
 	}
+	
 }

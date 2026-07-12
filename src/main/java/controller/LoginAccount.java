@@ -14,14 +14,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
+
 import dao.UtenteDao;
 import dao.UtenteDaoImpl;
 
 /**
- * Servlet implementation class registraAccount
+ * Servlet implementation class LoginAccount
  */
-@WebServlet("/registraAccount")
-public class RegistraAccount extends HttpServlet {
+@WebServlet("/LoginAccount")
+public class LoginAccount extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private UtenteDao utenteDao = null;
     
@@ -34,11 +35,10 @@ public class RegistraAccount extends HttpServlet {
         }
         utenteDao = new UtenteDaoImpl(ds);
     }
-    
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegistraAccount() {
+    public LoginAccount() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -57,27 +57,25 @@ public class RegistraAccount extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String pwd = request.getParameter("pwd");
-		UtenteBean utente = new UtenteBean();
-		byte[] salt = SecurityPassword.generateSalt();
 		try {
-			byte[] hashed = SecurityPassword.hashPassword(pwd,salt,10000,256);
-			String password = SecurityPassword.bytesToHex(hashed);
-			utente.setAdmin(false);
-			utente.setDarkTheme(false);
-			utente.setSalt(salt);
-			utente.setEmail(email);
-			utente.setPwd(password);
-			try {
-				utenteDao.createUtente(utente);
-				HttpSession sessione = request.getSession();
-				sessione.setAttribute("utente",utente);
-			}catch(SQLException e) {
-				e.printStackTrace();
+			UtenteBean utente = utenteDao.retrieveByEmail(email);
+			System.out.println(utente.getEmail() + pwd);
+			String storedPwd = utente.getPwd();
+			byte[] salt = utente.getSalt();
+			try{
+				if(SecurityPassword.validatePassword(pwd, salt, storedPwd,10000 , 256)) {
+					System.out.println("Successo");
+					HttpSession session = request.getSession();
+					session.setAttribute("utente",utente);
+				}
+				else System.out.println("Fallimento");
+			}catch(Exception exc) {
+				exc.printStackTrace();
 			}
-		}catch(Exception e) {
-			System.err.println("Errore nell'hashing della password");
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
 		
 	}
-	
+
 }

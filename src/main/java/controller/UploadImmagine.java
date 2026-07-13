@@ -34,6 +34,7 @@ import dao.TinDaoImpl;
 @WebServlet("/UploadImmagine")
 public class UploadImmagine extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String IMAGE_DIR = "images";
 	private static final String UPLOAD_DIR = "uploads";
 	private static final String PRODUCT_DIR = "prodotti";
 	private static final String CARDS_DIR = "carte";
@@ -47,12 +48,14 @@ public class UploadImmagine extends HttpServlet {
         if (ds == null) {
             throw new ServletException("DataSource non disponibile nel contesto applicativo.");
         }
-        String file_path_product = getServletContext().getRealPath(File.separator + UPLOAD_DIR + File.separator + PRODUCT_DIR);
-        String file_path_cards = getServletContext().getRealPath(File.separator + UPLOAD_DIR + File.separator + CARDS_DIR);
+        String base = getServletContext().getRealPath("");
+        System.out.println(base);
+        String file_path_product = base + File.separator + IMAGE_DIR + File.separator + UPLOAD_DIR + File.separator + PRODUCT_DIR;
+        String file_path_cards = base + File.separator + IMAGE_DIR + File.separator + UPLOAD_DIR + File.separator + CARDS_DIR;
         File upload_product_file = new File(file_path_product);
         File upload_cards_file = new File(file_path_cards);
-        if(!upload_product_file.exists()) upload_product_file.mkdir();
-        if(!upload_cards_file.exists()) upload_product_file.mkdir();
+        if(!upload_product_file.exists()) upload_product_file.mkdirs();
+        if(!upload_cards_file.exists()) upload_product_file.mkdirs();
         prodottoDao = new ProdottoDaoImpl(ds);
         cartaDao = new CartaDaoImpl(ds);
     }
@@ -66,8 +69,9 @@ public class UploadImmagine extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
-		if(request.getParameter("isProdotto").equals("true")) {
+		String temp = (String) request.getSession().getAttribute("isProdotto");
+		String action = (String) request.getSession().getAttribute("action");
+		if(temp.equals("true")) {
 			if(action.equalsIgnoreCase("show")) {
 				int id = Integer.parseInt(request.getParameter("prodottoId"));
 				try {
@@ -110,66 +114,27 @@ public class UploadImmagine extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
-		if(request.getParameter("isProdotto").equals("true")){
+		String action = (String) request.getSession().getAttribute("action");
+		String temp = (String) request.getSession().getAttribute("isProdotto");
+		String pathImg = (String) request.getSession().getAttribute("pathImg");
+		Part img = (Part) request.getSession().getAttribute("part");
+		System.out.println(temp);
+		if(temp.equals("true")){
 			if("upload".equalsIgnoreCase(action)) {
-				int id = Integer.parseInt(request.getParameter("prodottoId"));
 				Part part = request.getPart("image");
 				if(part != null) {
-					String originalFileName = part.getSubmittedFileName();
-					if(originalFileName != null && !originalFileName.isEmpty() && part.getSize() > 0) {
-						String mimeType = part.getContentType();
-						String uniqueFileName = buildUniqueFileName(part);
-						String uploadPath = getServletContext().getRealPath(File.separator + UPLOAD_DIR + File.separator + PRODUCT_DIR + File.separator +uniqueFileName);
-						ProdottoBean bean = new ProdottoBean();
-						bean.setId(id);
-						bean.setPathImg(uploadPath);
-						bean.setMimeType(mimeType);
-						try {
-							part.write(uploadPath);
-							prodottoDao.changeImage(bean);
-							System.out.println(uploadPath);
-						}catch(SQLException e ) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}response.sendRedirect("");
+					part.write(pathImg);	
+				}response.sendRedirect("");
+			}
 		}
 		else {
-			if(request.getParameter("isProdotto").equals("true")) {
-				int id = Integer.parseInt(request.getParameter("cartaId"));
+			if("upload".equalsIgnoreCase(action)) {
 				Part part = request.getPart("image");
 				if(part != null) {
-					String originalFileName = part.getSubmittedFileName();
-					if(originalFileName != null && !originalFileName.isEmpty() && part.getSize() > 0) {
-						String mimeType = part.getContentType();
-						String uniqueFileName = buildUniqueFileName(part);
-						String uploadPath = getServletContext().getRealPath(File.separator + UPLOAD_DIR + File.separator + CARDS_DIR + File.separator +uniqueFileName);
-						CartaBean bean = new CartaBean();
-						bean.setId(id);
-						bean.setPathImg(uploadPath);
-						bean.setMimeType(mimeType);
-						try {
-							part.write(uploadPath);
-							cartaDao.changeImage(bean);
-							System.out.println(uploadPath);
-						}catch(SQLException e ) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}response.sendRedirect("");
+					part.write(pathImg);
+				}response.sendRedirect("");
+					
+			}
 		}
-	}
-	
-	private String buildUniqueFileName(Part part) {
-		String originalName = part.getSubmittedFileName();
-		String extension;
-		if(originalName.contains(".")) {
-			extension = originalName.substring(originalName.lastIndexOf("."));
-		} else {
-			extension = "";
-		} return UUID.randomUUID() + extension;
 	}
 }

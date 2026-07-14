@@ -4,7 +4,7 @@ public class PacchettoBean extends ConfezionatoBean {
 	private static final long serialVersionUID = 1l;
 	
 	public PacchettoBean(int id, String nome, int qnt, int prezzo, String descrizione, int sconto, String pathImg,
-			String mimeType, String lingua, int idSet) {
+			String mimeType, String lingua, String idSet) {
 		super(id, nome, qnt, prezzo, descrizione, sconto, pathImg, mimeType, lingua,idSet);
 	}
 	

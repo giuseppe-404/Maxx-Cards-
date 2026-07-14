@@ -13,6 +13,8 @@ public interface CartaDao {
 	
 	public CartaBean retrieveByKey(int id) throws SQLException;
 	
+	public CartaBean retrieveByNome(String nome) throws SQLException;
+	
 	public List<CartaBean> retrieveAll() throws SQLException;
 	
 	public List<CartaBean> retrieveAll(int limit, int page) throws SQLException;

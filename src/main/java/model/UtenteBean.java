@@ -9,7 +9,6 @@ public class UtenteBean implements Serializable{
 	private byte[] salt;
 	private String email;
 	private String pwd;
-	private boolean darkTheme;
 	private boolean admin;
 	
 	public UtenteBean() {
@@ -17,23 +16,21 @@ public class UtenteBean implements Serializable{
 
 	
 	
-	public UtenteBean(int id, byte[] salt, String email, String pwd, boolean darkTheme) {
+	public UtenteBean(int id, byte[] salt, String email, String pwd) {
 		super();
 		this.id = id;
 		this.salt = salt;
 		this.email = email;
 		this.pwd = pwd;
-		this.darkTheme = darkTheme;
 		this.admin = false;
 	}
 
-	public UtenteBean(int id, byte[] salt, String email, String pwd, boolean darkTheme, boolean admin) {
+	public UtenteBean(int id, byte[] salt, String email, String pwd, boolean admin) {
 		super();
 		this.id = id;
 		this.salt = salt;
 		this.email = email;
 		this.pwd = pwd;
-		this.darkTheme = darkTheme;
 		this.admin = admin;
 	}
 	
@@ -68,16 +65,6 @@ public class UtenteBean implements Serializable{
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-
-	public boolean isDarkTheme() {
-		return darkTheme;
-	}
-
-	public void setDarkTheme(boolean darkTheme) {
-		this.darkTheme = darkTheme;
-	}
-
-
 
 	public boolean isAdmin() {
 		return admin;

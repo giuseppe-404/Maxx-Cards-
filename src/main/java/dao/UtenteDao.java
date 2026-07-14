@@ -12,8 +12,6 @@ public interface UtenteDao {
 	
 	public UtenteBean retrieveByEmail(String email) throws SQLException;
 	
-	public boolean changeTheme(UtenteBean utente) throws SQLException;
-	
 	public boolean deleteAccount(int id) throws SQLException;
 	
 	public boolean changePassword(UtenteBean utente) throws SQLException;

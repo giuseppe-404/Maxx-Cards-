@@ -277,7 +277,7 @@ public class ProdottoDaoImpl implements ProdottoDao {
 				primo = false;
 				filter.append("WHERE ");
 			}else filter.append(" AND ");
-			filter.append(" (prezzo*(100-sconto)/100)<=? ");
+			filter.append(" (prezzo*(100-(sconto/100))/100)<=? ");
 			attributi.add(Integer.toString(prodotto.getPrezzo()));
 		}
 		if(!prodotto.getDescrizione().equals("")) {

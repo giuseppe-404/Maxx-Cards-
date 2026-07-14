@@ -59,7 +59,6 @@ public class LoginAccount extends HttpServlet {
 		String pwd = request.getParameter("pwd");
 		try {
 			UtenteBean utente = utenteDao.retrieveByEmail(email);
-			System.out.println(utente.getEmail() + pwd);
 			String storedPwd = utente.getPwd();
 			byte[] salt = utente.getSalt();
 			try{

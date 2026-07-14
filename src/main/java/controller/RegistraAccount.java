@@ -63,7 +63,6 @@ public class RegistraAccount extends HttpServlet {
 			byte[] hashed = SecurityPassword.hashPassword(pwd,salt,10000,256);
 			String password = SecurityPassword.bytesToHex(hashed);
 			utente.setAdmin(false);
-			utente.setDarkTheme(false);
 			utente.setSalt(salt);
 			utente.setEmail(email);
 			utente.setPwd(password);

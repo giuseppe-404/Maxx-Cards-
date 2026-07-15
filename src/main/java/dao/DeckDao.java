@@ -9,8 +9,6 @@ public interface DeckDao extends ProdottoYGODao{
 	
 	public boolean saveDeck(DeckBean deck) throws SQLException;
 	
-	public boolean saveConfezionato(DeckBean deck) throws SQLException;
-	
 	public boolean saveProdotto(DeckBean deck) throws SQLException;
 	
 	public boolean saveProdottoYGO(DeckBean deck) throws SQLException;

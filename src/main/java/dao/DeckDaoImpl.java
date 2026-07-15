@@ -39,13 +39,6 @@ public class DeckDaoImpl extends ProdottoYGODaoImpl implements DeckDao{
 			return saveDeck(prodotto);
 		}
 	}
-	@Override
-	public synchronized boolean saveConfezionato(DeckBean prodotto) throws SQLException {
-		try(Connection connection = ds.getConnection()){
-			saveConfezionato(prodotto);
-			return saveDeck(prodotto);
-		}
-	}
 	
 	@Override
 	public synchronized boolean saveDeck(DeckBean deck) throws SQLException {

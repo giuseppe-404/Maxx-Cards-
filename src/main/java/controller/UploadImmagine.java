@@ -16,17 +16,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.UUID;
-
 import javax.sql.DataSource;
-
 import dao.CartaDao;
 import dao.CartaDaoImpl;
-import dao.ConfezionatoDaoImpl;
 import dao.ProdottoDao;
 import dao.ProdottoDaoImpl;
-import dao.ProdottoYGODaoImpl;
-import dao.TinDaoImpl;
 
 /**
  * Servlet implementation class UploadImmagine
@@ -38,7 +32,7 @@ public class UploadImmagine extends HttpServlet {
 	private static final String UPLOAD_DIR = "uploads";
 	private static final String PRODUCT_DIR = "prodotti";
 	private static final String CARDS_DIR = "carte";
-    private ProdottoDao prodottoDao = null;
+	private ProdottoDao prodottoDao = null;
     private CartaDao cartaDao = null;
     
     public void init(ServletConfig config) throws ServletException {
@@ -69,8 +63,8 @@ public class UploadImmagine extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String temp = (String) request.getSession().getAttribute("isProdotto");
-		String action = (String) request.getSession().getAttribute("action");
+		String temp = request.getParameter("isProdotto");
+		String action = request.getParameter("action");
 		if(temp.equals("true")) {
 			if(action.equalsIgnoreCase("show")) {
 				int id = Integer.parseInt(request.getParameter("prodottoId"));
@@ -78,6 +72,14 @@ public class UploadImmagine extends HttpServlet {
 					ProdottoBean bean = prodottoDao.retrieveByKey(id);
 					String mimeType = bean.getMimeType();
 					String path = bean.getPathImg();
+
+					File file = new File(path);
+					if(!file.exists()) {
+						path = getServletContext().getRealPath(""); 
+						path = path + "images" + File.separator + "no_image_available.jpeg";
+						mimeType = "image/jpeg";
+					}
+					System.out.println(path + "\n" +  mimeType);
 					response.setContentType(mimeType);
 					try(InputStream is = new FileInputStream(path)) {
 						OutputStream os = response.getOutputStream();
@@ -89,19 +91,27 @@ public class UploadImmagine extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-		} else {
+		} else if(temp.equals("false")){
 			if(action.equalsIgnoreCase("show")) {
 				int id = Integer.parseInt(request.getParameter("cartaId"));
 				try {
 					CartaBean bean = cartaDao.retrieveByKey(id);
 					String mimeType = bean.getMimeType();
 					String path = bean.getPathImg();
+					
+					File file = new File(path);
+					if(!file.exists()) {
+						path = getServletContext().getRealPath(""); 
+						path = path + File.separator + "src" + File.separator + "main" + File.separator + "webContent" + File.separator + "images" +
+								"no_image_available.jpeg";
+						mimeType = "image/jpeg";
+					}
 					response.setContentType(mimeType);
 					try(InputStream is = new FileInputStream(path)) {
 						OutputStream os = response.getOutputStream();
 						is.transferTo(os);
 					}catch(IOException ioe) {
-						ioe.printStackTrace();
+						
 					}
 				} catch( SQLException e) {
 					e.printStackTrace();

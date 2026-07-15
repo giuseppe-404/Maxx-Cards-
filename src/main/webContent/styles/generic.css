@@ -9,11 +9,45 @@
     --product-bg-color-2: #201d28;
     --footer-color: #1f212a;
 }
+[theme="dark"]{
+    --bg-color: #221f2a;
+    --nav-color: #4b1280;
+    --nav-highlight-color: #a484b1;
+    --icon-color: #a55911;
+    --header-color: #310c53;
+    --font-color: #fdf7e4;
+    --product-bg-color-1: #24212c;
+    --product-bg-color-2: #201d28;
+    --footer-color: #1f212a;
+}
+[theme="light"]{
+    --bg-color: #fdf7e4;
+    --nav-color: #a484b1;
+    --nav-highlight-color: #a484b1;
+    --icon-color: #a55911;
+    --header-color: #4b1280;
+    --font-color: #221f2a;
+    --product-bg-color-1: #fff9e6;
+    --product-bg-color-2: #fbf5e2;
+    --footer-color: #000;
+}
 .dark{
     display: inline;
 }
 .light{
     display: none;
+}
+[theme="dark"] .dark{
+    display: inline;
+}
+[theme="dark"] .light{
+    display: none;
+}
+[theme="light"] .dark{
+    display: none;
+}
+[theme="light"] .light{
+    display: inline;
 }
 
 body{

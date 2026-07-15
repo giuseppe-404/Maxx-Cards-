@@ -1,0 +1,142 @@
+:root{
+    --bg-color: #221f2a;
+    --nav-color: #4b1280;
+    --nav-highlight-color: #a484b1;
+    --icon-color: #a55911;
+    --header-color: #310c53;
+    --font-color: #fdf7e4;
+    --product-bg-color-1: #24212c;
+    --product-bg-color-2: #201d28;
+    --footer-color: #1f212a;
+}
+.dark{
+    display: inline;
+}
+.light{
+    display: none;
+}
+
+body{
+    background-color: #221f2a;
+    background-color: var(--bg-color);
+    color: var(--font-color);
+    font-family:'Courier New', Courier, monospace;
+    margin: 0;
+}
+
+header{
+    position: sticky;
+    top: 0;
+    max-height: 10vh;
+    display: flex;
+    background-color: #310c53;
+    background-color: var(--header-color);
+    margin-bottom: 3vh;
+    z-index: 1;
+}
+
+header>section>a{
+    display: flex;
+}
+
+#personal_area{
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    transition: max-width 0.5s ease-in;
+    max-height: 100%;
+    width: 100%;
+    max-width: 33%;
+}
+
+#personal_area>a{
+    max-height: 100%;
+    max-width: 100%;
+    padding: 1vh;
+    object-fit: contain;
+    aspect-ratio: 1/1;
+}
+
+#personal_area>img{
+    max-height: 100%;
+    max-width: 100%;
+    margin: 1vh;
+}
+
+#personal_area>a>img{
+    object-fit: contain;
+    max-height: 100%;
+}
+
+#logo{
+    width: 34%;
+    /* display: flex; */
+}
+
+#logo>a{
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 100%;
+}
+
+#logo>a>img{
+    /* margin: auto; */
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+#search_bar{
+    display: flex;
+    width: 33%;
+    align-content: center;
+    align-items: center;
+}
+
+#search_bar>section{
+    display: flex;
+    background-color: white;
+    min-height: 60%;
+    max-height: 60%;
+    border-style: solid;
+    border-color: orange;
+    border-width: 0.7vh;
+    align-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#search_bar>section:first-child{
+    max-width: 20%;
+    border-top-left-radius:1000vh;
+    border-bottom-left-radius:1000vh;
+}
+
+#search_bar>section:last-child{
+    width: 100%;
+    max-width: 100%;
+    border-top-right-radius:1000vh;
+    border-bottom-right-radius:1000vh;
+    border-left-width: 0px;
+    flex-direction: column;
+}
+
+#search_bar>section>img{
+    max-width: 50%;
+    object-fit: contain;
+    margin: auto;
+    transform: scaleX(-1);
+}
+
+#search_bar>section>input{
+    flex-grow: 1;
+    max-width: 100%;
+    width: 100%;
+    padding: 0%;
+    border: none;
+    font-size: 4vh;
+    margin-left: 1vw;
+}

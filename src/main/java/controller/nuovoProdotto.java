@@ -12,6 +12,7 @@ import jakarta.servlet.http.Part;
 import model.BoxBean;
 import model.CartaSingolaBean;
 import model.ConfezionatoBean;
+import model.ContieneDeckBean;
 import model.DeckBean;
 import model.PacchettoBean;
 import model.ProdottoBean;
@@ -28,11 +29,14 @@ import javax.sql.DataSource;
 
 import dao.BoxDao;
 import dao.BoxDaoImpl;
+import dao.CartaDao;
 import dao.CartaDaoImpl;
 import dao.CartaSingolaDao;
 import dao.CartaSingolaDaoImpl;
 import dao.ConfezionatoDao;
 import dao.ConfezionatoDaoImpl;
+import dao.ContieneDeckDao;
+import dao.ContieneDeckDaoImpl;
 import dao.DeckDao;
 import dao.DeckDaoImpl;
 import dao.PacchettoDao;
@@ -62,6 +66,8 @@ public class nuovoProdotto extends HttpServlet {
 	private StructureDeckDao structureDAO = null;
 	private PacchettoDao pacchettoDAO = null;
 	private BoxDao boxDAO = null;
+	private CartaDao cartaDAO = null;
+	private ContieneDeckDao contieneDAO = null;
 	private static final String IMAGE_DIR = "images";
 	private static final String UPLOAD_DIR = "uploads";
 	private static final String PRODUCT_DIR = "prodotti";
@@ -82,6 +88,8 @@ public class nuovoProdotto extends HttpServlet {
         tinDAO = new TinDaoImpl(ds);
         boxDAO = new BoxDaoImpl(ds);
         pacchettoDAO = new PacchettoDaoImpl(ds);
+        cartaDAO = new CartaDaoImpl(ds);
+        contieneDAO = new ContieneDeckDaoImpl(ds);
     }
        
     /**
@@ -155,7 +163,7 @@ public class nuovoProdotto extends HttpServlet {
 				temp.setNome(request.getParameter("nome"));
 				temp.setPrezzo((Integer.parseInt(request.getParameter("prezzo"))*100));
 				temp.setSconto(Integer.parseInt(request.getParameter("sconto")));
-				temp.setLingua("italiano");
+				temp.setLingua(request.getParameter("lingua"));
 				temp.setPathImg(uploadPath);
 				temp.setMimeType(mimeType);
 				try{
@@ -183,8 +191,8 @@ public class nuovoProdotto extends HttpServlet {
 				temp.setNome(request.getParameter("nome"));
 				temp.setPrezzo((Integer.parseInt(request.getParameter("prezzo"))*100));
 				temp.setSconto(Integer.parseInt(request.getParameter("sconto")));
-				temp.setLingua("italiano");
-				temp.setIdSet(2);
+				temp.setLingua(request.getParameter("lingua"));
+				temp.setIdSet(request.getParameter("set"));
 				temp.setPathImg(uploadPath);
 				temp.setMimeType(mimeType);
 				try {
@@ -212,13 +220,13 @@ public class nuovoProdotto extends HttpServlet {
 				temp.setNome(request.getParameter("nome"));
 				temp.setPrezzo((Integer.parseInt(request.getParameter("prezzo"))*100));
 				temp.setSconto(Integer.parseInt(request.getParameter("sconto")));
-				temp.setLingua("italiano");
-				temp.setQuality("Mint");
-				temp.setIdSet(2);
-				temp.setIdCarta(9455);
+				temp.setLingua(request.getParameter("lingua"));
+				temp.setQuality(request.getParameter("qlt"));
+				temp.setIdSet(request.getParameter("set"));
 				temp.setPathImg(uploadPath);
 				temp.setMimeType(mimeType);
 				try {
+					temp.setIdCarta(cartaDAO.retrieveByNome(request.getParameter("nome")).getId());
 					cartasingolaDAO.saveCartaSingola(temp);
 				}catch(SQLException e) {
 					e.printStackTrace();
@@ -243,8 +251,8 @@ public class nuovoProdotto extends HttpServlet {
 				temp.setNome(request.getParameter("nome"));
 				temp.setPrezzo((Integer.parseInt(request.getParameter("prezzo"))*100));
 				temp.setSconto(Integer.parseInt(request.getParameter("sconto")));
-				temp.setLingua("italiano");
-				temp.setIdSet(2);
+				temp.setLingua(request.getParameter("lingua"));
+				temp.setIdSet(request.getParameter("set"));
 				temp.setPathImg(uploadPath);
 				temp.setMimeType(mimeType);
 				try {
@@ -272,8 +280,8 @@ public class nuovoProdotto extends HttpServlet {
 				temp.setNome(request.getParameter("nome"));
 				temp.setPrezzo((Integer.parseInt(request.getParameter("prezzo"))*100));
 				temp.setSconto(Integer.parseInt(request.getParameter("sconto")));
-				temp.setLingua("italiano");
-				temp.setIdSet(2);
+				temp.setLingua(request.getParameter("lingua"));
+				temp.setIdSet(request.getParameter("set"));
 				temp.setPathImg(uploadPath);
 				temp.setMimeType(mimeType);
 				try {
@@ -302,7 +310,7 @@ public class nuovoProdotto extends HttpServlet {
 				temp.setPrezzo((Integer.parseInt(request.getParameter("prezzo"))*100));
 				temp.setSconto(Integer.parseInt(request.getParameter("sconto")));
 				temp.setLingua("italiano");
-				temp.setIdSet(2);
+				temp.setIdSet((request.getParameter("set")));
 				temp.setPathImg(uploadPath);
 				temp.setMimeType(mimeType);
 				try {
@@ -330,8 +338,8 @@ public class nuovoProdotto extends HttpServlet {
 				temp.setNome(request.getParameter("nome"));
 				temp.setPrezzo((Integer.parseInt(request.getParameter("prezzo"))*100));
 				temp.setSconto(Integer.parseInt(request.getParameter("sconto")));
-				temp.setLingua("italiano");
-				temp.setIdSet(2);
+				temp.setLingua(request.getParameter("lingua"));
+				temp.setIdSet(request.getParameter("set"));
 				temp.setPathImg(uploadPath);
 				temp.setMimeType(mimeType);
 				try {
@@ -359,11 +367,20 @@ public class nuovoProdotto extends HttpServlet {
 				temp.setNome(request.getParameter("nome"));
 				temp.setPrezzo((Integer.parseInt(request.getParameter("prezzo"))*100));
 				temp.setSconto(Integer.parseInt(request.getParameter("sconto")));
-				temp.setLingua("italiano");
+				temp.setLingua(request.getParameter("lingua"));
 				temp.setPathImg(uploadPath);
 				temp.setMimeType(mimeType);
 				try{
 					deckDAO.saveDeck(temp);
+					int idDeck = deckDAO.retrieveByNome(request.getParameter("nome")).getId();
+					int i = 0;
+					String[] qnt = request.getParameterValues("qnt");
+					for(String c : request.getParameterValues("nomeCarta")) {
+						int idCarta = cartaDAO.retrieveByNome(c).getId();
+						ContieneDeckBean cont = new ContieneDeckBean(idDeck,idCarta, Integer.parseInt(qnt[i]));
+						contieneDAO.saveContieneDeck(cont);
+						i++;
+					}
 				}catch(SQLException e) {
 					e.printStackTrace();
 				}break;

@@ -24,7 +24,7 @@ import dao.CartaDaoImpl;
  * Servlet implementation class ServletCercaCartaJson
  */
 @WebServlet("/ServletCercaCartaJson")
-public class ServletCercaCartaJson extends HttpServlet {
+public class ServletCercaCartaDeckJson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private CartaDao cartaDao = null;
 	
@@ -41,7 +41,7 @@ public class ServletCercaCartaJson extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletCercaCartaJson() {
+    public ServletCercaCartaDeckJson() {
         super();
         // TODO Auto-generated constructor stub
     }

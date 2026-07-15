@@ -17,6 +17,8 @@ public interface DeckDao extends ProdottoYGODao{
 	
 	public DeckBean retrieveByKey(int id) throws SQLException;
 	
+	public DeckBean retrieveByNome(String nome) throws SQLException;
+	
 	public List<DeckBean> retrieveFiltered(DeckBean deck) throws SQLException;
 	
 	public List<DeckBean> retrieveFiltered(DeckBean deck, int page, int limit) throws SQLException;

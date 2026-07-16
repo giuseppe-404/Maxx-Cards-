@@ -264,7 +264,7 @@ public class ProdottoDaoImpl implements ProdottoDao {
 			filter.append(" nome LIKE ? ");
 			attributi.add("%"+prodotto.getNome()+"%");
 		}
-		if(prodotto.getQnt() < 0) {
+		if(prodotto.getQnt() >= 0) {
 			if(primo) {
 				primo = false;
 				filter.append("WHERE ");
@@ -272,12 +272,12 @@ public class ProdottoDaoImpl implements ProdottoDao {
 			filter.append(" qnt=? ");
 			attributi.add(Integer.toString(prodotto.getQnt()));
 		}
-		if(prodotto.getPrezzo() < 0) {
+		if(prodotto.getPrezzo() > 0) {
 			if(primo) {
 				primo = false;
 				filter.append("WHERE ");
 			}else filter.append(" AND ");
-			filter.append(" (prezzo*(100-(sconto/100))/100)<=? ");
+			filter.append(" (prezzo * (100 - sconto) / 100) <= ? ");
 			attributi.add(Integer.toString(prodotto.getPrezzo()));
 		}
 		if(!prodotto.getDescrizione().equals("")) {

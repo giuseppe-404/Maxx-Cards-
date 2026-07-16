@@ -291,7 +291,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 	
 	protected synchronized boolean buildProdottoFilter(StringBuilder sql, ArrayList<String> attribute, ConfezionatoBean confezionato) {
 		boolean primo = super.buildProdottoFilter(sql, attribute, confezionato);
-		if(confezionato.getIdSet().equals("")) {
+		if(!confezionato.getIdSet().equals("")) {
 			if(primo) sql.append(" WHERE ");
 			else sql.append(" AND ");
 			sql.append(" id_set LIKE ? ");

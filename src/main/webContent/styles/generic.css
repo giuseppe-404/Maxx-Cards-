@@ -225,3 +225,27 @@ nav>ul>li>a{
     font-size: 3vh;
     padding: 0 0.2vw;
 }
+
+footer{
+    background-color: #000;
+    background-color: var(--footer-color);
+    padding: 1% 0% 2%;
+    border-top: solid #ffffff 2px;
+    display: flex;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+footer>*{
+    min-width: 50%;
+    max-width: 50%;
+    padding: 0% 0% 0% 1%;
+}
+
+footer>*:first-child{
+    border-right: solid #ffffff 2px;
+}
+
+footer ul{
+    margin: 0;
+}

@@ -23,7 +23,7 @@ import dao.CartaDaoImpl;
 /**
  * Servlet implementation class ServletCercaCartaJson
  */
-@WebServlet("/ServletCercaCartaJson")
+@WebServlet("/ServletCercaCartaDeckJson")
 public class ServletCercaCartaDeckJson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private CartaDao cartaDao = null;

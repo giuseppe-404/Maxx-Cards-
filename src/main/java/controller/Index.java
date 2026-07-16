@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.NotiziaBean;
 import model.ProdottoBean;
 
 import java.io.IOException;
@@ -16,6 +17,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import dao.NotiziaDao;
+import dao.NotiziaDaoImpl;
 import dao.ProdottiHomeDao;
 import dao.ProdottiHomeDaoImpl;
 import dao.ProdottoDao;
@@ -29,7 +32,8 @@ public class Index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProdottiHomeDao daoPH;
 	private ProdottoDao daoPR;
-       
+    private NotiziaDao daoN;  
+	
 	public void init(ServletConfig config) throws ServletException {
         super.init(config);
         System.out.println(getServletContext().getAttributeNames());
@@ -39,6 +43,7 @@ public class Index extends HttpServlet {
         }
         daoPH = new ProdottiHomeDaoImpl(ds);
         daoPR = new ProdottoDaoImpl(ds);
+        daoN = new NotiziaDaoImpl(ds);
 	}
     /**
      * @see HttpServlet#HttpServlet()
@@ -59,6 +64,8 @@ public class Index extends HttpServlet {
 				ProdottoBean temp = daoPR.retrieveByKey(i);
 				prod.add(temp);
 			}
+			List<NotiziaBean> notizie = daoN.retrieveAll(3,1);
+			request.setAttribute("notizie", notizie);
 			request.setAttribute("prodotti", prod);
 		}catch(SQLException e) {
 			e.printStackTrace();

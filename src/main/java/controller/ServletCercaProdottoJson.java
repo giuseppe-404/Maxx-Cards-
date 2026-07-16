@@ -94,567 +94,626 @@ public class ServletCercaProdottoJson extends HttpServlet {
     			int page = Integer.parseInt(request.getParameter("page"));
     			int limit = Integer.parseInt(request.getParameter("limit"));
     			ProdottoBean filter = new ProdottoBean();
-            	if(request.getParameter("nome") != null) {
-            		filter.setNome(request.getParameter("nome"));
-            	}
-            	if(request.getParameter("descrizione") != null) {
-            		filter.setDescrizione(request.getParameter("descrizione"));
-            	}
-            	if(request.getParameter("prezzo") != null) {
-            		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-            	}
-            	try {
-            		List<ProdottoBean> list = prodottoDao.retrieveFiltered(filter,limit,page);
-            		for(ProdottoBean p : list) {
-            			JSONObject obj = new JSONObject();
-            			obj.put("id", p.getId());
-            			obj.put("nome", p.getNome());
-            			obj.put("qnt", p.getQnt());
-            			obj.put("prezzo", p.getPrezzo());
-            			obj.put("descrizione", p.getDescrizione());
-            			obj.put("sconto", p.getSconto());
-            			obj.put("pathImg", p.getPathImg());
-            			obj.put("mimeType",p.getMimeType());
-            			result.put(obj);
-            		}
-            	}catch(SQLException e) {
-            		e.printStackTrace();
-            	}
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			}
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			}
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			}
+    			try {
+    				List<ProdottoBean> list = prodottoDao.retrieveFiltered(filter,limit,page);
+    				for(ProdottoBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
+    		} else {
+    			ProdottoBean filter = new ProdottoBean();
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			try {
+    				List<ProdottoBean> list = prodottoDao.retrieveFiltered(filter);
+    				for(ProdottoBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
     		}
-    		ProdottoBean filter = new ProdottoBean();
-        	if(request.getParameter("nome") != null) {
-        		filter.setNome(request.getParameter("nome"));
-        	}
-        	if(request.getParameter("descrizione") != null) {
-        		filter.setDescrizione(request.getParameter("descrizione"));
-        	}
-        	if(request.getParameter("prezzo") != null) {
-        		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-        	}
-        	try {
-        		List<ProdottoBean> list = prodottoDao.retrieveFiltered(filter);
-        		for(ProdottoBean p : list) {
-        			JSONObject obj = new JSONObject();
-        			obj.put("id", p.getId());
-        			obj.put("nome", p.getNome());
-        			obj.put("qnt", p.getQnt());
-        			obj.put("prezzo", p.getPrezzo());
-        			obj.put("descrizione", p.getDescrizione());
-        			obj.put("sconto", p.getSconto());
-        			obj.put("pathImg", p.getPathImg());
-        			obj.put("mimeType",p.getMimeType());
-        			result.put(obj);
-        		}
-        	}catch(SQLException e) {
-        		e.printStackTrace();
-        	}
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 2) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
     			int page = Integer.parseInt(request.getParameter("page"));
     			int limit = Integer.parseInt(request.getParameter("limit"));
     			ProdottoYGOBean filter = new ProdottoYGOBean();
-            	if(request.getParameter("nome") != null) {
-            		filter.setNome(request.getParameter("nome"));
-            	}
-            	if(request.getParameter("descrizione") != null) {
-            		filter.setDescrizione(request.getParameter("descrizione"));
-            	}
-            	if(request.getParameter("prezzo") != null) {
-            		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-            	}
-            	if(request.getParameter("lingua") != null) {
-            		filter.setLingua(request.getParameter("lingua"));
-            	}
-            	try {
-            		List<ProdottoYGOBean> list = prodottoYgoDao.retrieveFiltered(filter,limit,page);
-            		for(ProdottoYGOBean p : list) {
-            			JSONObject obj = new JSONObject();
-            			obj.put("id", p.getId());
-            			obj.put("nome", p.getNome());
-            			obj.put("qnt", p.getQnt());
-            			obj.put("prezzo", p.getPrezzo());
-            			obj.put("descrizione", p.getDescrizione());
-            			obj.put("sconto", p.getSconto());
-            			obj.put("pathImg", p.getPathImg());
-            			obj.put("mimeType",p.getMimeType());
-            			obj.put("lingua", p.getLingua());
-            			result.put(obj);
-            		}
-            	}catch(SQLException e) {
-            		e.printStackTrace();
-            	}
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			try {
+    				List<ProdottoYGOBean> list = prodottoYgoDao.retrieveFiltered(filter,limit,page);
+    				for(ProdottoYGOBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
+    		} else {
+    			ProdottoYGOBean filter = new ProdottoYGOBean();
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			try {
+    				List<ProdottoYGOBean> list = prodottoYgoDao.retrieveFiltered(filter);
+    				for(ProdottoYGOBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
     		}
-    		ProdottoYGOBean filter = new ProdottoYGOBean();
-        	if(request.getParameter("nome") != null) {
-        		filter.setNome(request.getParameter("nome"));
-        	}
-        	if(request.getParameter("descrizione") != null) {
-        		filter.setDescrizione(request.getParameter("descrizione"));
-        	}
-        	if(request.getParameter("prezzo") != null) {
-        		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-        	}
-        	if(request.getParameter("lingua") != null) {
-        		filter.setLingua(request.getParameter("lingua"));
-        	}
-        	try {
-        		List<ProdottoYGOBean> list = prodottoYgoDao.retrieveFiltered(filter);
-        		for(ProdottoYGOBean p : list) {
-        			JSONObject obj = new JSONObject();
-        			obj.put("id", p.getId());
-        			obj.put("nome", p.getNome());
-        			obj.put("qnt", p.getQnt());
-        			obj.put("prezzo", p.getPrezzo());
-        			obj.put("descrizione", p.getDescrizione());
-        			obj.put("sconto", p.getSconto());
-        			obj.put("pathImg", p.getPathImg());
-        			obj.put("mimeType",p.getMimeType());
-        			obj.put("lingua", p.getLingua());
-        			result.put(obj);
-        		}
-        	}catch(SQLException e) {
-        		e.printStackTrace();
-        	}
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 1) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
     			int page = Integer.parseInt(request.getParameter("page"));
     			int limit = Integer.parseInt(request.getParameter("limit"));
     			CartaSingolaBean filter = new CartaSingolaBean();
-            	if(request.getParameter("nome") != null) {
-            		filter.setNome(request.getParameter("nome"));
-            	}
-            	if(request.getParameter("descrizione") != null) {
-            		filter.setDescrizione(request.getParameter("descrizione"));
-            	}
-            	if(request.getParameter("prezzo") != null) {
-            		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-            	}
-            	if(request.getParameter("lingua") != null) {
-            		filter.setLingua(request.getParameter("lingua"));
-            	}
-            	if(request.getParameter("quality") != null) {
-            		filter.setQuality(request.getParameter("quality"));
-            	}
-            	if(request.getParameter("idSet") != null) {
-            		filter.setIdSet(request.getParameter("idSet"));
-            	}
-            	if(request.getParameter("idCarta") != null) {
-            		filter.setIdCarta(Integer.parseInt(request.getParameter("idCarta")));
-            	}
-            	try {
-            		List<CartaSingolaBean> list = cartaSingolaDao.retrieveFiltered(filter,limit,page);
-            		for(CartaSingolaBean p : list) {
-            			JSONObject obj = new JSONObject();
-            			obj.put("id", p.getId());
-            			obj.put("nome", p.getNome());
-            			obj.put("qnt", p.getQnt());
-            			obj.put("prezzo", p.getPrezzo());
-            			obj.put("descrizione", p.getDescrizione());
-            			obj.put("sconto", p.getSconto());
-            			obj.put("pathImg", p.getPathImg());
-            			obj.put("mimeType",p.getMimeType());
-            			obj.put("lingua", p.getLingua());
-            			result.put(obj);
-            		}
-            	}catch(SQLException e) {
-            		e.printStackTrace();
-            	}
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("quality") != null) {
+    				filter.setQuality(request.getParameter("quality"));
+    			} else filter.setQuality("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			if(request.getParameter("idCarta") != null) {
+    				filter.setIdCarta(Integer.parseInt(request.getParameter("idCarta")));
+    			} else filter.setIdCarta(0);
+    			try {
+    				List<CartaSingolaBean> list = cartaSingolaDao.retrieveFiltered(filter,limit,page);
+    				for(CartaSingolaBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("quality", p.getQuality());
+    					obj.put("idSet", p.getIdSet());
+    					obj.put("idCarta", p.getIdCarta());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
+    		} else {
+    			CartaSingolaBean filter = new CartaSingolaBean();
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("quality") != null) {
+    				filter.setQuality(request.getParameter("quality"));
+    			} else filter.setQuality("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			if(request.getParameter("idCarta") != null) {
+    				filter.setIdCarta(Integer.parseInt(request.getParameter("idCarta")));
+    			} else filter.setIdCarta(0);
+    			try {
+    				List<CartaSingolaBean> list = cartaSingolaDao.retrieveFiltered(filter);
+    				for(CartaSingolaBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("quality", p.getQuality());
+    					obj.put("idSet", p.getIdSet());
+    					obj.put("idCarta", p.getIdCarta());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			} 
     		}
-    		CartaSingolaBean filter = new CartaSingolaBean();
-        	if(request.getParameter("nome") != null) {
-        		filter.setNome(request.getParameter("nome"));
-        	}
-        	if(request.getParameter("descrizione") != null) {
-        		filter.setDescrizione(request.getParameter("descrizione"));
-        	}
-        	if(request.getParameter("prezzo") != null) {
-        		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-        	}
-        	if(request.getParameter("lingua") != null) {
-        		filter.setLingua(request.getParameter("lingua"));
-        	}
-        	if(request.getParameter("quality") != null) {
-        		filter.setQuality(request.getParameter("quality"));
-        	}
-        	if(request.getParameter("idSet") != null) {
-        		filter.setIdSet(request.getParameter("idSet"));
-        	}
-        	if(request.getParameter("idCarta") != null) {
-        		filter.setIdCarta(Integer.parseInt(request.getParameter("idCarta")));
-        	}
-        	try {
-        		List<CartaSingolaBean> list = cartaSingolaDao.retrieveFiltered(filter);
-        		for(CartaSingolaBean p : list) {
-        			JSONObject obj = new JSONObject();
-        			obj.put("id", p.getId());
-        			obj.put("nome", p.getNome());
-        			obj.put("qnt", p.getQnt());
-        			obj.put("prezzo", p.getPrezzo());
-        			obj.put("descrizione", p.getDescrizione());
-        			obj.put("sconto", p.getSconto());
-        			obj.put("pathImg", p.getPathImg());
-        			obj.put("mimeType",p.getMimeType());
-        			obj.put("lingua", p.getLingua());
-        			obj.put("quality", p.getQuality());
-        			obj.put("idSet", p.getIdSet());
-        			obj.put("idCarta", p.getIdCarta());
-        			result.put(obj);
-        		}
-        	}catch(SQLException e) {
-        		e.printStackTrace();
-        	}
     	}else if(Integer.parseInt(request.getParameter("idProdotto")) == 8) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
     			int page = Integer.parseInt(request.getParameter("page"));
     			int limit = Integer.parseInt(request.getParameter("limit"));
     			DeckBean filter = new DeckBean();
-            	if(request.getParameter("nome") != null) {
-            		filter.setNome(request.getParameter("nome"));
-            	}
-            	if(request.getParameter("descrizione") != null) {
-            		filter.setDescrizione(request.getParameter("descrizione"));
-            	}
-            	if(request.getParameter("prezzo") != null) {
-            		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-            	}
-            	if(request.getParameter("lingua") != null) {
-            		filter.setLingua(request.getParameter("lingua"));
-            	}
-            	try {
-            		List<DeckBean> list = deckDao.retrieveFiltered(filter,limit,page);
-            		for(DeckBean p : list) {
-            			JSONObject obj = new JSONObject();
-            			obj.put("id", p.getId());
-            			obj.put("nome", p.getNome());
-            			obj.put("qnt", p.getQnt());
-            			obj.put("prezzo", p.getPrezzo());
-            			obj.put("descrizione", p.getDescrizione());
-            			obj.put("sconto", p.getSconto());
-            			obj.put("pathImg", p.getPathImg());
-            			obj.put("mimeType",p.getMimeType());
-            			obj.put("lingua", p.getLingua());
-            			result.put(obj);
-            		}
-            	}catch(SQLException e) {
-            		e.printStackTrace();
-            	}
-    		}
-    		DeckBean filter = new DeckBean();
-        	if(request.getParameter("nome") != null) {
-        		filter.setNome(request.getParameter("nome"));
-        	}
-        	if(request.getParameter("descrizione") != null) {
-        		filter.setDescrizione(request.getParameter("descrizione"));
-        	}
-        	if(request.getParameter("prezzo") != null) {
-        		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-        	}
-        	if(request.getParameter("lingua") != null) {
-        		filter.setLingua(request.getParameter("lingua"));
-        	}
-        	try {
-        		List<DeckBean> list = deckDao.retrieveFiltered(filter);
-        		for(DeckBean p : list) {
-        			JSONObject obj = new JSONObject();
-        			obj.put("id", p.getId());
-        			obj.put("nome", p.getNome());
-        			obj.put("qnt", p.getQnt());
-        			obj.put("prezzo", p.getPrezzo());
-        			obj.put("descrizione", p.getDescrizione());
-        			obj.put("sconto", p.getSconto());
-        			obj.put("pathImg", p.getPathImg());
-        			obj.put("mimeType",p.getMimeType());
-        			obj.put("lingua", p.getLingua());
-        			result.put(obj);
-        		}
-        	}catch(SQLException e) {
-        		e.printStackTrace();
-        	}
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			try {
+    				List<DeckBean> list = deckDao.retrieveFiltered(filter,limit,page);
+    				for(DeckBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
+    		} else {
+    			DeckBean filter = new DeckBean();
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			try {
+    				List<DeckBean> list = deckDao.retrieveFiltered(filter);
+    				for(DeckBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			} }
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 3) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
     			int page = Integer.parseInt(request.getParameter("page"));
     			int limit = Integer.parseInt(request.getParameter("limit"));
     			ConfezionatoBean filter = new ConfezionatoBean();
-            	if(request.getParameter("nome") != null) {
-            		filter.setNome(request.getParameter("nome"));
-            	}
-            	if(request.getParameter("descrizione") != null) {
-            		filter.setDescrizione(request.getParameter("descrizione"));
-            	}
-            	if(request.getParameter("prezzo") != null) {
-            		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-            	}
-            	if(request.getParameter("lingua") != null) {
-            		filter.setLingua(request.getParameter("lingua"));
-            	}
-            	try {
-            		List<ConfezionatoBean> list = confezionatoDao.retrieveFiltered(filter,limit,page);
-            		for(ConfezionatoBean p : list) {
-            			JSONObject obj = new JSONObject();
-            			obj.put("id", p.getId());
-            			obj.put("nome", p.getNome());
-            			obj.put("qnt", p.getQnt());
-            			obj.put("prezzo", p.getPrezzo());
-            			obj.put("descrizione", p.getDescrizione());
-            			obj.put("sconto", p.getSconto());
-            			obj.put("pathImg", p.getPathImg());
-            			obj.put("mimeType",p.getMimeType());
-            			obj.put("lingua", p.getLingua());
-            			result.put(obj);
-            		}
-            	}catch(SQLException e) {
-            		e.printStackTrace();
-            	}
-    		}
-    		ConfezionatoBean filter = new ConfezionatoBean();
-        	if(request.getParameter("nome") != null) {
-        		filter.setNome(request.getParameter("nome"));
-        	}
-        	if(request.getParameter("descrizione") != null) {
-        		filter.setDescrizione(request.getParameter("descrizione"));
-        	}
-        	if(request.getParameter("prezzo") != null) {
-        		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-        	}
-        	if(request.getParameter("lingua") != null) {
-        		filter.setLingua(request.getParameter("lingua"));
-        	}
-        	try {
-        		List<ConfezionatoBean> list = confezionatoDao.retrieveFiltered(filter);
-        		for(ConfezionatoBean p : list) {
-        			JSONObject obj = new JSONObject();
-        			obj.put("id", p.getId());
-        			obj.put("nome", p.getNome());
-        			obj.put("qnt", p.getQnt());
-        			obj.put("prezzo", p.getPrezzo());
-        			obj.put("descrizione", p.getDescrizione());
-        			obj.put("sconto", p.getSconto());
-        			obj.put("pathImg", p.getPathImg());
-        			obj.put("mimeType",p.getMimeType());
-        			obj.put("lingua", p.getLingua());
-        			result.put(obj);
-        		}
-        	}catch(SQLException e) {
-        		e.printStackTrace();
-        	}
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			try {
+    				List<ConfezionatoBean> list = confezionatoDao.retrieveFiltered(filter,limit,page);
+    				for(ConfezionatoBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("idSet", p.getIdSet());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
+    		} else {
+    			ConfezionatoBean filter = new ConfezionatoBean();
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			try {
+    				List<ConfezionatoBean> list = confezionatoDao.retrieveFiltered(filter);
+    				for(ConfezionatoBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("idSet", p.getIdSet());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			} }
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 4) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
     			int page = Integer.parseInt(request.getParameter("page"));
     			int limit = Integer.parseInt(request.getParameter("limit"));
     			PacchettoBean filter = new PacchettoBean();
-            	if(request.getParameter("nome") != null) {
-            		filter.setNome(request.getParameter("nome"));
-            	}
-            	if(request.getParameter("descrizione") != null) {
-            		filter.setDescrizione(request.getParameter("descrizione"));
-            	}
-            	if(request.getParameter("prezzo") != null) {
-            		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-            	}
-            	if(request.getParameter("lingua") != null) {
-            		filter.setLingua(request.getParameter("lingua"));
-            	}
-            	try {
-            		List<PacchettoBean> list = pacchettoDao.retrieveFiltered(filter,limit,page);
-            		for(PacchettoBean p : list) {
-            			JSONObject obj = new JSONObject();
-            			obj.put("id", p.getId());
-            			obj.put("nome", p.getNome());
-            			obj.put("qnt", p.getQnt());
-            			obj.put("prezzo", p.getPrezzo());
-            			obj.put("descrizione", p.getDescrizione());
-            			obj.put("sconto", p.getSconto());
-            			obj.put("pathImg", p.getPathImg());
-            			obj.put("mimeType",p.getMimeType());
-            			obj.put("lingua", p.getLingua());
-            			result.put(obj);
-            		}
-            	}catch(SQLException e) {
-            		e.printStackTrace();
-            	}
-    		}
-    		PacchettoBean filter = new PacchettoBean();
-        	if(request.getParameter("nome") != null) {
-        		filter.setNome(request.getParameter("nome"));
-        	}
-        	if(request.getParameter("descrizione") != null) {
-        		filter.setDescrizione(request.getParameter("descrizione"));
-        	}
-        	if(request.getParameter("prezzo") != null) {
-        		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-        	}
-        	if(request.getParameter("lingua") != null) {
-        		filter.setLingua(request.getParameter("lingua"));
-        	}
-        	try {
-        		List<PacchettoBean> list = pacchettoDao.retrieveFiltered(filter);
-        		for(PacchettoBean p : list) {
-        			JSONObject obj = new JSONObject();
-        			obj.put("id", p.getId());
-        			obj.put("nome", p.getNome());
-        			obj.put("qnt", p.getQnt());
-        			obj.put("prezzo", p.getPrezzo());
-        			obj.put("descrizione", p.getDescrizione());
-        			obj.put("sconto", p.getSconto());
-        			obj.put("pathImg", p.getPathImg());
-        			obj.put("mimeType",p.getMimeType());
-        			obj.put("lingua", p.getLingua());
-        			result.put(obj);
-        		}
-        	}catch(SQLException e) {
-        		e.printStackTrace();
-        	}
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			try {
+    				List<PacchettoBean> list = pacchettoDao.retrieveFiltered(filter,limit,page);
+    				for(PacchettoBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("idSet", p.getIdSet());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
+    		} else {
+    			PacchettoBean filter = new PacchettoBean();
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			try {
+    				List<PacchettoBean> list = pacchettoDao.retrieveFiltered(filter);
+    				for(PacchettoBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("idSet", p.getIdSet());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			} }
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 5) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
     			int page = Integer.parseInt(request.getParameter("page"));
     			int limit = Integer.parseInt(request.getParameter("limit"));
     			TinBean filter = new TinBean();
-            	if(request.getParameter("nome") != null) {
-            		filter.setNome(request.getParameter("nome"));
-            	}
-            	if(request.getParameter("descrizione") != null) {
-            		filter.setDescrizione(request.getParameter("descrizione"));
-            	}
-            	if(request.getParameter("prezzo") != null) {
-            		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-            	}
-            	if(request.getParameter("lingua") != null) {
-            		filter.setLingua(request.getParameter("lingua"));
-            	}
-            	try {
-            		List<TinBean> list = tinDao.retrieveFiltered(filter,limit,page);
-            		for(TinBean p : list) {
-            			JSONObject obj = new JSONObject();
-            			obj.put("id", p.getId());
-            			obj.put("nome", p.getNome());
-            			obj.put("qnt", p.getQnt());
-            			obj.put("prezzo", p.getPrezzo());
-            			obj.put("descrizione", p.getDescrizione());
-            			obj.put("sconto", p.getSconto());
-            			obj.put("pathImg", p.getPathImg());
-            			obj.put("mimeType",p.getMimeType());
-            			obj.put("lingua", p.getLingua());
-            			result.put(obj);
-            		}
-            	}catch(SQLException e) {
-            		e.printStackTrace();
-            	}
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			try {
+    				List<TinBean> list = tinDao.retrieveFiltered(filter,limit,page);
+    				for(TinBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("idSet", p.getIdSet());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
+    		} else {
+    			TinBean filter = new TinBean();
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			try {
+    				List<TinBean> list = tinDao.retrieveFiltered(filter);
+    				for(TinBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("idSet", p.getIdSet());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
     		}
-    		TinBean filter = new TinBean();
-        	if(request.getParameter("nome") != null) {
-        		filter.setNome(request.getParameter("nome"));
-        	}
-        	if(request.getParameter("descrizione") != null) {
-        		filter.setDescrizione(request.getParameter("descrizione"));
-        	}
-        	if(request.getParameter("prezzo") != null) {
-        		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-        	}
-        	if(request.getParameter("lingua") != null) {
-        		filter.setLingua(request.getParameter("lingua"));
-        	}
-        	try {
-        		List<TinBean> list = tinDao.retrieveFiltered(filter);
-        		for(TinBean p : list) {
-        			JSONObject obj = new JSONObject();
-        			obj.put("id", p.getId());
-        			obj.put("nome", p.getNome());
-        			obj.put("qnt", p.getQnt());
-        			obj.put("prezzo", p.getPrezzo());
-        			obj.put("descrizione", p.getDescrizione());
-        			obj.put("sconto", p.getSconto());
-        			obj.put("pathImg", p.getPathImg());
-        			obj.put("mimeType",p.getMimeType());
-        			obj.put("lingua", p.getLingua());
-        			result.put(obj);
-        		}
-        	}catch(SQLException e) {
-        		e.printStackTrace();
-        	}
-        } else if(Integer.parseInt(request.getParameter("idProdotto")) == 6) {
+    	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 6) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
     			int page = Integer.parseInt(request.getParameter("page"));
     			int limit = Integer.parseInt(request.getParameter("limit"));
     			BoxBean filter = new BoxBean();
-            	if(request.getParameter("nome") != null) {
-            		filter.setNome(request.getParameter("nome"));
-            	}
-            	if(request.getParameter("descrizione") != null) {
-            		filter.setDescrizione(request.getParameter("descrizione"));
-            	}
-            	if(request.getParameter("prezzo") != null) {
-            		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-            	}
-            	if(request.getParameter("lingua") != null) {
-            		filter.setLingua(request.getParameter("lingua"));
-            	}
-            	try {
-            		List<BoxBean> list = boxDao.retrieveFiltered(filter,limit,page);
-            		for(BoxBean p : list) {
-            			JSONObject obj = new JSONObject();
-            			obj.put("id", p.getId());
-            			obj.put("nome", p.getNome());
-            			obj.put("qnt", p.getQnt());
-            			obj.put("prezzo", p.getPrezzo());
-            			obj.put("descrizione", p.getDescrizione());
-            			obj.put("sconto", p.getSconto());
-            			obj.put("pathImg", p.getPathImg());
-            			obj.put("mimeType",p.getMimeType());
-            			obj.put("lingua", p.getLingua());
-            			result.put(obj);
-            		}
-            	}catch(SQLException e) {
-            		e.printStackTrace();
-            	}
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			try {
+    				List<BoxBean> list = boxDao.retrieveFiltered(filter,limit,page);
+    				for(BoxBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("idSet", p.getIdSet());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
+    		} else {
+    			BoxBean filter = new BoxBean();
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			try {
+    				List<BoxBean> list = boxDao.retrieveFiltered(filter);
+    				for(BoxBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("idSet", p.getIdSet());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
     		}
-    		BoxBean filter = new BoxBean();
-        	if(request.getParameter("nome") != null) {
-        		filter.setNome(request.getParameter("nome"));
-        	}
-        	if(request.getParameter("descrizione") != null) {
-        		filter.setDescrizione(request.getParameter("descrizione"));
-        	}
-        	if(request.getParameter("prezzo") != null) {
-        		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-        	}
-        	if(request.getParameter("lingua") != null) {
-        		filter.setLingua(request.getParameter("lingua"));
-        	}
-        	try {
-        		List<BoxBean> list = boxDao.retrieveFiltered(filter);
-        		for(BoxBean p : list) {
-        			JSONObject obj = new JSONObject();
-        			obj.put("id", p.getId());
-        			obj.put("nome", p.getNome());
-        			obj.put("qnt", p.getQnt());
-        			obj.put("prezzo", p.getPrezzo());
-        			obj.put("descrizione", p.getDescrizione());
-        			obj.put("sconto", p.getSconto());
-        			obj.put("pathImg", p.getPathImg());
-        			obj.put("mimeType",p.getMimeType());
-        			obj.put("lingua", p.getLingua());
-        			result.put(obj);
-        		}
-        	}catch(SQLException e) {
-        		e.printStackTrace();
-        	}
-        } else if(Integer.parseInt(request.getParameter("idProdotto")) == 7) {
+    	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 7) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
     			int page = Integer.parseInt(request.getParameter("page"));
     			int limit = Integer.parseInt(request.getParameter("limit"));
     			StructureDeckBean filter = new StructureDeckBean();
-            	if(request.getParameter("nome") != null) {
+    			if(request.getParameter("nome") != null) {
             		filter.setNome(request.getParameter("nome"));
-            	}
+            	} else filter.setNome("");
             	if(request.getParameter("descrizione") != null) {
             		filter.setDescrizione(request.getParameter("descrizione"));
-            	}
+            	} else filter.setDescrizione("");
             	if(request.getParameter("prezzo") != null) {
-            		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-            	}
+            		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+            	} else filter.setPrezzo(-1);
+            	filter.setQnt(-1);
             	if(request.getParameter("lingua") != null) {
             		filter.setLingua(request.getParameter("lingua"));
-            	}
+            	} else filter.setLingua("");
+            	if(request.getParameter("idSet") != null) {
+            		filter.setIdSet(request.getParameter("idSet"));
+            	} else filter.setIdSet("");
             	try {
             		List<StructureDeckBean> list = structureDao.retrieveFiltered(filter,limit,page);
             		for(StructureDeckBean p : list) {
@@ -668,44 +727,54 @@ public class ServletCercaProdottoJson extends HttpServlet {
             			obj.put("pathImg", p.getPathImg());
             			obj.put("mimeType",p.getMimeType());
             			obj.put("lingua", p.getLingua());
+            			obj.put("idSet", p.getIdSet());
             			result.put(obj);
             		}
             	}catch(SQLException e) {
             		e.printStackTrace();
             	}
+    		} else {
+    			StructureDeckBean filter = new StructureDeckBean();
+    			if(request.getParameter("nome") != null) {
+    				filter.setNome(request.getParameter("nome"));
+    			} else filter.setNome("");
+    			if(request.getParameter("descrizione") != null) {
+    				filter.setDescrizione(request.getParameter("descrizione"));
+    			} else filter.setDescrizione("");
+    			if(request.getParameter("prezzo") != null) {
+    				filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo"))*100);
+    			} else filter.setPrezzo(-1);
+    			filter.setQnt(-1);
+    			if(request.getParameter("lingua") != null) {
+    				filter.setLingua(request.getParameter("lingua"));
+    			} else filter.setLingua("");
+    			if(request.getParameter("idSet") != null) {
+    				filter.setIdSet(request.getParameter("idSet"));
+    			} else filter.setIdSet("");
+    			try {
+    				List<StructureDeckBean> list = structureDao.retrieveFiltered(filter);
+    				for(StructureDeckBean p : list) {
+    					JSONObject obj = new JSONObject();
+    					obj.put("id", p.getId());
+    					obj.put("nome", p.getNome());
+    					obj.put("qnt", p.getQnt());
+    					obj.put("prezzo", p.getPrezzo());
+    					obj.put("descrizione", p.getDescrizione());
+    					obj.put("sconto", p.getSconto());
+    					obj.put("pathImg", p.getPathImg());
+    					obj.put("mimeType",p.getMimeType());
+    					obj.put("lingua", p.getLingua());
+    					obj.put("idSet", p.getIdSet());
+    					result.put(obj);
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			} 
+    			System.out.println(result.isEmpty());
     		}
-    		StructureDeckBean filter = new StructureDeckBean();
-        	if(request.getParameter("nome") != null) {
-        		filter.setNome(request.getParameter("nome"));
-        	}
-        	if(request.getParameter("descrizione") != null) {
-        		filter.setDescrizione(request.getParameter("descrizione"));
-        	}
-        	if(request.getParameter("prezzo") != null) {
-        		filter.setPrezzo(Integer.parseInt(request.getParameter("prezzo")));
-        	}
-        	if(request.getParameter("lingua") != null) {
-        		filter.setLingua(request.getParameter("lingua"));
-        	}
-        	try {
-        		List<StructureDeckBean> list = structureDao.retrieveFiltered(filter);
-        		for(StructureDeckBean p : list) {
-        			JSONObject obj = new JSONObject();
-        			obj.put("id", p.getId());
-        			obj.put("nome", p.getNome());
-        			obj.put("qnt", p.getQnt());
-        			obj.put("prezzo", p.getPrezzo());
-        			obj.put("descrizione", p.getDescrizione());
-        			obj.put("sconto", p.getSconto());
-        			obj.put("pathImg", p.getPathImg());
-        			obj.put("mimeType",p.getMimeType());
-        			obj.put("lingua", p.getLingua());
-        			result.put(obj);
-        		}
-        	}catch(SQLException e) {
-        		e.printStackTrace();
-        	} out.print(result.toString());
-        }
+        } else {
+        	result.put("Nessun risultato!");
+        } out.print(result.toString());
     }
     
 	/**

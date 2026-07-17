@@ -31,7 +31,7 @@ public class UploadImmagine extends HttpServlet {
 	private static final String IMAGE_DIR = "images";
 	private static final String UPLOAD_DIR = "uploads";
 	private static final String PRODUCT_DIR = "prodotti";
-	private static final String CARDS_DIR = "carte";
+	private static final String CARDS_DIR = "carta";
 	private ProdottoDao prodottoDao = null;
     private CartaDao cartaDao = null;
     
@@ -49,7 +49,7 @@ public class UploadImmagine extends HttpServlet {
         File upload_product_file = new File(file_path_product);
         File upload_cards_file = new File(file_path_cards);
         if(!upload_product_file.exists()) upload_product_file.mkdirs();
-        if(!upload_cards_file.exists()) upload_product_file.mkdirs();
+        if(!upload_cards_file.exists()) upload_cards_file.mkdirs();
         prodottoDao = new ProdottoDaoImpl(ds);
         cartaDao = new CartaDaoImpl(ds);
     }

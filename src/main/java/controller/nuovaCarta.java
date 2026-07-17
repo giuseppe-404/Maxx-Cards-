@@ -3,6 +3,7 @@ package controller;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,11 +11,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import model.MagiaBean;
 import model.MostroBean;
+import model.TipoBean;
 import model.TrappolaBean;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.UUID;
 
@@ -24,6 +27,8 @@ import dao.MagiaDao;
 import dao.MagiaDaoImpl;
 import dao.MostroDao;
 import dao.MostroDaoImpl;
+import dao.TipoDao;
+import dao.TipoDaoImpl;
 import dao.TrappolaDao;
 import dao.TrappolaDaoImpl;
 
@@ -31,6 +36,7 @@ import dao.TrappolaDaoImpl;
  * Servlet implementation class nuovaCarta
  */
 @WebServlet("/nuovaCarta")
+@MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024, fileSizeThreshold = 2* 1024 * 1024)
 public class nuovaCarta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String IMAGE_DIR = "images";
@@ -39,7 +45,13 @@ public class nuovaCarta extends HttpServlet {
 	private MostroDao mostroDao = null;
 	private MagiaDao magiaDao = null;
 	private TrappolaDao trappolaDao = null;
-       
+	private ArrayList<String> attributi = null;
+	private ArrayList<String> tipologiaM = null;
+	private ArrayList<String> categoria = null;
+	private TipoDao tipoDao = null;
+ 	private ArrayList<String> tipologiaMa = null;
+    private ArrayList<String> tipologiaT = null;
+    
 	public void init(ServletConfig config) throws ServletException {
         super.init(config);
         System.out.println(getServletContext().getAttributeNames());
@@ -50,6 +62,39 @@ public class nuovaCarta extends HttpServlet {
         mostroDao = new MostroDaoImpl(ds);
         magiaDao = new MagiaDaoImpl(ds);
         trappolaDao = new TrappolaDaoImpl(ds);
+        tipoDao = new TipoDaoImpl(ds);
+        attributi = new ArrayList<>();
+        tipologiaM = new ArrayList<>();
+        categoria = new ArrayList<>();
+        tipologiaMa = new ArrayList<>();
+        tipologiaT = new ArrayList<>();
+        attributi.add("luce");
+        attributi.add("oscurita");
+        attributi.add("divino");
+        attributi.add("terra");
+        attributi.add("acqua");
+        attributi.add("fuoco");
+        attributi.add("vento");
+        tipologiaM.add("none");
+        tipologiaM.add("fusione");
+        tipologiaM.add("synchro");
+        tipologiaM.add("xyz");
+        tipologiaM.add("link");
+        tipologiaM.add("rituale");
+        categoria.add("none");
+        categoria.add("toon");
+        categoria.add("gemello");
+        categoria.add("spirit");
+        categoria.add("unione");
+        tipologiaMa.add("none");
+        tipologiaMa.add("rapida");
+        tipologiaMa.add("terreno");
+        tipologiaMa.add("equipaggiamento");
+        tipologiaMa.add("rituale");
+        tipologiaMa.add("continua");
+        tipologiaT.add("none");
+        tipologiaT.add("contro");
+        tipologiaT.add("continua");
 	}
 	
     /**
@@ -72,26 +117,35 @@ public class nuovaCarta extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession().setAttribute("isProdotto", "false");
+		request.getSession().setAttribute("action", "upload");
+		boolean img = false;
+		boolean valido = true;
 		if(request.getParameter("classe_carta") != null) {
 			String classe = request.getParameter("classe_carta").toLowerCase();
 			if(classe.equals("mostro")) {
 				MostroBean bean = new MostroBean();
 				if(request.getParameter("nome_it") != null) {
-					bean.setNomeIt(request.getParameter("nome_it"));
+					bean.setNomeIt(request.getParameter("nome_it").trim());
+					System.out.println("nome _it valido...");
 				} 
 				if(request.getParameter("nome_en") != null) {
-					bean.setNomeEn(request.getParameter("nome_en"));
+					bean.setNomeEn(request.getParameter("nome_en").trim());
+					System.out.println("nome _en valido...");
 				}
 				if(request.getParameter("nome_jp") != null) {
-					bean.setNomeIt(request.getParameter("nome_jp"));
+					bean.setNomeIt(request.getParameter("nome_jp").trim());
+					System.out.println("nome _jp valido...");
 				}
 				if(request.getParameter("pnt_carta") != null) {
-					bean.setPunteggio(Integer.parseInt(request.getParameter("pnt_carta")));
+					bean.setPunteggio(Integer.parseInt(request.getParameter("pnt_carta").trim()));
+					System.out.println("pnt_carta valido...");
 				} else {
 					bean.setPunteggio(101);
 				}
 				if(request.getParameter("testo_carta") != null) {
-					bean.setTesto(request.getParameter("testo_carta"));
+					bean.setTesto(request.getParameter("testo_carta").trim());
+					System.out.println("testo_carta valido...");
 				}
 				Part part = request.getPart("image");
 				String mimeType = null;
@@ -102,43 +156,87 @@ public class nuovaCarta extends HttpServlet {
 						mimeType = part.getContentType();
 						String uniqueFileName = buildUniqueFileName(part);
 						uploadPath = getServletContext().getRealPath("")+ File.separator + IMAGE_DIR + File.separator + UPLOAD_DIR + File.separator + CARDS_DIR + File.separator +uniqueFileName;
+						img = true;
+						System.out.println("immagine valida...");
+						request.getSession().setAttribute("pathImg", uploadPath);
+						request.getSession().setAttribute("part",part);
 					}
 				}
-				request.getSession().setAttribute("pathImg", uploadPath);
-				request.getSession().setAttribute("part",part);
 				bean.setMimeType(mimeType);
 				bean.setPathImg(uploadPath);
 				if(request.getParameter("tipologia_carta") != null) {
-					bean.setTipologia(request.getParameter("tipologia_carta"));
-				}
+					if(tipologiaM.contains((String)request.getParameter("tipologia_carta").trim())) {
+						bean.setTipologia(request.getParameter("tipologia_carta").trim());
+						System.out.println("tipologia valida...");
+					} else valido = false;
+				} else valido = false;
 				if(request.getParameter("livello_mostro") != null) {
-					bean.setLivello(Integer.parseInt(request.getParameter("livello_mostro")));
-				}
+					if(Integer.parseInt(request.getParameter("livello_mostro").trim()) >= 1 && Integer.parseInt(request.getParameter("livello_mostro").trim()) <= 12) {
+						bean.setLivello(Integer.parseInt(request.getParameter("livello_mostro").trim()));
+						System.out.println("livello valido...");
+					} else valido = false;
+				} else valido = false;
 				if(request.getParameter("categoria_mostro") != null) {
-					bean.setCategoria(request.getParameter("categoria_mostro"));
-				}
+					if(categoria.contains(request.getParameter("categoria_mostro").trim())) {
+						bean.setCategoria(request.getParameter("categoria_mostro").trim());
+						System.out.println("categoria valido...");
+					} else valido = false;
+				} else valido = false;
 				if(request.getParameter("attributo_mostro") != null) {
-					bean.setAttributo(request.getParameter("attributi_mostro"));
-				}
+					if(attributi.contains(request.getParameter("attributo_mostro").trim())) {
+						bean.setAttributo(request.getParameter("attributi_mostro").trim());
+						System.out.println("attributo valido...");
+					} else valido = false;
+				} else valido = false;
 				if(request.getParameter("attacco_mostro") != null) {
-					bean.setAtk(Integer.parseInt(request.getParameter("attacco_mostro")));
-				}
-				if(request.getParameter("difesa") != null) {
-					bean.setDef(Integer.parseInt(request.getParameter("difesa_mostro")));
-				}
+					if(Integer.parseInt(request.getParameter("attacco_mostro").trim()) >= -1) {
+						bean.setAtk(Integer.parseInt(request.getParameter("attacco_mostro").trim()));
+						System.out.println("attaco valido...");
+					} else valido = false;
+				} else valido = false;
+				if(request.getParameter("difesa_mostro") != null) {
+					if(Integer.parseInt(request.getParameter("difesa_mostro").trim()) >= -1) {
+						bean.setDef(Integer.parseInt(request.getParameter("difesa_mostro").trim()));
+						System.out.println("difesa valido...");
+					} else valido = false;
+				} else valido = false;
 				if(request.getParameter("tuner_mostro") != null) {
-					if(Integer.parseInt(request.getParameter("tuner_mostro")) == 1) {
-						bean.setTuner(1);
-					} else if(Integer.parseInt(request.getParameter("tuner_mostro")) == 0) {
-						bean.setTuner(0);
-					}
-				}
+					if(Integer.parseInt(request.getParameter("tuner_mostro").trim()) == 1 || Integer.parseInt(request.getParameter("tuner_mostro").trim()) == 0) {
+						bean.setTuner(Integer.parseInt(request.getParameter("tuner_mostro").trim()));
+						System.out.println("tuner valido...");
+					} else valido = false;
+				} else valido = false;
 				if(request.getParameter("scala_mostro") != null) {
-					bean.setScalaPendulum(Integer.parseInt(request.getParameter("scala_mostro")));
-				}
+					if(Integer.parseInt(request.getParameter("scala_mostro").trim()) >= 0 && Integer.parseInt(request.getParameter("livello_mostro").trim()) <= 13) {
+						bean.setScalaPendulum(Integer.parseInt(request.getParameter("scala_mostro").trim()));
+						System.out.println("scala pendulum valido...");
+					} else if(request.getParameter("scala_mostro").equals("")){
+						System.out.println("scala pendulum valido...");
+					} else {
+						valido = false;
+					}
+				} else valido = false;
 				if(request.getParameter("tipo_mostro") != null) {
-					bean.setTipo(request.getParameter("tipo_mostro"));
-				}
+					try {
+						TipoBean filter = new TipoBean();
+						if(request.getParameter("tipo_mostro") != null) {
+							if(request.getParameter("tipo_mostro").trim().equals("nuovo")) {
+								filter.setTipo(request.getParameter("tipo_mostro").trim());
+								tipoDao.saveTipo(filter);
+								bean.setTipo(filter.getTipo());
+								System.out.println("tipo valido...");
+							}else {
+								filter.setTipo(request.getParameter("tipo_mostro").trim());
+								tipoDao.retrieveByKey(request.getParameter("tipo_mostro").trim());
+								bean.setTipo(request.getParameter("tipo_mostro").trim());
+								System.out.println("tipo valido...");
+							}
+						}
+						
+					} catch (SQLException e) {
+						valido = false;
+					}
+				} else valido = false;
 				if(request.getParameter("frecce_link") != null) {
 					String[] list = request.getParameterValues("frecce_Link");
     				BitSet bs = new BitSet();
@@ -147,30 +245,38 @@ public class nuovaCarta extends HttpServlet {
     						 bs.set(i);
     				}
     				bean.setFrecceLink(bs);
+    				System.out.println("frecce link valido...");
 				}
-				try {
-					mostroDao.saveMostro(bean);
-				} catch(SQLException e) {
-					e.printStackTrace();
+				if(valido) {
+					try {
+						mostroDao.saveMostro(bean);
+					} catch(SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			} else if (classe.equals("magia")) {
 				MagiaBean bean = new MagiaBean();
 				if(request.getParameter("nome_it") != null) {
-					bean.setNomeIt(request.getParameter("nome_it"));
+					bean.setNomeIt(request.getParameter("nome_it").trim());
+					System.out.println("nome_it valido...");
 				} 
 				if(request.getParameter("nome_en") != null) {
-					bean.setNomeEn(request.getParameter("nome_en"));
+					bean.setNomeEn(request.getParameter("nome_en").trim());
+					System.out.println("nome_en valido...");
 				}
 				if(request.getParameter("nome_jp") != null) {
-					bean.setNomeIt(request.getParameter("nome_jp"));
+					bean.setNomeIt(request.getParameter("nome_jp").trim());
+					System.out.println("nome_jp valido...");
 				}
 				if(request.getParameter("pnt_carta") != null) {
-					bean.setPunteggio(Integer.parseInt(request.getParameter("pnt_carta")));
+					bean.setPunteggio(Integer.parseInt(request.getParameter("pnt_carta").trim()));
+					System.out.println("pnt_carta valido...");
 				} else {
 					bean.setPunteggio(101);
 				}
 				if(request.getParameter("testo_carta") != null) {
-					bean.setTesto(request.getParameter("testo_carta"));
+					bean.setTesto(request.getParameter("testo_carta").trim());
+					System.out.println("testo_carta valido...");
 				}
 				Part part = request.getPart("image");
 				String mimeType = null;
@@ -181,38 +287,50 @@ public class nuovaCarta extends HttpServlet {
 						mimeType = part.getContentType();
 						String uniqueFileName = buildUniqueFileName(part);
 						uploadPath = getServletContext().getRealPath("")+ File.separator + IMAGE_DIR + File.separator + UPLOAD_DIR + File.separator + CARDS_DIR + File.separator +uniqueFileName;
+						img = true;
+						request.getSession().setAttribute("pathImg", uploadPath);
+						request.getSession().setAttribute("part",part);
+						System.out.println("immagine valido...");
 					}
 				}
-				request.getSession().setAttribute("pathImg", uploadPath);
-				request.getSession().setAttribute("part",part);
 				bean.setMimeType(mimeType);
 				bean.setPathImg(uploadPath);
 				if(request.getParameter("tipologia_carta") != null) {
-					bean.setTipologia(request.getParameter("tipologia_carta"));
-				}
-				try {
-					magiaDao.saveCarta(bean);
-				}catch(SQLException e) {
-					e.printStackTrace();
+					if(tipologiaMa.contains(request.getParameter("tipologia_carta").trim())) {
+						bean.setTipologia(request.getParameter("tipologia_carta").trim());
+						System.out.println("tipologia_carta valido...");
+					} else valido = false;
+ 				} else valido = false;
+				if(valido) {
+					try {
+						magiaDao.saveCarta(bean);
+					}catch(SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			} else if (classe.equals("trappola")) {
 				TrappolaBean bean = new TrappolaBean();
 				if(request.getParameter("nome_it") != null) {
-					bean.setNomeIt(request.getParameter("nome_it"));
+					bean.setNomeIt(request.getParameter("nome_it").trim());
+					System.out.println("nome_it valido...");
 				} 
 				if(request.getParameter("nome_en") != null) {
-					bean.setNomeEn(request.getParameter("nome_en"));
+					bean.setNomeEn(request.getParameter("nome_en").trim());
+					System.out.println("nome_en valido...");
 				}
 				if(request.getParameter("nome_jp") != null) {
-					bean.setNomeIt(request.getParameter("nome_jp"));
+					bean.setNomeIt(request.getParameter("nome_jp").trim());
+					System.out.println("nome_jp valido...");
 				}
 				if(request.getParameter("pnt_carta") != null) {
-					bean.setPunteggio(Integer.parseInt(request.getParameter("pnt_carta")));
+					bean.setPunteggio(Integer.parseInt(request.getParameter("pnt_carta").trim()));
+					System.out.println("pnt_carta valido...");
 				} else {
 					bean.setPunteggio(101);
 				}
 				if(request.getParameter("testo_carta") != null) {
-					bean.setTesto(request.getParameter("testo_carta"));
+					bean.setTesto(request.getParameter("testo_carta").trim());
+					System.out.println("testo_carta valido...");
 				}
 				Part part = request.getPart("image");
 				String mimeType = null;
@@ -223,23 +341,35 @@ public class nuovaCarta extends HttpServlet {
 						mimeType = part.getContentType();
 						String uniqueFileName = buildUniqueFileName(part);
 						uploadPath = getServletContext().getRealPath("")+ File.separator + IMAGE_DIR + File.separator + UPLOAD_DIR + File.separator + CARDS_DIR + File.separator +uniqueFileName;
+						img = true;
+						request.getSession().setAttribute("pathImg", uploadPath);
+						request.getSession().setAttribute("part",part);
+						System.out.println("immagine valido...");
 					}
 				}
-				request.getSession().setAttribute("pathImg", uploadPath);
-				request.getSession().setAttribute("part",part);
 				bean.setMimeType(mimeType);
 				bean.setPathImg(uploadPath);
 				if(request.getParameter("tipologia_carta") != null) {
-					bean.setTipologia(request.getParameter("tipologia_carta"));
-				}
-				try {
-					trappolaDao.saveCarta(bean);
-				}catch(SQLException e) {
-					e.printStackTrace();
+					if(tipologiaT.contains(request.getParameter("tipologia_carta").trim())) {
+						bean.setTipologia(request.getParameter("tipologia_carta").trim());
+						System.out.println("tipologia valido...");
+					} else valido = false;
+				} else valido = false;
+				if(valido) {
+					try {
+						trappolaDao.saveCarta(bean);
+					}catch(SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			} 	
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+			if(img) {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+				dispatcher.forward(request, response);
+			} else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("");
 			dispatcher.forward(request, response);
+			}
 		}
 	}
 

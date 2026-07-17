@@ -49,7 +49,7 @@ public class NotiziaDaoImpl implements NotiziaDao {
 	@Override
 	public List<NotiziaBean> retrieveAll(int limit, int page) throws SQLException {
 		ArrayList<NotiziaBean> list = new ArrayList<NotiziaBean>();
-		String sql = "SELECT * FROM " + TABLE_NAME + " LIMIT " + limit + " OFFSET " + page*limit + "ORDER BY id DESC";
+		String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY id DESC LIMIT " + limit + " OFFSET " + page*limit;
 		try(
 				Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql)

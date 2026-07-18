@@ -78,11 +78,11 @@ body{
 header{
     position: sticky;
     top: 0;
+    min-height: 10vh;
     max-height: 10vh;
     display: flex;
     background-color: #310c53;
     background-color: var(--header-color);
-    margin-bottom: 3vh;
     z-index: 1;
 }
 
@@ -92,6 +92,7 @@ header>section>a{
 
 #personal_area{
     display: flex;
+    flex-direction: row;
     justify-content: center;
     overflow: hidden;
     transition: max-width 0.5s ease-in;
@@ -111,6 +112,7 @@ header>section>a{
 #personal_area>img{
     max-height: 100%;
     max-width: 100%;
+    object-fit: contain;
     margin: 1vh;
 }
 
@@ -121,6 +123,7 @@ header>section>a{
 
 #logo{
     width: 34%;
+    display: flex;
 }
 
 #logo>a{
@@ -190,8 +193,76 @@ header>section>a{
     margin-left: 1vw;
 }
 
+@media screen and (max-width: 1080px) {
+    header{
+        max-height: 20vh;
+        min-height: 20vh;
+        flex-wrap: wrap;
+        >#logo{
+            flex-grow: 1;
+            flex-direction: row; 
+            order: 1;
+            max-height: 10vh;
+            min-height: 10vh;
+            height: 10vh;
+            max-width: 100%;
+            min-width: 100%;
+            width: 100%;
+            >a{
+                max-width: 100%;
+                min-width: 100%;
+            }
+            /* img{
+                
+            }
+            >a{
+                max-height: 100%;
+                flex-direction: row;
+            } */
+        }
+        >#personal_area{
+            flex-grow: 1;
+            order: 2;
+            flex-direction: row;
+            max-height: 10vh;
+            min-height: 10vh;
+            height: 10vh;
+            max-width: 50%;
+            min-width: 50%;
+        }
+        >#search_bar{
+            flex-grow: 3;
+            flex-direction: row;
+            min-height: 10vh;
+            max-height: 10vh;
+            height: 10vh;
+            max-width: 50%;
+            min-width: 50%;
+            order: 3;
+                    position: sticky;
+            align-self: flex-start;
+            top:auto;
+        }
+    }
+}
+
+@media screen and (max-width:480px) {
+    header{
+        max-height: 30vh;
+        min-height: 30vh;
+        >#personal_area{
+            max-width: 100%;
+            min-width: 100%;
+        }
+        >#search_bar{
+            max-width: 100%;
+            min-width: 100%;
+        }
+    }
+}
+
 nav{
-    height: 10vh;
+    margin: 3vh 0;
     width: 100%;
 }
 
@@ -199,17 +270,19 @@ nav>ul{
     display: flex;
     flex-direction: row;
     justify-content:space-around;
-    height: 100%;
     margin: 0;
+    flex-wrap: wrap;
+    padding: 0;
 }
 
 nav>ul>li{
     min-width: 10%;
-    height: 80%;
+    min-height: 8vh;
+    max-height: 8vh;
     display: flex;
     justify-content: center;
     text-align: center;     
-    margin: auto;
+    margin: 0.5vh 2vw;
 }
 
 nav>ul>li>a{
@@ -248,4 +321,60 @@ footer>*:first-child{
 
 footer ul{
     margin: 0;
+}
+
+@media screen and (max-width: 480px) {
+    footer{
+        flex-direction: column;
+        >*{
+            min-width: 100%;
+            max-width: 100%;
+            padding: 0% 0% 1% 0%;
+        }
+        >*:first-child{
+            border-bottom: solid #ffffff 2px;
+            border-right: none;
+        }
+    }
+}
+
+#options{
+    background-color: #000;
+    background-color: var(--footer-color);
+    padding: 1% 0% 2%;
+    border-right: solid #ffffff 2px;
+    border-bottom: solid #ffffff 2px;
+    position: sticky;
+    top: 10vh;  
+    /* header height */
+    z-index: 2;
+    max-width: 33%;
+    padding: 3vh 0;
+    transition: max-width 0.5s ease-in;
+    font-size: 3vh;
+}
+
+@media screen and (min-width: 481px) and (max-width: 1080px) {
+    #options{
+        top: 20vh;
+        /* header height */
+        max-width: 50%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #options{
+        top: 30vh;
+        /* header height */
+        max-width: 100%;
+    }
+}
+
+#options>*{
+    margin: auto;
+    flex-basis: min-content;
+    display: flex;
+    min-width: 50%;
+    max-width: 50%;
+    padding: 0% 0% 0% 1%;
 }

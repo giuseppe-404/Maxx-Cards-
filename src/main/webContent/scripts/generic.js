@@ -3,6 +3,8 @@ window.addEventListener("load",function(event) {
 	
     themeSetup();
     updateTheme();
+
+    optionsSetup(document.getElementById("options_button"))
 })
 
 function themeSetup(){
@@ -45,3 +47,18 @@ function changeTheme(event) {
     }
     updateTheme();
 }
+
+function optionsSetup(button){
+    var options_div = document.getElementById("options");
+    if (!options_div || !button)
+        return;
+    button.addEventListener("click", switchShowOptions);
+
+    function switchShowOptions(){
+        if(options_div.classList.contains("hidden"))
+            options_div.classList.remove("hidden");
+        else
+            options_div.classList.add("hidden");
+    }
+}
+

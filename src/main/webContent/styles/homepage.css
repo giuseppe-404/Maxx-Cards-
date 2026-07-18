@@ -17,7 +17,7 @@ main{
     align-self: start;
     flex-direction: row;
     justify-content: space-around;
-    margin: 5vh 0 5vh;
+    margin: 0 0 5vh;
     font-size: 2vh;
 }
 
@@ -47,10 +47,13 @@ main{
 }
 
 @media screen and (min-width: 1081px){
+    #product_selection{
+        margin-top: 5vh;
+    }
     #product_selection>a.product_link:hover{
         transform: scale(1.2);
         font-size: smaller;
-        z-index: 2;
+        z-index: 3;
     }
 }
 

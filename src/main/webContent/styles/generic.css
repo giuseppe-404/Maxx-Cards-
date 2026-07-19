@@ -177,10 +177,15 @@ header>section>a{
 }
 
 #search_bar>section>img{
-    max-width: 50%;
+    /* max-width: 50%; */
+    max-height: 100%;
     object-fit: contain;
     margin: auto;
     transform: scaleX(-1);
+    box-sizing:border-box;
+
+    display: block;
+    max-width: 50%;
 }
 
 #search_bar>section>input{
@@ -377,4 +382,10 @@ footer ul{
     min-width: 50%;
     max-width: 50%;
     padding: 0% 0% 0% 1%;
+}
+
+#theme_toggle{
+    width: 3vh;
+  height: 3vh;
+  margin: auto;
 }

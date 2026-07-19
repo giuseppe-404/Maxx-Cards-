@@ -23,8 +23,8 @@
 		<section>
 			<img src="https://static.thenounproject.com/png/1891820-200.png" alt="zoom_lens">                    
 		</section>
-		<section>
-			<input type="text" placeholder="Ricerca...">
+		<section class="autocompletabile" >
+			<input type="text" id="ricerca" placeholder="Ricerca...">
 		</section>
 	</search>
 </header>

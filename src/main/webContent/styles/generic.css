@@ -146,6 +146,7 @@ header>section>a{
     width: 33%;
     align-content: center;
     align-items: center;
+    flex-grow:1;
 }
 
 #search_bar>section{
@@ -165,6 +166,7 @@ header>section>a{
     max-width: 20%;
     border-top-left-radius:1000vh;
     border-bottom-left-radius:1000vh;
+    aspect-ratio: 1;
 }
 
 #search_bar>section:last-child{
@@ -217,13 +219,6 @@ header>section>a{
                 max-width: 100%;
                 min-width: 100%;
             }
-            /* img{
-                
-            }
-            >a{
-                max-height: 100%;
-                flex-direction: row;
-            } */
         }
         >#personal_area{
             flex-grow: 1;
@@ -241,7 +236,6 @@ header>section>a{
             min-height: 10vh;
             max-height: 10vh;
             height: 10vh;
-            max-width: 50%;
             min-width: 50%;
             order: 3;
                     position: sticky;
@@ -356,6 +350,7 @@ footer ul{
     max-width: 33%;
     padding: 3vh 0;
     transition: max-width 0.5s ease-in;
+    transition: min-width 0.5s ease-in;
     font-size: 3vh;
 }
 
@@ -388,4 +383,45 @@ footer ul{
     width: 3vh;
   height: 3vh;
   margin: auto;
+}
+
+#autocompletabile{
+    position: relative;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  width:100%;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: var(--bg-color);
+  border-bottom: 1px solid #ffffff;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: var(--product-bg-color-1);
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: var(--product-bg-color-2);
+  border-left: 5px solid var(--icon-color);
+  color: #ffffff;
+}
+
+@media screen and (min-width: 1081px){
+	#search_bar{
+	    .autocomplete-items{
+	        left:33%;
+	    }
+	}
 }

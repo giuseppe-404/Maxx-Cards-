@@ -254,6 +254,23 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
         }
 	}
 
+	@Override
+	public synchronized TrappolaBean retrieveByNome(String nome) throws SQLException{
+		CartaBean carta = super.retrieveByNome(nome);
+		TrappolaBean trappola = null;
+		if(carta.getId() != 0) {
+			String sql = "SELECT * FROM trappola WHERE id=?";
+			try(Connection conn = ds.getConnection();
+					PreparedStatement ps = conn.prepareStatement(sql)){
+				ps.setInt(1, carta.getId());
+				ResultSet rs = ps.executeQuery();
+				if(rs.next()) {
+					fillBean(trappola, rs);
+				}
+			}
+		} return trappola;
+	}
+	
 	private void fillBean(TrappolaBean trappola, ResultSet rs) throws SQLException {
 		super.fillBean(trappola, rs);
 		trappola.setTipologia(rs.getString("tipologia"));

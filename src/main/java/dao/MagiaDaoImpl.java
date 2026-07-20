@@ -254,6 +254,23 @@ public class MagiaDaoImpl extends CartaDaoImpl implements MagiaDao{
         }
 	}
 
+	@Override
+	public synchronized MagiaBean retrieveByNome(String nome) throws SQLException{
+		CartaBean carta = super.retrieveByNome(nome);
+		MagiaBean magia = null;
+		if(carta.getId() != 0) {
+			String sql = "SELECT * FROM magia WHERE id=?";
+			try(Connection conn = ds.getConnection();
+					PreparedStatement ps = conn.prepareStatement(sql)){
+				ps.setInt(1, carta.getId());
+				ResultSet rs = ps.executeQuery();
+				if(rs.next()) {
+					fillBean(magia, rs);
+				} 
+			}
+		} return magia;
+	}
+	
 	private void fillBean(MagiaBean magia, ResultSet rs) throws SQLException {
 		super.fillBean(magia, rs);
 		magia.setTipologia(rs.getString("tipologia"));

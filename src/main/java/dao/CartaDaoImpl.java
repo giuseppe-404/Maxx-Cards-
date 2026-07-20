@@ -288,6 +288,27 @@ public class CartaDaoImpl implements CartaDao{
 		}
 		return carta;
 	}
+	@Override
+	public synchronized int cartaType(int id) throws SQLException{
+		String sql = """
+				SELECT tipo from carta LEFT JOIN (
+					SELECT id, 1 as tipo FROM mostro
+					UNION
+					SELECT id, 2 as tipo FROM magia
+					UNION 
+					SELECT id, 3 as tipo FROM trappola)
+					as tipo ON carta.id = ?
+				""";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			return -1;
+		}
+	}
 	
 	protected void fillBean(CartaBean carta, ResultSet rs) throws SQLException {
 		carta.setId(rs.getInt("id"));

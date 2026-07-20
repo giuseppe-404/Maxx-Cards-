@@ -162,7 +162,7 @@ function updateMonsterTypology(event) {
             frecce_fieldset.classList.remove("hidden");
             livello.readOnly = true;
             difesa.readOnly = true;
-            document.getElementByID("freccia1").dispatchEvent(new Event("change"));
+            document.getElementById("freccia1").dispatchEvent(new Event("change"));
             difesa.value = 0;
             break;
         default:
@@ -283,15 +283,16 @@ function loadCardData(carta) {
 	document.getElementById("difesa_mostro").value = carta.difesa;
 	document.getElementById("tuner_mostro").checked = carta.tuner>0;
 	document.getElementById("scala_mostro").value = carta.scalaPendulum;
-	document.getElementById("testo").value = carta.testo;
-	document.getElementById("testo").value = carta.testo;
 	document.getElementById("monster_data").saveState();
 
-	document.getElementById("arrow_data").loadState();
-	carta.frecceLink.forEach(function(number){
-		document.getElementById("freccia"+number).checked = true;
-	})
-	document.getElementByID("freccia1").dispatchEvent(new Event("change"));	
+	
+	document.getElementById("arrow_data").resetToDefault();
+	var frecceLink = carta.frecceLink;
+    if (frecceLink)
+        frecceLink.forEach(function(number) {
+            document.getElementById("freccia" + number).checked = true;
+        })
+	document.getElementById("freccia1").dispatchEvent(new Event("change"));	
 	document.getElementById("arrow_data").saveState();
 	
     var tipo_select = document.getElementById("tipo_mostro");

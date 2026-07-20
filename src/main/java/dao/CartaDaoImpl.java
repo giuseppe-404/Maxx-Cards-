@@ -291,13 +291,13 @@ public class CartaDaoImpl implements CartaDao{
 	@Override
 	public synchronized int cartaType(int id) throws SQLException{
 		String sql = """
-				SELECT tipo from carta LEFT JOIN (
+				SELECT t.tipo from carta LEFT JOIN (
 					SELECT id, 1 as tipo FROM mostro
-					UNION
+					UNION ALL
 					SELECT id, 2 as tipo FROM magia
-					UNION 
+					UNION ALL
 					SELECT id, 3 as tipo FROM trappola)
-					as tipo ON carta.id = ?
+					as t ON carta.id = t.id WHERE carta.id = ?
 				""";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

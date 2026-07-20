@@ -15,6 +15,8 @@ public interface MostroDao extends CartaDao{
 	
 	public MostroBean retrieveByKey(int id) throws SQLException;
 	
+	public MostroBean retrieveByNome(String nome) throws SQLException;
+	
 	public List<MostroBean> retrieveFiltered(MostroBean mostro, int minAtk, int minDef) throws SQLException;
 	
 	public List<MostroBean> retrieveFiltered(MostroBean mostro, int minAtk, int minDef, int limit, int page) throws SQLException;

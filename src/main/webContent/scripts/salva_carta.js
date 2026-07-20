@@ -22,7 +22,7 @@ window.addEventListener("load", function() {
         var autArgs = [cardSearch, "http://localhost/Max-Cards-/servletCercaCartaDeckJson", "get", null];
         autocomplete(...autArgs, true, ricercaCartaAutoc.bind(null, ...autArgs));
         document.getElementById("carica_carta").addEventListener("click", function() {
-            ajax("http://localhost/Max-Cards-/JsonTest", "get", "nome=" + carta_selezionata, function(request) {
+            ajax("http://localhost/Max-Cards-/JsonTest", "get", "nome=" + cardSearch.value, function(request) {
                 if (request.readyState < 4)
                     return;
 				var error_p = document.getElementById("card_retrieve_error");
@@ -162,7 +162,7 @@ function updateMonsterTypology(event) {
             frecce_fieldset.classList.remove("hidden");
             livello.readOnly = true;
             difesa.readOnly = true;
-            document.getElementByID("freccia1").dispatchEvent(new Event("change"));
+            document.getElementById("freccia1").dispatchEvent(new Event("change"));
             difesa.value = 0;
             break;
         default:
@@ -283,15 +283,16 @@ function loadCardData(carta) {
 	document.getElementById("difesa_mostro").value = carta.difesa;
 	document.getElementById("tuner_mostro").checked = carta.tuner>0;
 	document.getElementById("scala_mostro").value = carta.scalaPendulum;
-	document.getElementById("testo").value = carta.testo;
-	document.getElementById("testo").value = carta.testo;
 	document.getElementById("monster_data").saveState();
 
-	document.getElementById("arrow_data").loadState();
-	carta.frecceLink.forEach(function(number){
-		document.getElementById("freccia"+number).checked = true;
-	})
-	document.getElementByID("freccia1").dispatchEvent(new Event("change"));	
+	
+	document.getElementById("arrow_data").resetToDefault();
+	var frecceLink = carta.frecceLink;
+    if (frecceLink)
+        frecceLink.forEach(function(number) {
+            document.getElementById("freccia" + number).checked = true;
+        })
+	document.getElementById("freccia1").dispatchEvent(new Event("change"));	
 	document.getElementById("arrow_data").saveState();
 	
     var tipo_select = document.getElementById("tipo_mostro");

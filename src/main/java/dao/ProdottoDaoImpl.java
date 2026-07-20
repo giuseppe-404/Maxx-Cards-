@@ -214,23 +214,23 @@ public class ProdottoDaoImpl implements ProdottoDao {
 	
 	public synchronized int prodottoType(int prodotto) throws SQLException {
 		String sql = """
-				SELECT tipo FROM prodotto LEFT JOIN
+				SELECT t.tipo FROM prodotto LEFT JOIN
 					( SELECT id, 1 as tipo FROM cartaSingola
-					  UNION
+					  UNION ALL
 					  SELECT id, 2 as tipo FROM ProdottoYGO
-					  UNION
+					  UNION ALL
 					  SELECT id, 3 as tipo FROM confezionato
-					  UNION 
+					  UNION ALL
 					  SELECT id, 4 as tipo FROM pacchetto
-					  UNION 
+					  UNION ALL
 					  SELECT id, 5 as tipo FROM tin
-					  UNION 
+					  UNION ALL
 					  SELECT id, 6 as tipo FROM box
-					  UNION
+					  UNION ALL
 					  SELECT id, 7 as tipo FROM structure_deck
-					  UNION
+					  UNION ALL
 					  SELECT id, 8 as tipo FROM deck
-					 ) as tipo ON prodotto.id = ?
+					 ) as t ON prodotto.id = t.id WHERE prodotto.id = ?
 				""";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){

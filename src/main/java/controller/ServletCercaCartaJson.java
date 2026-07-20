@@ -14,6 +14,7 @@ import model.TrappolaBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
@@ -82,6 +83,7 @@ public class ServletCercaCartaJson extends HttpServlet {
     				List<CartaBean> list = cartaDao.retrieveFiltered(filter,limit,page);
     				for(CartaBean c : list) {
     					JSONObject obj = new JSONObject();
+    					obj.put("classe", "");
     					obj.put("id", c.getId());
     					obj.put("punteggio", c.getPunteggio());
     					obj.put("nomeIt", c.getNomeIt());
@@ -133,15 +135,17 @@ public class ServletCercaCartaJson extends HttpServlet {
     				} else tuner = 0;
     				filter.setTuner(tuner);
     			}
-    			if(request.getParameter("frecceLink") != null) {
-    				String[] list = request.getParameterValues("frecceLink");
-    				BitSet bs = new BitSet();
-    				for(int i = 0; i < 8; i++) {
-    					 if(list[i].equals("true"))
-    						 bs.set(i);
+    			boolean changed = false;
+    			BitSet bs = new BitSet();
+    			for(int i = 1; i < 9; i++) {
+    				if(!changed) changed = true;
+    				String par = "freccia" + i;
+    				if(request.getParameter(par) != null) {
+    					bs.set(i);
     				}
-    				filter.setFrecceLink(bs);
     			}
+    			if(changed) filter.setFrecceLink(bs);
+    			
     			if(request.getParameter("scalaPendulum") != null) {
     				filter.setScalaPendulum(Integer.parseInt(request.getParameter("scalaPendulum")));
     			}
@@ -156,7 +160,14 @@ public class ServletCercaCartaJson extends HttpServlet {
     			try {
     				List<MostroBean> list = mostroDao.retrieveFiltered(filter, minAtk, minDef, limit, page);
     				for(MostroBean c : list) {
+    					List<Integer> frecce = new ArrayList<>();
+    					for(int i = 1; i < 9; i++) {
+    						if(c.getFrecceLink().get(i-1)) {
+    							frecce.add(i);
+    						}
+    					}
     					JSONObject obj = new JSONObject();
+    					obj.put("classe", "mostro");
     					obj.put("id", c.getId());
     					obj.put("punteggio", c.getPunteggio());
     					obj.put("nomeIt", c.getNomeIt());
@@ -173,7 +184,7 @@ public class ServletCercaCartaJson extends HttpServlet {
     					obj.put("def", c.getDef());
     					obj.put("categoria", c.getCategoria());
     					obj.put("tuner", c.getTuner());
-    					obj.put("frecceLink", c.getFrecceLink());
+    					obj.put("frecceLink", frecce);
     					obj.put("scalaPendulum", c.getScalaPendulum());
     					result.put(obj);
     				}
@@ -196,6 +207,7 @@ public class ServletCercaCartaJson extends HttpServlet {
     				List<MagiaBean> list = magiaDao.retrieveFiltered(filter, limit, page);
     				for(MagiaBean c : list) {
     					JSONObject obj = new JSONObject();
+    					obj.put("classe", "magia");
     					obj.put("id", c.getId());
     					obj.put("punteggio", c.getPunteggio());
     					obj.put("nomeIt", c.getNomeIt());
@@ -226,6 +238,7 @@ public class ServletCercaCartaJson extends HttpServlet {
     				List<TrappolaBean> list = trappolaDao.retrieveFiltered(filter, limit, page);
     				for(TrappolaBean c : list) {
     					JSONObject obj = new JSONObject();
+    					obj.put("classe", "trappola");
     					obj.put("id", c.getId());
     					obj.put("punteggio", c.getPunteggio());
     					obj.put("nomeIt", c.getNomeIt());
@@ -305,15 +318,17 @@ public class ServletCercaCartaJson extends HttpServlet {
     				} else tuner = 0;
     				filter.setTuner(tuner);
     			}
-    			if(request.getParameter("frecceLink") != null) {
-    				String[] list = request.getParameterValues("frecceLink");
-    				BitSet bs = new BitSet();
-    				for(int i = 0; i < 8; i++) {
-    					 if(list[i].equals("true"))
-    						 bs.set(i);
+    			boolean changed = false;
+    			BitSet bs = new BitSet();
+    			for(int i = 1; i < 9; i++) {
+    				if(!changed) changed = true;
+    				String par = "freccia" + i;
+    				if(request.getParameter(par) != null) {
+    					bs.set(i);
     				}
-    				filter.setFrecceLink(bs);
     			}
+    			if(changed) filter.setFrecceLink(bs);
+    			
     			if(request.getParameter("scalaPendulum") != null) {
     				filter.setScalaPendulum(Integer.parseInt(request.getParameter("scalaPendulum")));
     			}
@@ -328,6 +343,12 @@ public class ServletCercaCartaJson extends HttpServlet {
     			try {
     				List<MostroBean> list = mostroDao.retrieveFiltered(filter, minAtk, minDef);
     				for(MostroBean c : list) {
+    					List<Integer> frecce = new ArrayList<>();
+    					for(int i = 1; i < 9; i++) {
+    						if(c.getFrecceLink().get(i-1)) {
+    							frecce.add(i);
+    						}
+    					}
     					JSONObject obj = new JSONObject();
     					obj.put("id", c.getId());
     					obj.put("punteggio", c.getPunteggio());
@@ -345,7 +366,7 @@ public class ServletCercaCartaJson extends HttpServlet {
     					obj.put("def", c.getDef());
     					obj.put("categoria", c.getCategoria());
     					obj.put("tuner", c.getTuner());
-    					obj.put("frecceLink", c.getFrecceLink());
+    					obj.put("frecceLink", frecce);
     					obj.put("scalaPendulum", c.getScalaPendulum());
     					result.put(obj);
     				}
@@ -413,7 +434,7 @@ public class ServletCercaCartaJson extends HttpServlet {
     				e.printStackTrace();
     			}
     		}
-    	}
+    	} out.print(result.toString());
     }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

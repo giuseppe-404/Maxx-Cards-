@@ -396,10 +396,12 @@ public class MostroDaoImpl extends CartaDaoImpl implements MostroDao {
 		CartaBean carta = super.retrieveByNome(nome);
 		MostroBean mostro = null;
 		if(carta.getId() != 0) {
-			String sql = "SELECT * FROM mostro WHERE id=?";
+			String sql = "SELECT * FROM mostro WHERE nome_it LIKE ? OR nome_en LIKE ? OR nome_jp LIKE ?";
 			try(Connection conn = ds.getConnection();
 					PreparedStatement ps = conn.prepareStatement(sql)){
-				ps.setInt(1, carta.getId());
+				ps.setString(1, nome);
+				ps.setString(2, nome);
+				ps.setString(3, nome);
 				ResultSet rs = ps.executeQuery();
 				if(rs.next()) {
 					fillBean(mostro, rs);

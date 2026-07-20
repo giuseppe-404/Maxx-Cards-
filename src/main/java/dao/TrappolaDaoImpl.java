@@ -259,10 +259,12 @@ public class TrappolaDaoImpl extends CartaDaoImpl implements TrappolaDao{
 		CartaBean carta = super.retrieveByNome(nome);
 		TrappolaBean trappola = null;
 		if(carta.getId() != 0) {
-			String sql = "SELECT * FROM trappola WHERE id=?";
+			String sql = "SELECT * FROM trappola WHERE nome_it LIKE ? OR nome_en LIKE ? OR nome_jp LIKE ?";
 			try(Connection conn = ds.getConnection();
 					PreparedStatement ps = conn.prepareStatement(sql)){
-				ps.setInt(1, carta.getId());
+				ps.setString(1, nome);
+				ps.setString(2, nome);
+				ps.setString(3, nome);
 				ResultSet rs = ps.executeQuery();
 				if(rs.next()) {
 					fillBean(trappola, rs);

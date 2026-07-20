@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import model.CartaBean;
 import model.ProdottoBean;
@@ -124,10 +125,15 @@ public class UploadImmagine extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = (String) request.getSession().getAttribute("action");
-		String temp = (String) request.getSession().getAttribute("isProdotto");
-		String pathImg = (String) request.getSession().getAttribute("pathImg");
+		HttpSession session = request.getSession();
+		String action = (String) session.getAttribute("action");
+		String temp = (String) session.getAttribute("isProdotto");
+		String pathImg = (String) session.getAttribute("pathImg");
 		Part img = (Part) request.getSession().getAttribute("part");
+		session.removeAttribute("action");
+		session.removeAttribute("isProdotto");
+		session.removeAttribute("pathImg");
+		session.removeAttribute("part");
 		System.out.println(temp);
 		if(temp.equals("true")){
 			if("upload".equalsIgnoreCase(action)) {
@@ -135,15 +141,35 @@ public class UploadImmagine extends HttpServlet {
 				if(part != null) {
 					part.write(pathImg);	
 				}response.sendRedirect("");
+			} else if("change".equalsIgnoreCase(action)) {
+				String oldPath = (String)session.getAttribute("oldPath");
+				session.removeAttribute("oldPath");
+				File old = new File(oldPath);
+				if(old.exists()) {
+					old.delete();
+				}
+				Part part = request.getPart("image");
+				if(part != null) {
+					part.write(pathImg);
+				} response.sendRedirect("");
 			}
-		}
-		else {
+		} else {
 			if("upload".equalsIgnoreCase(action)) {
 				Part part = request.getPart("image");
 				if(part != null) {
 					part.write(pathImg);
 				}response.sendRedirect("");
-					
+			} else if("change".equalsIgnoreCase(action)) {
+				String oldPath = (String)session.getAttribute("oldPath");
+				session.removeAttribute("oldPath");
+				File old = new File(oldPath);
+				if(old.exists()) {
+					old.delete();
+				}
+				Part part = request.getPart("image");
+				if(part != null) {
+					part.write(pathImg);
+				} response.sendRedirect("");
 			}
 		}
 	}

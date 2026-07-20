@@ -37,5 +37,5 @@ public interface CartaDao {
 
 	public boolean changeImage(CartaBean carta) throws SQLException;
 	
-	public  int cartaType(int id) throws SQLException;
+	public int cartaType(int id) throws SQLException;
 }

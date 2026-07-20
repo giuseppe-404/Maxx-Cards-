@@ -8,6 +8,8 @@ window.addEventListener("load",function(event) {
 	
 	var search = document.getElementById("ricerca");
 	var personal = document.getElementById("personal_area");
+	if (search)
+		autocomplete(search, "http://localhost/Max-Cards-/JsonTest", "get");
 	if (search && personal){
 		search.addEventListener("focus", function(){
 			if (window.matchMedia('screen and (min-width:481px)').matches){
@@ -184,7 +186,7 @@ function fieldsetsResetSetup(fieldsets){
             for(var i = 0; i<areas.length; i++){
                 if (areas[i].value != fieldset.state.areas[i]){
                     areas[i].value = fieldset.state.areas[i];
-                    area.dispatchEvent(new Event('change'));
+                    areas[i].dispatchEvent(new Event('change'));
                 }
             }
 
@@ -192,7 +194,7 @@ function fieldsetsResetSetup(fieldsets){
             for(var i = 0; i<selects.length; i++){
                 if (selects[i].selectedIndex != fieldset.state.selects[i]){
                     selects[i].selectedIndex = fieldset.state.selects[i];
-                    select.dispatchEvent(new Event('change'));
+                    selects[i].dispatchEvent(new Event('change'));
                 }
             }
         }
@@ -228,11 +230,12 @@ function fieldsetsResetSetup(fieldsets){
 }
 
 var timer;
-function autocomplete(inp, link, method="get", params=null, func=null){
-    var current_focus;  //elemento nella lista attualmente selezionato
-    if(!func)
-        func=defaultFunc,
-    inp.addEventListener("input", func)
+function autocomplete(inp, link, method="get", params=null, override_func=false, func=null){
+    var current_focus = -1;  //elemento nella lista attualmente selezionato
+	
+    if(!override_func)
+        func=defaultFunc;
+    inp.addEventListener("input", func);
 
     //cambia elemento selezionato nella lista premendo freccia su/giù
     inp.addEventListener("keydown", function(e) {
@@ -278,14 +281,6 @@ function autocomplete(inp, link, method="get", params=null, func=null){
     }
 
     //chiude tutte le liste con autocompletamento nel documento, tranne l'argomento
-    function closeAllLists(elem) {
-        var liste = document.getElementsByClassName("autocomplete-items");
-        liste.forEach(function(lista){
-            if (elem != lista && elem != inp)
-                lista.parentNode.removeChild(lista)
-        })
-    }
-
     function defaultFunc(request){
         closeAllLists();
 
@@ -293,22 +288,21 @@ function autocomplete(inp, link, method="get", params=null, func=null){
             window.clearTimeout(timer);
 
         timer = window.setTimeout(function(){
-            var val = this.value;
+            var val = inp.value;
             if (!val) 
                 return false;
             current_focus = -1;
 
             var list_div = document.createElement("div");
-            list_div.setAttribute("id", this.id + "autocomplete-list");
+            list_div.setAttribute("id", inp.id + "autocomplete-list");
             list_div.setAttribute("class", "autocomplete-items");
 
-            this.parentNode.appendChild(list_div);
+            inp.parentNode.appendChild(list_div);
 
             ajax(link, method, params, function(request){
-                if (request.readyState<4)
+                if (request.readyState<4 || request.status != 200)
                     return;
                 var arr = JSON.parse(request.responseText).array;
-                console.log(arr);
                 const rg = new RegExp(val, "i");
                 arr.forEach(function(item){
                     var index = item.search(rg);
@@ -333,8 +327,20 @@ function autocomplete(inp, link, method="get", params=null, func=null){
     //chiude tutte le liste al click di qualcosa sullo schermo (tranne l'eventuali lista cliccata)
     //una funzione con nome non viene aggiunta più volte con l'addEventListener (quindi closeAllTargeted non si duplica)
     document.addEventListener("click", closeAllTargeted);
+    document.getElementsByTagName("input").forEach(function(input){
+        input.addEventListener("focus", closeAllTargeted);
+    })
 
     function closeAllTargeted(event){
-        closeAllLists(e.target);
+		current_focus = -1;
+        closeAllLists(event.target, inp);
     }
+}
+
+function closeAllLists(elem) {
+    var liste = document.getElementsByClassName("autocomplete-items");
+    liste.forEach(function(lista){
+    if (elem != lista)
+        lista.parentNode.removeChild(lista)
+    })
 }

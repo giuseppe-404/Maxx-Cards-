@@ -69,7 +69,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 			return list;
 		}
 	}
-
+	
 	@Override
 	public synchronized boolean deleteProdottoComprato(int id, int idOrdine) throws SQLException {
 		String sql = "DELETE FROM "+TABLE_NAME+" WHERE id=? and id_ordine=?";

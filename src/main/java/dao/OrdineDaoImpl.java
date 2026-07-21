@@ -137,6 +137,21 @@ public class OrdineDaoImpl implements OrdineDao{
 		}
 	}
 	
+	@Override
+	public synchronized OrdineBean retrieveCarrello(int idUtente) throws SQLException {
+		String sql = "SELECT * from "+TABLE_NAME+" where id_utente=? and stato LIKE 'Carrello'";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setInt(1, idUtente);
+			ResultSet rs = ps.executeQuery();
+			OrdineBean ordine = null;
+			if(rs.next()) {
+				ordine = new OrdineBean(rs.getString(1),rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getInt(5),rs.getDate(6),rs.getDate(7));
+			}
+			return ordine;
+		}
+	}
+	
 	public synchronized List<OrdineBean> retrieveAll() throws SQLException {
 		String sql = "SELECT * FROM "+TABLE_NAME+";";
 		try(Connection connection = ds.getConnection();

@@ -14,7 +14,7 @@
         <%@include file="/WEB-INF/views/components/header.jsp"%>
 		<%@include file="/WEB-INF/views/components/optionsAside.jsp"%>
         <main>
-            <form action="http://localhost/Max-Cards-/nuovaCarta" method="post" class="insertion_form" enctype="multipart/form-data" autocomplete="off" id="card_form">
+            <form action="nuovaCarta" method="post" class="insertion_form" enctype="multipart/form-data" autocomplete="off" id="card_form">
                 <fieldset id="product_loader">
                 	<label for="ricerca_carta" class="autocompletabile">Ricerca:
                 		<input type="text" name="ricerca_carta" id="ricerca_carta" placeholder="Maxx &quot C &quot">

@@ -74,7 +74,7 @@ window.addEventListener("load", function() {
 
     document.getElementById("tipo_mostro").addEventListener("change", function(event) {
         var new_type = document.getElementById("nuovo_tipo");
-        if (event.target.value = "nuovo") {
+        if (event.target.value == "nuovo") {
             new_type.parentNode.classList.remove("invisible");
             new_type.required = true;
         }
@@ -179,7 +179,16 @@ function setMonsterRequired(bool = true) {
     document.getElementById("attributo_mostro").required = bool;
     document.getElementById("attacco_mostro").required = bool;
     document.getElementById("difesa_mostro").required = bool;
-    document.getElementById("tipo_mostro").required = bool;
+	var tipo = document.getElementById("tipo_mostro");
+    tipo.required = bool;
+	if (bool){
+		if(tipo.value != "nuovo")
+			document.getElementById("nuovo_tipo").required = true;
+	}
+	else{
+		if(tipo.value == "nuovo")
+				document.getElementById("nuovo_tipo").required = false;
+	}
 }
 
 function ricercaCartaAutoc(inp, link, method) {

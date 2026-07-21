@@ -29,7 +29,7 @@
     --font-color: #221f2a;
     --product-bg-color-1: #fff9e6;
     --product-bg-color-2: #fbf5e2;
-    --footer-color: #000;
+    --footer-color: #f9e9b5;
 }
 .dark{
     display: inline;
@@ -78,6 +78,11 @@ body{
 
 .invisible{
     visibility: hidden;
+}
+
+a{
+	color: inherit;
+	font-weight: bold;
 }
 
 header{

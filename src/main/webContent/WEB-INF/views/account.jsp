@@ -7,8 +7,8 @@
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="/WEB-INF/views/components/ext.jsp"%>
-		<script src="<%=request.getContextPath()%>/scripts/account.js"></script>
-		<link href="<%=request.getContextPath()%>/styles/account.css" rel="stylesheet" type="text/css">
+		<script src="${pageContext.request.contextPath}/scripts/account.js"></script>
+		<link href="${pageContext.request.contextPath}/styles/account.css" rel="stylesheet" type="text/css">
 		
     </head>
     <body>

@@ -8,7 +8,7 @@
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <%@include file="/WEB-INF/views/components/ext.jsp"%>
-		<script src="<%=request.getContextPath()%>/scripts/salva_carta.js"></script>
+		<script src="${pageContext.request.contextPath}/scripts/salva_carta.js"></script>
     </head>
     <body>
         <%@include file="/WEB-INF/views/components/header.jsp"%>

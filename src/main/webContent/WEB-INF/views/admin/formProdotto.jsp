@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Salva Prodotto</title>
 <%@include file="/WEB-INF/views/components/ext.jsp"%>
-<script src="<%=request.getContextPath()%>/scripts/salva_prodotto.js"></script>
+<script src="${pageContext.request.contextPath}/scripts/salva_prodotto.js"></script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/components/header.jsp"%>

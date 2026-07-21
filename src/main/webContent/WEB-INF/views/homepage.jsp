@@ -6,8 +6,8 @@
 	<meta charset="UTF-8">
 	<title>Homepage</title>
 	<%@include file="/WEB-INF/views/components/ext.jsp"%>
-	<link href="<%=request.getContextPath()%>/styles/homepage.css" rel="stylesheet" type="text/css">
-	<script src="<%=request.getContextPath()%>/scripts/homepage.js"></script>
+	<link href="${pageContext.request.contextPath}/styles/homepage.css" rel="stylesheet" type="text/css">
+	<script src="${pageContext.request.contextPath}/scripts/homepage.js"></script>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/components/header.jsp"%>
@@ -27,7 +27,7 @@
 							</section>
 						</c:if>
 						<section class="product_image">
-							<img src="image?action=show&prodottoId=${prodotto.id}&isProdotto=true" alt="Ash Blossom">
+							<img src="image?action=show&prodottoId=${prodotto.id}&isProdotto=true" alt="Immagine di ${prodotto.nome}">
 						</section>
 						<section class="product_description">
 							<h3>${prodotto.nome}</h3>

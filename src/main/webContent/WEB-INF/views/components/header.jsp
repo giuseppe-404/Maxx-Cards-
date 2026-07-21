@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <header>
 	<section id="personal_area">
 		<a href="">
@@ -6,7 +7,7 @@
 			<img src="https://cdn-icons-png.flaticon.com/512/82/82122.png" alt="Opzioni" class="light">
 		</a>
 		<a href="http://localhost/Max-Cards-/bbbbbbbbbbbbbbbbb">
-			<img src="https://cdn-icons-png.flaticon.com/512/3081/3081986.png" alt="Carrello" class="dark">
+			<img src="${pageContext.request.contextPath}/images/carrello.png" alt="Carrello" class="dark">
 			<img src="https://cdn-icons-png.flaticon.com/512/82/82122.png" alt="Opzioni" class="light">
 		</a>
 		<a id="options_button">

@@ -8,6 +8,8 @@
     --product-bg-color-1: #24212c;
     --product-bg-color-2: #201d28;
     --footer-color: #1f212a;
+    --search-bg-color:#fdf7e4;
+    --search-txt-color:#221f2a;
 }
 [theme="dark"]{
     --bg-color: #221f2a;
@@ -19,6 +21,8 @@
     --product-bg-color-1: #24212c;
     --product-bg-color-2: #201d28;
     --footer-color: #1f212a;
+    --search-bg-color:#fdf7e4;
+    --search-txt-color:#221f2a;
 }
 [theme="light"]{
     --bg-color: #fdf7e4;
@@ -30,6 +34,8 @@
     --product-bg-color-1: #fff9e6;
     --product-bg-color-2: #fbf5e2;
     --footer-color: #f9e9b5;
+    --search-bg-color:#fdf7e4;
+    --search-txt-color:#221f2a;
 }
 .dark{
     display: inline;
@@ -161,11 +167,13 @@ header>section>a{
 
 #search_bar>section{
     display: flex;
-    background-color: white;
+    background-color: #fdf7e4;
+    background-color: var(--search-bg-color); 
     min-height: 60%;
     max-height: 60%;
     border-style: solid;
-    border-color: orange;
+    border-color: #a55911;
+    border-color: var(--icon-color);
     border-width: 0.7vh;
     align-content: center;
     align-items: center;
@@ -198,6 +206,10 @@ header>section>a{
 
     display: block;
     max-width: 50%;
+    
+    background-color: inherit;
+    color: #221f2a;
+    color: var(--search-txt-color); 
 }
 
 #search_bar>section>input{
@@ -208,6 +220,9 @@ header>section>a{
     border: none;
     font-size: 4vh;
     padding-left: 1vw;
+    
+    background-color: #fdf7e4;
+    background-color: var(--search-bg-color); 
 }
 
 @media screen and (max-width: 1080px) {

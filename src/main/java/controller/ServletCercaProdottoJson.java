@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.BoxBean;
 import model.CartaSingolaBean;
 import model.ConfezionatoBean;
+import model.ContieneDeckBean;
 import model.DeckBean;
 import model.PacchettoBean;
 import model.ProdottoBean;
@@ -28,10 +29,14 @@ import org.json.JSONObject;
 
 import dao.BoxDao;
 import dao.BoxDaoImpl;
+import dao.CartaDao;
+import dao.CartaDaoImpl;
 import dao.CartaSingolaDao;
 import dao.CartaSingolaDaoImpl;
 import dao.ConfezionatoDao;
 import dao.ConfezionatoDaoImpl;
+import dao.ContieneDeckDao;
+import dao.ContieneDeckDaoImpl;
 import dao.DeckDao;
 import dao.DeckDaoImpl;
 import dao.PacchettoDao;
@@ -60,6 +65,8 @@ public class ServletCercaProdottoJson extends HttpServlet {
 	private TinDao tinDao = null;
 	private BoxDao boxDao = null;
 	private PacchettoDao pacchettoDao = null;
+	private ContieneDeckDao contieneDao = null;
+	private CartaDao cartaDao = null;
 	
 	public void init(ServletConfig config) throws ServletException {
 		 super.init(config);
@@ -77,6 +84,8 @@ public class ServletCercaProdottoJson extends HttpServlet {
 	     tinDao = new TinDaoImpl(ds);
 	     boxDao = new BoxDaoImpl(ds);
 	     pacchettoDao = new PacchettoDaoImpl(ds);
+	     contieneDao = new ContieneDeckDaoImpl(ds);
+	     cartaDao = new CartaDaoImpl(ds);
 	}
     /**
      * @see HttpServlet#HttpServlet()
@@ -319,6 +328,7 @@ public class ServletCercaProdottoJson extends HttpServlet {
     			int page = Integer.parseInt(request.getParameter("page"));
     			int limit = Integer.parseInt(request.getParameter("limit"));
     			DeckBean filter = new DeckBean();
+    			
     			if(request.getParameter("nome") != null) {
     				filter.setNome(request.getParameter("nome"));
     			} else filter.setNome("");
@@ -335,6 +345,16 @@ public class ServletCercaProdottoJson extends HttpServlet {
     			try {
     				List<DeckBean> list = deckDao.retrieveFiltered(filter,limit,page);
     				for(DeckBean p : list) {
+    					JSONArray cards = new JSONArray();
+    	    			List<ContieneDeckBean> carte = contieneDao.retrieveByIdDeck(p.getId());
+    	    			for(ContieneDeckBean c : carte) {
+    	    				JSONObject oggetto = new JSONObject();
+    	    				String nomeC = cartaDao.retrieveByKey(c.getIdCarta()).getNomeIt();
+    	    				oggetto.put("nome",nomeC);
+    	    				oggetto.put("id",c.getIdCarta());
+    	    				oggetto.put("qnt",c.getQnt());
+    	    				cards.put(nomeC);
+    	    			}
     					JSONObject obj = new JSONObject();
     					obj.put("id", p.getId());
     					obj.put("nome", p.getNome());
@@ -369,6 +389,16 @@ public class ServletCercaProdottoJson extends HttpServlet {
     				List<DeckBean> list = deckDao.retrieveFiltered(filter);
     				for(DeckBean p : list) {
     					JSONObject obj = new JSONObject();
+    					JSONArray cards = new JSONArray();
+    	    			List<ContieneDeckBean> carte = contieneDao.retrieveByIdDeck(p.getId());
+    	    			for(ContieneDeckBean c : carte) {
+    	    				JSONObject oggetto = new JSONObject();
+    	    				String nomeC = cartaDao.retrieveByKey(c.getIdCarta()).getNomeIt();
+    	    				oggetto.put("nome",nomeC);
+    	    				oggetto.put("id",c.getIdCarta());
+    	    				oggetto.put("qnt",c.getQnt());
+    	    				cards.put(nomeC);
+    	    			}
     					obj.put("id", p.getId());
     					obj.put("nome", p.getNome());
     					obj.put("qnt", p.getQnt());

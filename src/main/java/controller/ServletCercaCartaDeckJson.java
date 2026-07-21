@@ -53,64 +53,65 @@ public class ServletCercaCartaDeckJson extends HttpServlet {
     	if(request.getParameter("page") != null && request.getParameter("limit") != null) {
     		int page = Integer.parseInt(request.getParameter("page"));
     		int limit = Integer.parseInt(request.getParameter("limit"));
-    		
+
     		if(request.getParameter("lingua")==null || (request.getParameter("lingua") != "en" && request.getParameter("lingua")!= "jp")) 
-        		ln = "it";
-        	else ln = request.getParameter("lingua");
-        	if(request.getParameter("nomeCarta") == null) {
-        		try {
-        			List<CartaBean> list = cartaDao.retrieveAll(limit,page);
-        			JSONArray array = new JSONArray();
-            		switch(ln) {
-            			case "it" : {
-            				for(CartaBean c : list) {
-            	    			array.put(c.getNomeIt());
-            	    		} break;
-            			}
-            			case "en" : {
-            				for(CartaBean c : list) {
-            	    			array.put(c.getNomeEn());
-            	    		} break;
-            			}
-            			case "jp" : {
-            				for(CartaBean c : list) {
-            	    			array.put(c.getNomeJp());
-            	    		} break;
-            			}
-            		}
-        		}catch(SQLException e) {
-        			e.printStackTrace();
-        		}
-        		
-        		
-        	}
-        	String nome = request.getParameter("nomeCarta");
-        	CartaBean filter = new CartaBean();
-        	filter.setNomeIt(nome);
-        	
-        	try {
-        		List<CartaBean> list = cartaDao.retrieveFiltered(filter,limit,page);
-        		JSONArray array = new JSONArray();
-        		switch(ln) {
-        			case "it" : {
-        				for(CartaBean c : list) {
-        	    			array.put(c.getNomeIt());
-        	    		} break;
-        			}
-        			case "en" : {
-        				for(CartaBean c : list) {
-        	    			array.put(c.getNomeEn());
-        	    		} break;
-        			}
-        			case "jp" : {
-        				for(CartaBean c : list) {
-        	    			array.put(c.getNomeJp());
-        	    		} break;
-        			}
-        		}out.print(array.toString());
-        	}catch(SQLException e) {
-        		e.printStackTrace();
-        	}
+    			ln = "it";
+    		else ln = request.getParameter("lingua");
+    		if(request.getParameter("nomeCarta") == null) {
+    			try {
+    				List<CartaBean> list = cartaDao.retrieveAll(limit,page);
+    				JSONArray array = new JSONArray();
+    				switch(ln) {
+    				case "it" : {
+    					for(CartaBean c : list) {
+    						array.put(c.getNomeIt());
+    					} break;
+    				}
+    				case "en" : {
+    					for(CartaBean c : list) {
+    						array.put(c.getNomeEn());
+    					} break;
+    				}
+    				case "jp" : {
+    					for(CartaBean c : list) {
+    						array.put(c.getNomeJp());
+    					} break;
+    				}
+    				}
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
+
+
+    		} else {
+    			String nome = request.getParameter("nomeCarta");
+    			CartaBean filter = new CartaBean();
+    			filter.setNomeIt(nome);
+
+    			try {
+    				List<CartaBean> list = cartaDao.retrieveFiltered(filter,limit,page);
+    				JSONArray array = new JSONArray();
+    				switch(ln) {
+    				case "it" : {
+    					for(CartaBean c : list) {
+    						array.put(c.getNomeIt());
+    					} break;
+    				}
+    				case "en" : {
+    					for(CartaBean c : list) {
+    						array.put(c.getNomeEn());
+    					} break;
+    				}
+    				case "jp" : {
+    					for(CartaBean c : list) {
+    						array.put(c.getNomeJp());
+    					} break;
+    				}
+    				}out.print(array.toString());
+    			}catch(SQLException e) {
+    				e.printStackTrace();
+    			}
+    		}
     	}
     	if(request.getParameter("lingua")==null || (request.getParameter("lingua") != "en" && request.getParameter("lingua")!= "jp")) 
     		ln = "it";
@@ -119,55 +120,56 @@ public class ServletCercaCartaDeckJson extends HttpServlet {
     		try {
     			List<CartaBean> list = cartaDao.retrieveAll();
     			JSONArray array = new JSONArray();
-        		switch(ln) {
-        			case "it" : {
-        				for(CartaBean c : list) {
-        	    			array.put(c.getNomeIt());
-        	    		} break;
-        			}
-        			case "en" : {
-        				for(CartaBean c : list) {
-        	    			array.put(c.getNomeEn());
-        	    		} break;
-        			}
-        			case "jp" : {
-        				for(CartaBean c : list) {
-        	    			array.put(c.getNomeJp());
-        	    		} break;
-        			}
-        		}
-    		}catch(SQLException e) {
-    			e.printStackTrace();
-    		}
-    		
-    		
-    	}
-    	String nome = request.getParameter("nomeCarta");
-    	CartaBean filter = new CartaBean();
-    	filter.setNomeIt(nome);
-    	
-    	try {
-    		List<CartaBean> list = cartaDao.retrieveFiltered(filter);
-    		JSONArray array = new JSONArray();
-    		switch(ln) {
+    			switch(ln) {
     			case "it" : {
     				for(CartaBean c : list) {
-    	    			array.put(c.getNomeIt());
-    	    		} break;
+    					array.put(c.getNomeIt());
+    				} break;
     			}
     			case "en" : {
     				for(CartaBean c : list) {
-    	    			array.put(c.getNomeEn());
-    	    		} break;
+    					array.put(c.getNomeEn());
+    				} break;
     			}
     			case "jp" : {
     				for(CartaBean c : list) {
-    	    			array.put(c.getNomeJp());
-    	    		} break;
+    					array.put(c.getNomeJp());
+    				} break;
     			}
-    		}out.print(array.toString());
-    	}catch(SQLException e) {
-    		e.printStackTrace();
+    			}
+    		}catch(SQLException e) {
+    			e.printStackTrace();
+    		}
+
+
+    	} else {
+    		String nome = request.getParameter("nomeCarta");
+    		CartaBean filter = new CartaBean();
+    		filter.setNomeIt(nome);
+
+    		try {
+    			List<CartaBean> list = cartaDao.retrieveFiltered(filter);
+    			JSONArray array = new JSONArray();
+    			switch(ln) {
+    			case "it" : {
+    				for(CartaBean c : list) {
+    					array.put(c.getNomeIt());
+    				} break;
+    			}
+    			case "en" : {
+    				for(CartaBean c : list) {
+    					array.put(c.getNomeEn());
+    				} break;
+    			}
+    			case "jp" : {
+    				for(CartaBean c : list) {
+    					array.put(c.getNomeJp());
+    				} break;
+    			}
+    			}out.print(array.toString());
+    		}catch(SQLException e) {
+    			e.printStackTrace();
+    		}
     	}
     }
     

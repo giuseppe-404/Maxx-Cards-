@@ -3,16 +3,16 @@
 <header>
 	<section id="personal_area">
 		<a href="">
-			<img src="https://www.nicepng.com/png/full/367-3671905_person-icon-person-icon-silhouette.png" alt="Area Personale" class="dark ">
-			<img src="https://cdn-icons-png.flaticon.com/512/82/82122.png" alt="Opzioni" class="light">
+			<img src="${pageContext.request.contextPath}/images/iconDark.png" alt="Area Personale" class="dark ">
+			<img src="${pageContext.request.contextPath}/images/iconLight.png" alt="Area Personale" class="light">
 		</a>
 		<a href="http://localhost/Max-Cards-/bbbbbbbbbbbbbbbbb">
-			<img src="${pageContext.request.contextPath}/images/carrello.png" alt="Carrello" class="dark">
-			<img src="https://cdn-icons-png.flaticon.com/512/82/82122.png" alt="Opzioni" class="light">
+			<img src="${pageContext.request.contextPath}/images/carrelloDark.png" alt="Carrello" class="dark">
+			<img src="${pageContext.request.contextPath}/images/carrelloLight.png" alt="Carrello" class="light">
 		</a>
 		<a id="options_button">
-			<img src="https://cdn-icons-png.flaticon.com/512/82/82122.png" alt="Opzioni" class="dark">
-			<img src="https://cdn-icons-png.flaticon.com/512/82/82122.png" alt="Opzioni" class="light">
+			<img src="${pageContext.request.contextPath}/images/menuDark.png" alt="Opzioni" class="dark">
+			<img src="${pageContext.request.contextPath}/images/menuLight.png" alt="Opzioni" class="light">
 		</a>
 	</section>
 	<section id="logo">

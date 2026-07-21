@@ -48,7 +48,7 @@ public class ContieneDeckDaoImpl implements ContieneDeckDao {
 
 	@Override
 	public synchronized boolean deleteContieneDeckByIdDeck(int idDeck) throws SQLException {
-		String sql = "DELETE FROM "+TABLE_NAME+" where id_deck=?";
+		String sql = "DELETE FROM "+TABLE_NAME+" where id_deck=?;";
 		try (Connection connection = ds.getConnection()){
 			try(Statement stmt = connection.createStatement()) {
 				stmt.execute("SET SQL_SAFE_UPDATES = 0;");

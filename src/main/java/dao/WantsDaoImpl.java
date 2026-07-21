@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,20 +47,22 @@ public class WantsDaoImpl implements WantsDao {
 
 	@Override
 	public synchronized boolean deleteByIdUser(int idUser) throws SQLException {
-		String sql = "SET SQL_SAFE_UPDATES = 0; DELETE FROM "+TABLE_NAME+" WHERE id_utente=?; SET SQL_SAFE_UPDATE = 1;";
+		String sql = "DELETE FROM "+TABLE_NAME+" WHERE id_utente=?; ";
 		try (Connection connection = ds.getConnection()){
-			connection.setAutoCommit(false);
+			try(Statement stmt = connection.createStatement()) {
+				stmt.execute("SET SQL_SAFE_UPDATES = 0;");
+			}
 			try(PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, idUser);
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 			}finally{
-				connection.setAutoCommit(true);
+				try(Statement stmt = connection.createStatement()) { 
+					stmt.execute("SET SQL_SAFE_UPDATES = 1;");
+				}
 			}	
 		}
 	}
-	
-
 	@Override
 	public synchronized List<WantsBean> retrieveByIdUtente(int idUtente) throws SQLException {
 		String sql = "SELECT * from "+TABLE_NAME+" where id_utente=?";

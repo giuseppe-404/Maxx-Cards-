@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
@@ -83,15 +84,19 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 
 	@Override
 	public synchronized boolean deleteProdottoCompratoByIdOrdine(int idOrdine) throws SQLException {
-		String sql = " SET SQL_SAFE_UPDATES = 0; DELETE FROM "+TABLE_NAME+" WHERE id_ordine=?; SET SQL_SAFE_UPDATE = 1;";
+		String sql = "DELETE FROM "+TABLE_NAME+" WHERE id_ordine=?;";
 		try (Connection connection = ds.getConnection()){
-			connection.setAutoCommit(false);
+			try(Statement stmt = connection.createStatement()) {
+				stmt.execute("SET SQL_SAFE_UPDATES = 0;");
+			}
 			try(PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, idOrdine);
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 			}finally{
-				connection.setAutoCommit(true);
+				try(Statement stmt = connection.createStatement()) { 
+					stmt.execute("SET SQL_SAFE_UPDATES = 1;");
+				}
 			}	
 		}
 	}

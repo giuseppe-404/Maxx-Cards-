@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,25 @@ public class ContieneDeckDaoImpl implements ContieneDeckDao {
 		}
 	}
 
+	@Override
+	public synchronized boolean deleteContieneDeckByIdDeck(int idDeck) throws SQLException {
+		String sql = "DELETE FROM "+TABLE_NAME+" where id_deck=?";
+		try (Connection connection = ds.getConnection()){
+			try(Statement stmt = connection.createStatement()) {
+				stmt.execute("SET SQL_SAFE_UPDATES = 0;");
+			}
+			try(PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setInt(1, idDeck);
+			int rowUpdated = ps.executeUpdate();
+			return rowUpdated != 0;
+			}finally{
+				try(Statement stmt = connection.createStatement()) { 
+					stmt.execute("SET SQL_SAFE_UPDATES = 1;");
+				}
+			}	
+		}
+	}
+	
 	@Override
 	public synchronized boolean changeQnt(ContieneDeckBean cont) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+" SET qnt=? WHERE id_deck=? and id_carta=?";

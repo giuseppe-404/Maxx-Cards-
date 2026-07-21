@@ -465,13 +465,32 @@ textarea{
 	font-weight: bolder;
 }
 
-#card_retrieve_error{
+#card_retrieve_error, #prod_retrieve_error{
 	color:red;
 	display: block;
 }
 
 #product_data>label:first-child{
     display: block;
+}
+
+#deck_composition>.carte_contenute {
+  display: block;
+  .aggiungi_carta{
+    display: initial;
+  }
+  .rimuovi_carta{
+    display: none;
+  }
+}
+#deck_composition>.inserita {
+
+  .aggiungi_carta{
+    display: none;
+  }
+  .rimuovi_carta{
+    display: initial;
+  }
 }
 
 .image_preview_container{

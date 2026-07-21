@@ -97,6 +97,20 @@ public class ProdottoDaoImpl implements ProdottoDao {
 	}
 	
 	@Override
+	public synchronized ProdottoBean retrieveByNome(String nome) throws SQLException{
+		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE nome LIKE ?";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setString(1, nome);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				ProdottoBean prodotto = new ProdottoBean(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getString(7),rs.getString(8));
+				return prodotto;
+			}
+		} return null;
+	}
+	
+	@Override
 	public synchronized List<ProdottoBean> retrieveAll(int page, int limit) throws SQLException {
 		String sql = "SELECT * FROM "+TABLE_NAME+" LIMIT "+limit+" OFFSET "+page*limit+";";
 		try(Connection connection = ds.getConnection();
@@ -210,6 +224,18 @@ public class ProdottoDaoImpl implements ProdottoDao {
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
+	}
+	
+	public synchronized boolean changeId(ProdottoBean bean, int oldId) throws SQLException{
+		String sql = "UPDATE "+TABLE_NAME+" SET id=? WHERE id=?";
+		 try (Connection conn = ds.getConnection();
+				 PreparedStatement ps = conn.prepareStatement(sql)) {
+	        	ps.setInt(1, bean.getId());
+	        	ps.setInt(2, oldId);
+				
+				int result = ps.executeUpdate();
+				return result != 0;
+	        }
 	}
 	
 	public synchronized int prodottoType(int prodotto) throws SQLException {

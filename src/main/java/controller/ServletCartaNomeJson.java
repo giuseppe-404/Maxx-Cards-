@@ -33,7 +33,7 @@ import dao.TrappolaDaoImpl;
 /**
  * Servlet implementation class ServletCartaNomeJson
  */
-@WebServlet("/ServletCartaNomeJson")
+@WebServlet("/servletCartaNomeJson")
 public class ServletCartaNomeJson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private CartaDao cartaDao = null;
@@ -70,8 +70,7 @@ public class ServletCartaNomeJson extends HttpServlet {
     	try {
     		CartaBean carta = cartaDao.retrieveByNome(nome);
     		int temp = cartaDao.cartaType(carta.getId());
-    		switch(temp) {
-    			case 0:{
+    		if(temp == 0){
     				JSONObject obj = new JSONObject();
 					obj.put("classe", "");
 					obj.put("id", carta.getId());
@@ -83,9 +82,7 @@ public class ServletCartaNomeJson extends HttpServlet {
 					obj.put("pathImg", carta.getPathImg());
 					obj.put("mimeType", carta.getMimeType());
 					out.print(obj.toString());
-					break;
-    			}
-    			case 1:{
+    			} else if(temp == 1){
     				MostroBean mostro = mostroDao.retrieveByKey(carta.getId());
     				List<Integer> frecce = new ArrayList<>();
 					for(int i = 1; i < 9; i++) {
@@ -114,8 +111,7 @@ public class ServletCartaNomeJson extends HttpServlet {
 					obj2.put("frecceLink", frecce);
 					obj2.put("scalaPendulum", mostro.getScalaPendulum());
 					out.print(obj2.toString());
-					break;}
-    			case 2:{
+				} else if (temp == 2){
     				MagiaBean magia = magiaDao.retrieveByKey(carta.getId());
     				JSONObject obj3 = new JSONObject();
 					obj3.put("classe", "magia");
@@ -129,9 +125,7 @@ public class ServletCartaNomeJson extends HttpServlet {
 					obj3.put("mimeType", magia.getMimeType());
 					obj3.put("tipologia", magia.getTipologia());
 					out.print(obj3.toString());
-					break;
-    			}
-    			case 3: {
+    			}else if (temp == 3){
     				TrappolaBean trappola = trappolaDao.retrieveByKey(carta.getId());
     				JSONObject obj4 = new JSONObject();
 					obj4.put("classe", "trappola");
@@ -145,15 +139,12 @@ public class ServletCartaNomeJson extends HttpServlet {
 					obj4.put("mimeType", trappola.getMimeType());
 					obj4.put("tipologia", trappola.getTipologia());
 					out.print(obj4.toString());
-					break;
-    			} default : {
+    			} else {
     				out.print("Carta non trovata");
     			}
-    		}
     	} catch(SQLException e) {
     		e.printStackTrace();
     	}
-    	
     }
     
 	/**

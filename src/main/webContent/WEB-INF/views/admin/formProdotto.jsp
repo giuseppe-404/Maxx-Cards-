@@ -11,8 +11,7 @@
 <body>
 	<%@ include file="/WEB-INF/views/components/header.jsp"%>
 	<main>
-		<form action="http://localhost/Max-Cards-/salva" method="get"
-			class="insertion_form" enctype="multipart/form-data">
+		<form action="http://localhost/Max-Cards-/nuovoProdotto" method="post" class="insertion_form" enctype="multipart/form-data">
 			<fieldset id="product_loader">
 				<label for="ricerca_prodotto" class="autocompletabile">Ricerca:
 					<input type="text" name="ricerca_prodotto" id="ricerca_prodotto" placeholder="Maxx &quot C &quot">

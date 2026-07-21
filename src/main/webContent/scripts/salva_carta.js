@@ -19,7 +19,7 @@ window.addEventListener("load", function() {
 
     if (autocomplete) {
         var cardSearch = document.getElementById("ricerca_carta");
-        var autArgs = [cardSearch, "https://localhost/Max-Cards-/servletCercaCartaDeckJson", "get", null];
+        var autArgs = [cardSearch, "servletCercaCartaDeckJson", "get", null];
         autocomplete(...autArgs, true, ricercaCartaAutoc.bind(null, ...autArgs));
         document.getElementById("carica_carta").addEventListener("click", function() {
             ajax("https://localhost/Max-Cards-/servletCartaNomeJson", "get", "nome=" + cardSearch.value, function(request) {

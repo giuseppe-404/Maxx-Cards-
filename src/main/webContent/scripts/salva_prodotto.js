@@ -42,10 +42,10 @@ window.addEventListener("load", function() {
 
     if (autocomplete) {
         var prodSearch = document.getElementById("ricerca_prodotto");
-        var autArgs = [prodSearch, "http://localhost/Max-Cards-/servletProdottoElencoJson", "get", null];
+        var autArgs = [prodSearch, "servletProdottoElencoJson", "get", null];
         autocomplete(...autArgs, true, ricercaAutoc.bind(null, ...autArgs));
         document.getElementById("carica_prodotto").addEventListener("click", function() {
-            ajax("http://localhost/Max-Cards-/servletProdottoNomeJson", "get", "nome=" + prodSearch.value, function(request) {
+            ajax("servletProdottoNomeJson", "get", "nome=" + prodSearch.value, function(request) {
                 if (request.readyState < 4)
                     return;
                 var error_p = document.getElementById("prod_retrieve_error");
@@ -183,7 +183,7 @@ function setCartaEvents(div) {
             cardSearch.id = "carta" + next_id;
             next_id++;
         }
-        var autArgs = [cardSearch, "http://localhost/Max-Cards-/servletCercaCartaDeckJson", "get", null];
+        var autArgs = [cardSearch, "servletCercaCartaDeckJson", "get", null];
         autocomplete(...autArgs, true, ricercaAutoc.bind(null, ...autArgs));
     }
 

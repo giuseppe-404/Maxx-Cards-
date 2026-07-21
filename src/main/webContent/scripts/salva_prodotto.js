@@ -111,6 +111,11 @@ window.addEventListener("load", function() {
             data_set.required = false;
         }
     })
+	
+	document.getElementById("cancella_prodotto").addEventListener("click", function() {
+        document.getElementById("action").value = "delete";
+        document.getElementById("prod_form").submit();
+    })
 })
 
 function updateTipoProd(event) {

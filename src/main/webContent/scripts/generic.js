@@ -9,7 +9,7 @@ window.addEventListener("load",function(event) {
 	var search = document.getElementById("ricerca");
 	var personal = document.getElementById("personal_area");
 	if (search)
-		autocomplete(search, "http://localhost/Max-Cards-/JsonTest", "get");
+		autocomplete(search, "http://localhost/Max-Cards-/servletCercaProdottoJson", "get");  //[{id, nome, qnt, prezzo, descrizione, sconto, lingua, idSet, quality, idCarta, deck:[{nome:"", id:"", qnt:""}]]
 	if (search && personal){
 		search.addEventListener("focus", function(){
 			if (window.matchMedia('screen and (min-width:481px)').matches){

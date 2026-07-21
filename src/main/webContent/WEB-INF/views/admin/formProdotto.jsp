@@ -70,26 +70,41 @@
                 <input type="button" value="Reset" class="reset_button">
 			</fieldset>
 
+			<fieldset id="product_language" class="hidden">
+				<label for="lingua_prodotto">Lingua: 
+					<select name="lingua_prodotto" id="lingua_prodotto">
+						<option disabled selected value="">-- Lingua --</option>
+						<option value="italiano">Italiano</option>
+						<option value="inglese">Inglese</option>
+						<option value="giapponese">Giappone</option>
+					</select>
+				</label>
+				<input type="button" value="Reset" class="reset_button">
+			</fieldset>
+
 			<fieldset id="product_set" class="hidden">
 				<label for="set_prodotto">Set: 
 					<select name="set" id="set_prodotto">
 						<option disabled selected value>-- Set --</option>
-						<option value="Preesistente1">Preesistente1</option>
-						<option value="Preesistente2">Preesistente1</option>
+						<c:if test="${not empty sets}">
+							<c:forEach var="tipo" items="${set}">
+								<option value="${set.nome}">${set.nome}</option>
+							</c:forEach>
+						</c:if>
 						<option value="nuovo">Crea nuovo</option>
 					</select>
 				</label> 
-				<label for="nuovo_set" class="hidden">Nome del nuovo set 
+				<label for="nuovo_set" class="invisible">Nome del nuovo set 
 					<input type="text" name="nuovo_set" id="nuovo_set">
 				</label> 
-				<label for="data_set" class="hidden">Data di rilascio 
+				<label for="data_set" class="invisible">Data di rilascio 
 					<input type="date" name="data_set" id="data_set">
 				</label> 
 				<input type="button" value="Reset" class="reset_button">
 			</fieldset>
 
 			<fieldset id="product_quality" class="hidden">
-				<label for="qlt_prodotto"> 
+				<label for="qlt_prodotto">Qualità carta: 
 					<select name="qlt" id="qlt_prodotto"><!-- Controllare come i parametri con spazio vengono passati -->
 						<option value="mint">Mint</option>
 						<option value="near mint">Near Mint</option>
@@ -105,8 +120,8 @@
 			
 			<fieldset id="deck_composition" class="hidden">
 				<section class="carte_contenute">
-					<label for="carta">Carta: 
-						<input type="text" name="carta" class="autocompletabile">
+					<label for="carta" class="autocompletabile">Carta: 
+						<input type="text" name="carta" class="nome_carta">
 					</label> 
 					<label for="qnt_carta">Quantità: 
 						<input type="number" name="qnt_carta" min="1" max="3" step="1" class="qnt_carta">
@@ -114,6 +129,7 @@
 					<input type="button" value="+" class="aggiungi_carta"> 
 					<input type="button" value="-" class="rimuovi_carta">
 				</section>
+				<input type="button" value="Reset" class="reset_button">
 			</fieldset>
 
 			<input type="submit" value="Crea">

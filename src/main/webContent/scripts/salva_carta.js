@@ -4,8 +4,8 @@ window.addEventListener("load", function() {
     if (imageUploadSetup)
         imageUploadSetup()
 
+	const fieldsets = document.getElementsByTagName("fieldset");
     if (fieldsetsResetSetup) {
-        var fieldsets = document.getElementsByTagName("fieldset");
         fieldsetsResetSetup(fieldsets);
         fieldsets.forEach(function(fieldset) {
             fieldset.saveState();
@@ -19,10 +19,10 @@ window.addEventListener("load", function() {
 
     if (autocomplete) {
         var cardSearch = document.getElementById("ricerca_carta");
-        var autArgs = [cardSearch, "http://localhost/Max-Cards-/servletCercaCartaDeckJson", "get", null];
+        var autArgs = [cardSearch, "https://localhost/Max-Cards-/servletCercaCartaDeckJson", "get", null];
         autocomplete(...autArgs, true, ricercaCartaAutoc.bind(null, ...autArgs));
         document.getElementById("carica_carta").addEventListener("click", function() {
-            ajax("http://localhost/Max-Cards-/JsonTest", "get", "nome=" + cardSearch.value, function(request) {
+            ajax("https://localhost/Max-Cards-/servletCartaNomeJson", "get", "nome=" + cardSearch.value, function(request) {
                 if (request.readyState < 4)
                     return;
 				var error_p = document.getElementById("card_retrieve_error");
@@ -53,7 +53,9 @@ window.addEventListener("load", function() {
 		
 		var loader_reset = document.getElementById("product_loader").getElementsByClassName("reset_button")[0];
 		if (loader_reset)
-			loader_reset.addEventListener("click", document.getElementById("card_retrieve_error").classList.add("hidden"));
+            loader_reset.addEventListener("click", function() {
+                document.getElementById("prod_retrieve_error").classList.add("hidden")
+            });
     }
 
     document.getElementById("classe_carta").addEventListener("change", updateCardClasss);
@@ -211,7 +213,7 @@ function ricercaCartaAutoc(inp, link, method) {
         var params = "nome=" + inp.val;
 
         ajax(link, method, params, function(request) {
-            if (request.readyState < 4)
+            if (request.readyState < 4 || request.status != 200)
                 return;
             var arr = JSON.parse(request.responseText).array;
             console.log(arr);

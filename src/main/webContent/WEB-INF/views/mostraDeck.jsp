@@ -32,9 +32,9 @@
 						<c:forEach var="contiene" items="${contieni}">
 							<c:if test="${carta.id eq contiene.idCarta}">
 								<div class="carta_div">
-									<a href="mostraCarta?id=${carta.id}">${carta.nomeIt}</a>
+									<a href="getCartaPage?id=${carta.id}">${carta.nomeIt}</a>
 									<p>× ${contiene.qnt}</p>
-									<img alt="" src="https://m.media-amazon.com/images/I/71aorzt910L._AC_UF1000,1000_QL80_.jpg">
+									<img alt="Immagine di ${carta.nomeIt}" src="image?action=show&prodottoId=${carta.id}&isProdotto=false">
 								</div>
 							</c:if>
 						</c:forEach>

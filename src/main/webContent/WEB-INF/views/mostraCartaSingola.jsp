@@ -25,7 +25,7 @@
 					<p>Qualità: ${carta.quality}</p>
 					<p>Lingua: ${carta.lingua}</p>
 					<p>Set: ${carta.idSet}</p>
-					<a href="mostraCarta?id=${carta.idCarta}">Visita la pagina della carta!</a>
+					<a href="getCartaPage?id=${carta.idCarta}">Visita la pagina della carta!</a>
 				</section>
 				<section id="price_section">
 					<c:if test="${carta.qnt < 20}">

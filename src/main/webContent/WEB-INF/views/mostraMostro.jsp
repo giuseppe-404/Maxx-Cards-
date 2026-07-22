@@ -112,7 +112,7 @@
 							<c:set target="${prodotto}" property="prezzo" value="${(100 - prodotto.sconto / 100) * prodotto.prezzo / 100}" />
 						</c:if>
 						<tr class="card_row">
-							<td colspan="5"><a href="mostraProdotto?id=${prodotto.id}">${prodotto.nome}</a></td>
+							<td colspan="5"><a href="getProdottoPage?id=${prodotto.id}">${prodotto.nome}</a></td>
 							<td>${prodotto.lingua}</td>
 							<td>${prodotto.quality}</td>
 							<td>${prodotto.prezzo/100}</td>

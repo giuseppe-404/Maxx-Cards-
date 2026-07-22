@@ -60,7 +60,9 @@ main{
 }
 
 form{
-	padding: 3vh 5vh
+	padding: 3vh 5vh;
+	display: inline-block;
+	max-width: 50%
 }
 
 .error_msg{

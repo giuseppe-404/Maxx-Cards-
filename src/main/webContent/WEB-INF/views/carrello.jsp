@@ -56,7 +56,13 @@
 							</c:if>
 						</c:forEach>
 					</c:forEach>
+					<tr>
+						
+					</tr>
 				</table>
+				<form action="svuotaCarrello" method=post>
+					<button>Svuota il carrello</button>
+				</form>
 				<form action="checkout" method=post>
 					<button>Vai al checkout!</button>
 				</form>

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.OrdineBean;
+import model.ProdottoBean;
 import model.ProdottoCompratoBean;
 import model.UtenteBean;
 
@@ -25,6 +26,8 @@ import dao.OrdineDao;
 import dao.OrdineDaoImpl;
 import dao.ProdottoCompratoDao;
 import dao.ProdottoCompratoDaoImpl;
+import dao.ProdottoDao;
+import dao.ProdottoDaoImpl;
 
 /**
  * Servlet implementation class ServletAggiungiCarrello
@@ -34,6 +37,7 @@ public class ServletAggiungiCarrello extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProdottoCompratoDao prodottoCDao = null;
 	private OrdineDao ordineDao = null;
+	private ProdottoDao prodottoDao = null;
        
 	public void init(ServletConfig config) throws ServletException{
 		super.init(config);
@@ -44,6 +48,7 @@ public class ServletAggiungiCarrello extends HttpServlet {
         }
         ordineDao = new OrdineDaoImpl(ds);
         prodottoCDao = new ProdottoCompratoDaoImpl(ds);
+        prodottoDao = new ProdottoDaoImpl(ds);
 	}
 	
     /**
@@ -58,13 +63,19 @@ public class ServletAggiungiCarrello extends HttpServlet {
     	response.setContentType("application/json");
     	HttpSession session = request.getSession();
     	PrintWriter out = response.getWriter();
-    	int id = Integer.parseInt(request.getParameter("idProdotto"));
-    	int qnt = Integer.parseInt(request.getParameter("qnt"));
-    	ProdottoCompratoBean prod = new ProdottoCompratoBean();
-    	prod.setIdOriginale(id);
-    	prod.setQnt(qnt);
-    	OrdineBean carrello = (OrdineBean)session.getAttribute("carrello");
     	try {
+	    	int id = Integer.parseInt(request.getParameter("idProdotto"));
+	    	int qnt = Integer.parseInt(request.getParameter("qnt"));
+	    	int diff = qnt;
+	    	ProdottoBean prodotto = prodottoDao.retrieveByKey(id);
+	    	if(qnt < 0 || qnt > prodotto.getQnt()) {
+	    		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+	    		return;
+	    	}
+	    	ProdottoCompratoBean prod = new ProdottoCompratoBean();
+	    	prod.setIdOriginale(id);
+	    	prod.setQnt(qnt);
+	    	OrdineBean carrello = (OrdineBean)session.getAttribute("carrello");
     		if(carrello == null) {
     			UtenteBean utente = (UtenteBean)session.getAttribute("utente");
     			if(utente != null) {
@@ -88,6 +99,7 @@ public class ServletAggiungiCarrello extends HttpServlet {
     			prod.setIdOrdine(carrello.getIdOrdine());
     		}
     		List<ProdottoCompratoBean> prodScelti = (List<ProdottoCompratoBean>) session.getAttribute("prodCarrello");
+    		
     		if (prodScelti == null) {
     			prodScelti = new ArrayList<>();
     		}	
@@ -98,11 +110,13 @@ public class ServletAggiungiCarrello extends HttpServlet {
     		for(ProdottoCompratoBean p : prodScelti) {
     			if(p.getId() == prod.getIdOriginale()) {
     				if(prod.getQnt() == 0) {
+    					diff = -p.getQnt();
     					daRimuovere = p;
     					if(logged) {
     						prodottoCDao.deleteProdottoComprato(p.getId(),carrello.getIdOrdine());
     					}
     				} else {
+    					diff = qnt - p.getQnt();
     					p.setQnt(prod.getQnt());
     				}
     				presente = true;
@@ -121,8 +135,9 @@ public class ServletAggiungiCarrello extends HttpServlet {
     			
     		}
     		session.setAttribute("prodCarrello", prodScelti);
+    		
     		JSONObject obj = new JSONObject();
-    	    obj.put("Status", true);
+    	    obj.put("diff", diff);
     	    out.print(obj.toString());
     	} catch(SQLException e) {
     		JSONObject obj = new JSONObject();

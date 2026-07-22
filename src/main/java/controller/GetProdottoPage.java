@@ -7,20 +7,30 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.CartaBean;
 import model.CartaSingolaBean;
 import model.ConfezionatoBean;
+import model.ContieneDeckBean;
 import model.ProdottoBean;
 import model.ProdottoYGOBean;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
+import dao.CartaDao;
+import dao.CartaDaoImpl;
 import dao.CartaSingolaDao;
 import dao.CartaSingolaDaoImpl;
 import dao.ConfezionatoDao;
 import dao.ConfezionatoDaoImpl;
+import dao.ContieneDeckDao;
+import dao.ContieneDeckDaoImpl;
+import dao.DeckDao;
+import dao.DeckDaoImpl;
 import dao.ProdottoDao;
 import dao.ProdottoDaoImpl;
 import dao.ProdottoYGODao;
@@ -35,8 +45,10 @@ public class GetProdottoPage extends HttpServlet {
     private ProdottoDao daoProd;
     private ProdottoYGODao daoPYGO;
     private ConfezionatoDao daoConf;
-    private CartaSingolaDao daoCarta;
-
+    private CartaSingolaDao daoCartaSingola;
+    private CartaDao daoCarta;
+    private DeckDao daoDeck;
+    private ContieneDeckDao daoContiene;
     
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -48,7 +60,10 @@ public class GetProdottoPage extends HttpServlet {
         daoProd = new ProdottoDaoImpl(ds);
         daoPYGO = new ProdottoYGODaoImpl(ds);
         daoConf = new ConfezionatoDaoImpl(ds);
-        daoCarta = new CartaSingolaDaoImpl(ds);
+        daoCartaSingola = new CartaSingolaDaoImpl(ds);
+        daoDeck = new DeckDaoImpl(ds);
+        daoContiene = new ContieneDeckDaoImpl(ds);
+        daoCarta = new CartaDaoImpl(ds);
     }
     
     /**
@@ -63,70 +78,74 @@ public class GetProdottoPage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = (int)request.getAttribute("id");
+		int id = Integer.parseInt(request.getParameter("id"));
 		try {
 			int tipo = daoProd.prodottoType(id);
 			switch(tipo){
 				case 1: {
-					CartaSingolaBean prodotto = daoCarta.retrieveByKey(id);
+					CartaSingolaBean prodotto = daoCartaSingola.retrieveByKey(id);
 					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraCartaSingola.jsp");
-					request.setAttribute("bean", prodotto);
+					request.setAttribute("carta", prodotto);
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 2: {
-					ProdottoYGOBean prodotto = daoPYGO.retrieveByKey(id);
-					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraProdottoYGO.jsp");
-					request.setAttribute("bean", prodotto);
+					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/index");
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 3: {
-					ConfezionatoBean prodotto = daoConf.retrieveByKey(id);
-					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraConfezionato.jsp");
-					request.setAttribute("bean", prodotto);
+					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/index");
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 4:{
 					ConfezionatoBean prodotto = daoConf.retrieveByKey(id);
 					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraPacchetto.jsp");
-					request.setAttribute("bean", prodotto);
+					request.setAttribute("confezionato", prodotto);
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 5: {
 					ConfezionatoBean prodotto = daoConf.retrieveByKey(id);
 					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraTin.jsp");
-					request.setAttribute("bean", prodotto);
+					request.setAttribute("confezionato", prodotto);
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 6 : {
 					ConfezionatoBean prodotto = daoConf.retrieveByKey(id);
 					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraBox.jsp");
-					request.setAttribute("bean", prodotto);
+					request.setAttribute("confezionato", prodotto);
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 7 : {
 					ConfezionatoBean prodotto = daoConf.retrieveByKey(id);
 					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraStructureDeck.jsp");
-					request.setAttribute("bean", prodotto);
+					request.setAttribute("confezionato", prodotto);
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 8 : {
-					ConfezionatoBean prodotto = daoConf.retrieveByKey(id);
+					ProdottoYGOBean prodotto = daoPYGO.retrieveByKey(id);
 					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraDeck.jsp");
-					request.setAttribute("bean", prodotto);
+					List<ContieneDeckBean> contiene = daoContiene.retrieveByIdDeck(id);
+					List<CartaBean> carte = new ArrayList<>();
+					for(ContieneDeckBean c : contiene) {
+						CartaBean carta = daoCarta.retrieveByKey(c.getIdCarta());
+						carte.add(carta);
+					}
+					request.setAttribute("contiene", contiene);
+					request.setAttribute("carte", carte);
+					request.setAttribute("deck", prodotto);
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 0 : {
 					ProdottoBean prodotto = daoProd.retrieveByKey(id);
 					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraProdotto.jsp");
-					request.setAttribute("bean", prodotto);
+					request.setAttribute("prodotto", prodotto);
 					dispatcher.forward(request, response);
 				}
 			}

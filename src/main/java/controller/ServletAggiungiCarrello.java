@@ -75,6 +75,9 @@ public class ServletAggiungiCarrello extends HttpServlet {
 	    	ProdottoCompratoBean prod = new ProdottoCompratoBean();
 	    	prod.setIdOriginale(id);
 	    	prod.setQnt(qnt);
+	    	prod.setPrezzo(prodotto.getPrezzo());
+	    	prod.setInfo(prodotto.getDescrizione());
+	    	prod.setNome(prodotto.getNome());
 	    	OrdineBean carrello = (OrdineBean)session.getAttribute("carrello");
     		if(carrello == null) {
     			UtenteBean utente = (UtenteBean)session.getAttribute("utente");

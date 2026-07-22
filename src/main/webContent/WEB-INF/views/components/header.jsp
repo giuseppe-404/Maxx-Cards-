@@ -6,7 +6,7 @@
 			<img src="${pageContext.request.contextPath}/images/iconDark.png" alt="Area Personale" class="dark ">
 			<img src="${pageContext.request.contextPath}/images/iconLight.png" alt="Area Personale" class="light">
 		</a>
-		<a href="http://localhost/Max-Cards-/bbbbbbbbbbbbbbbbb">
+		<a href="mostraCarrello">
 			<img src="${pageContext.request.contextPath}/images/carrelloDark.png" alt="Carrello" class="dark">
 			<img src="${pageContext.request.contextPath}/images/carrelloLight.png" alt="Carrello" class="light">
 		</a>

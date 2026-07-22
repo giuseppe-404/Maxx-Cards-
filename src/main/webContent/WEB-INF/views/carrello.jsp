@@ -32,7 +32,7 @@
 									<td colspan="6">
 										<a href="getProdottoPage?id=${prodotto.id}">${prodotto.nome}</a>
 									</td>
-									<td colspan="2">
+									<td colspan="3">
 										<p>${prodotto.prezzo}€</p>
 									</td>
 									<td colspan="3">
@@ -56,16 +56,15 @@
 							</c:if>
 						</c:forEach>
 					</c:forEach>
-					<tr>
-						
+					<tr id="buttons_row">
+						<td colspan="7">
+							<button onclick="location.href = 'svuotaCarrello';">Svuota il carrello</button>
+						</td>
+						<td colspan="7">
+							<button onclick="location.href = 'checkout';">Vai al checkout!</button>
+						</td>
 					</tr>
 				</table>
-				<form action="svuotaCarrello" method=post>
-					<button>Svuota il carrello</button>
-				</form>
-				<form action="checkout" method=post>
-					<button>Vai al checkout!</button>
-				</form>
 			</c:otherwise>
 		</c:choose>
 	</main>

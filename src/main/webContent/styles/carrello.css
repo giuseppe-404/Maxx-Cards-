@@ -19,6 +19,13 @@ main{
 	tr:nth-child(even) {
 		background-color: var(--product-bg-color-2);
 	}
+	tr#buttons_row{
+		border:none;
+		>td{
+			padding: 3vh 0;
+			border:none;
+		}
+	}
 	td {
 		border: #fdf7e4 solid 0.3vh;
 		border-bottom-width: 0.5vh;
@@ -57,12 +64,6 @@ main{
 		}
 		
 	}
-}
-
-form{
-	padding: 3vh 5vh;
-	display: inline-block;
-	max-width: 50%
 }
 
 .error_msg{

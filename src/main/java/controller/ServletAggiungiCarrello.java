@@ -69,22 +69,29 @@ public class ServletAggiungiCarrello extends HttpServlet {
     			UtenteBean utente = (UtenteBean)session.getAttribute("utente");
     			if(utente != null) {
     				carrello = ordineDao.retrieveCarrello(utente.getId());
+    				if(carrello == null) {
+    					carrello = new OrdineBean();
+        				carrello.setStato("Carrello");
+        				carrello.setIdUtente(utente.getId());
+        				ordineDao.createOrdine(carrello);
+        				carrello = ordineDao.retrieveCarrello(utente.getId());
+    				}
     			}
     			if(carrello == null) {
     				carrello = new OrdineBean();
     				carrello.setStato("Carrello");
-    			} else {
-    				prod.setIdOrdine(carrello.getIdOrdine());
     			}
     			session.setAttribute("carrello", carrello);
-    		} else {
+    		} 
+    		boolean logged = (carrello.getIdOrdine() > 0);
+    		if(logged){
     			prod.setIdOrdine(carrello.getIdOrdine());
     		}
     		List<ProdottoCompratoBean> prodScelti = (List<ProdottoCompratoBean>) session.getAttribute("prodCarrello");
     		if (prodScelti == null) {
     			prodScelti = new ArrayList<>();
     		}	
-
+    		
     		ProdottoCompratoBean daRimuovere = null;
     		boolean presente = false;
     		
@@ -92,6 +99,9 @@ public class ServletAggiungiCarrello extends HttpServlet {
     			if(p.getId() == prod.getIdOriginale()) {
     				if(prod.getQnt() == 0) {
     					daRimuovere = p;
+    					if(logged) {
+    						prodottoCDao.deleteProdottoComprato(p.getId(),carrello.getIdOrdine());
+    					}
     				} else {
     					p.setQnt(prod.getQnt());
     				}
@@ -104,7 +114,11 @@ public class ServletAggiungiCarrello extends HttpServlet {
     		}
     		
     		if(!presente && prod.getQnt() > 0) {
+    			if(logged) {
+    				prodottoCDao.saveProdottoComprato(prod);
+    			}
     			prodScelti.add(prod);
+    			
     		}
     		session.setAttribute("prodCarrello", prodScelti);
     		JSONObject obj = new JSONObject();

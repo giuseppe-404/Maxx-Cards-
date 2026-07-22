@@ -29,7 +29,7 @@ import dao.ProdottoYGODaoImpl;
 /**
  * Servlet implementation class getProdottoPage
  */
-@WebServlet("/GetProdottoPage")
+@WebServlet("/getProdottoPage")
 public class GetProdottoPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private ProdottoDao daoProd;

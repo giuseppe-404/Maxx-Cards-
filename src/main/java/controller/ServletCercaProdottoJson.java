@@ -53,7 +53,7 @@ import dao.TinDaoImpl;
 /**
  * Servlet implementation class ServletCercaProdottoJson
  */
-@WebServlet("/ServletCercaProdottoJson")
+@WebServlet("/servletCercaProdottoJson")
 public class ServletCercaProdottoJson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProdottoDao prodottoDao = null;

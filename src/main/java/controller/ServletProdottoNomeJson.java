@@ -23,7 +23,7 @@ import dao.ProdottoDaoImpl;
 /**
  * Servlet implementation class ServletProdottoNome
  */
-@WebServlet("/ServletProdottoNomeJson")
+@WebServlet("/servletProdottoNomeJson")
 public class ServletProdottoNomeJson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private ProdottoDao prodottoDao = null;

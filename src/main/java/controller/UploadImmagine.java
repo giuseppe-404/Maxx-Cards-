@@ -26,7 +26,7 @@ import dao.ProdottoDaoImpl;
 /**
  * Servlet implementation class UploadImmagine
  */
-@WebServlet("/UploadImmagine")
+@WebServlet("/uploadImmagine")
 public class UploadImmagine extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String IMAGE_DIR = "images";

@@ -29,7 +29,7 @@ import dao.ProdottoCompratoDaoImpl;
 /**
  * Servlet implementation class ServletAggiungiCarrello
  */
-@WebServlet("/ServletAggiungiCarrello")
+@WebServlet("/servletAggiungiCarrello")
 public class ServletAggiungiCarrello extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProdottoCompratoDao prodottoCDao = null;

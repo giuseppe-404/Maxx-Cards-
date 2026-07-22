@@ -26,7 +26,7 @@ import dao.ProdottoDaoImpl;
 /**
  * Servlet implementation class Fattura
  */
-@WebServlet("/Fattura")
+@WebServlet("/fattura")
 public class Fattura extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private OrdineDao daoOrdine;

@@ -35,7 +35,7 @@ import dao.TrappolaDaoImpl;
 /**
  * Servlet implementation class ServletCercaCartaJson
  */
-@WebServlet("/ServletCercaCartaJson")
+@WebServlet("/servletCercaCartaJson")
 public class ServletCercaCartaJson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private CartaDao cartaDao = null;

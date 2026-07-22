@@ -295,7 +295,7 @@ public class ProdottoDaoImpl implements ProdottoDao {
 				primo = false;
 				filter.append("WHERE ");
 			}else filter.append(" AND ");
-			filter.append(" qnt=? ");
+			filter.append(" qnt >= ? ");
 			attributi.add(Integer.toString(prodotto.getQnt()));
 		}
 		if(prodotto.getPrezzo() > 0) {

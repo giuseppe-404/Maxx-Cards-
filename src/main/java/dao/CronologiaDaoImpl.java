@@ -1,4 +1,4 @@
-package model;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import dao.CronologiaDao;
+import model.CronologiaBean;
 
 public class CronologiaDaoImpl implements CronologiaDao {
 	private static final String TABLE_NAME_PRODOTTO= "cronologia_prodotto";

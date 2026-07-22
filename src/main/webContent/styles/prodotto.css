@@ -23,6 +23,36 @@
 			max-width:100%;
 			margin-bottom: 1vh;
 		}
+		>#deck_section{
+			max-width:100%;
+			min-width:100%;
+			display:flex;
+			flex-direction:row;
+			flex-wrap:wrap;
+			>label{
+				display:block;
+				max-width:100%;
+				min-width:100%;
+				margin-bottom:0.5vh;
+				text-align: center;
+			}
+			>.carta_div{
+				max-width:25%;
+				min-width:25%;
+				margin:0 0 1vh;
+				padding: 0 0.5vh 0 1vh;
+				border-left: #fdf7e4 solid 0.3vh;
+				border-left-color: var(--font-color);
+				display:flex;
+				flex-direction: column;
+				box-sizing: border-box;
+				>img{
+					max-width:100%;
+					min-width:100%;
+					object-fit:contain;
+				}
+			}
+		}
 		>#price_section{
 			min-width:90%;
 			max-width:90%;
@@ -81,6 +111,12 @@
 		>#data_section{
 			min-width:70%;
 			max-width:70%;
+			>#deck_section{
+				>.carta_div{
+					max-width:33%;
+					min-width:33%;
+				}
+			}
 		}
 	}
 }
@@ -95,6 +131,12 @@
 		>#data_section{
 			min-width:100%;
 			max-width:100%;
+			>#deck_section{
+				>.carta_div{
+					max-width:50%;
+					min-width:50%;
+				}
+			}
 		}
 	}
 }

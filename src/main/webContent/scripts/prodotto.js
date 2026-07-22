@@ -1,4 +1,6 @@
 window.addEventListener("load", function(){
+	HTMLCollection.prototype.forEach = Array.prototype.forEach;
+	
 	const button = document.getElementById("buy_button");
 	const id = document.getElementById("buy_id");
 	const qnt = document.getElementById("buy_qnt");
@@ -22,4 +24,15 @@ window.addEventListener("load", function(){
 			
         })
 	})
+	
+	const show_deck_button = document.getElementById("mostra_carte");
+	if (show_deck_button){
+		const deck_images = document.getElementById("deck_section").getElementsByTagName("img");
+		show_deck_button.addEventListener("click", function(){
+			if (show_deck_button.checked)
+				deck_images.forEach(function(image){image.classList.remove("hidden")});
+			else
+				deck_images.forEach(function(image){image.classList.add("hidden")});
+		})
+	}
 })

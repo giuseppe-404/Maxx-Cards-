@@ -20,7 +20,7 @@ window.addEventListener("load", function(){
 			else if(diff==0)
 				output.innerHTML = quant+" unità già presenti nel carrello"
 			else
-				output.innerHTML = "Rimosse  "+diff+" unità dal carrello  ("+quant+" totali)"
+				output.innerHTML = "Rimosse  "+Math.abs(diff)+" unità dal carrello  ("+quant+" totali)"
 			
         })
 	})

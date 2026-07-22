@@ -12,8 +12,10 @@ window.addEventListener("load", function(){
             if (request.readyState < 4)
                 return;
 			output.classList.remove("hidden");
-			if(request.status != 200)
+			if(request.status != 200){
 				output.innerHTML = "Errore durante l'inserimento nel carrello";
+				return;
+			}
 			var diff = JSON.parse(request.responseText).diff;
 			if(diff>0)
 				output.innerHTML = "Aggiunte  "+diff+" unità al carrello! ("+quant+" totali)";

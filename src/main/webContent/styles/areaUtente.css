@@ -1,0 +1,29 @@
+main{
+	padding: 5vh;
+	>#admin_section{
+		border-bottom: #fdf7e4 solid 0.5vh;
+		border-bottom-color: var(--font-color);
+	}
+	>section{
+		max-width:33%;
+		display: flex;	
+		flex-direction: column;
+		margin-bottom: 3vh;
+	}
+	button{
+		display: block;
+		margin: 1vh 3vh;
+	}
+}
+
+@media screen and (min-width: 481px) and (max-width: 1080px){
+	main>section{
+		max-width: 50%;
+	}
+}
+
+@media screen and (max-width: 480px){
+	main>section{
+		max-width: 100%;
+	}
+}

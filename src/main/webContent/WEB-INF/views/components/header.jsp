@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <header>
 	<section id="personal_area">
-		<a href="">
+		<a href="personalPage">
 			<img src="${pageContext.request.contextPath}/images/iconDark.png" alt="Area Personale" class="dark ">
 			<img src="${pageContext.request.contextPath}/images/iconLight.png" alt="Area Personale" class="light">
 		</a>

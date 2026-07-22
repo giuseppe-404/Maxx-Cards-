@@ -140,3 +140,45 @@
 		}
 	}
 }
+
+
+#buy_options{
+	min-width:100%;
+	max-width:100%;
+	padding:1vh;
+	box-sizing: border-box;
+	>table{
+		min-width:100%;
+		max-width:100%;
+		table-layout: fixed;
+		word-wrap:break-word;
+    	width: 100%;
+    	border-collapse:collapse;
+    	box-sizing: border-box;
+    	td{
+    		border: #fdf7e4 solid 0.3vh;
+    		border-bottom-width: 0.5vh;
+			border-color: var(--font-color);
+			text-align: center;
+    	}
+    	.card_row{
+	    	>td{
+				padding: 1vh 0;
+				border-bottom-width:0.1vh;
+			}
+	    	>td:first-child{
+	    		padding-left: 1vh;
+	    		text-align: left;
+	    		border-left-width: 1vh;
+	    	}
+		}
+		.half_extra_row>td{
+			padding: 0.2vh 0 1vh;
+			border-top-width:0.1vh;
+		}
+		.full_extra_row>td{
+			padding: 0.2vh 0 1vh;
+			border-top-width:0.1vh;
+		}
+	}
+}

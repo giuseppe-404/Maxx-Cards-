@@ -77,6 +77,7 @@ public class GetCartaPage extends HttpServlet {
 				filter.setIdCarta(id);
 				filter.setQnt(0);
 				List<CartaSingolaBean> prodotti = cartaSingolaDao.retrieveFiltered(filter,1,16);
+				request.setAttribute("prodotti", prodotti);
 				dispatcher.forward(request, response);
 			} else if(type == 2) {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/mostraMagia.jsp");
@@ -84,6 +85,7 @@ public class GetCartaPage extends HttpServlet {
 				filter.setIdCarta(id);
 				filter.setQnt(0);
 				List<CartaSingolaBean> prodotti = cartaSingolaDao.retrieveFiltered(filter,1,16);
+				request.setAttribute("prodotti", prodotti);
 				dispatcher.forward(request, response);
 			} else if(type == 3) {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/mostraTrappola.jsp");
@@ -91,6 +93,7 @@ public class GetCartaPage extends HttpServlet {
 				filter.setIdCarta(id);
 				filter.setQnt(0);
 				List<CartaSingolaBean> prodotti = cartaSingolaDao.retrieveFiltered(filter,1,16);
+				request.setAttribute("prodotti", prodotti);
 				dispatcher.forward(request, response);
 			} else {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/index");

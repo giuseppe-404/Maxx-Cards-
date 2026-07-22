@@ -37,6 +37,14 @@
 				</c:forEach>
 			</section>
 		</c:if>
+		<c:if test="${notizie != null}">
+			<section id="news_section">
+				<c:forEach var="notizia" items="${notizie}">
+					<h3>${notizia.corpo}</h3>
+					<p>${notizia.corpo}</p>
+				</c:forEach>
+			</section>
+		</c:if>
 	</main>
 	<%@include file="/WEB-INF/views/components/footer.jsp"%>
 </body>

@@ -1,0 +1,20 @@
+#link_display{
+	margin: 1vh;
+	>div>div{
+		display: inline-block;
+	}
+}
+
+.arrow{
+	color:red;
+}
+
+#br_arrow, #tl_arrow{
+	transform: rotate(45deg);
+}
+#b_arrow, #t_arrow{
+	transform: rotate(90deg);
+}
+#bl_arrow, #tr_arrow{
+	transform: rotate(-45deg);
+}

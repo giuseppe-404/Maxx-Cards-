@@ -155,6 +155,12 @@
     	width: 100%;
     	border-collapse:collapse;
     	box-sizing: border-box;
+    	tr:nth-child(odd){
+		    background-color: var(--product-bg-color-1);
+		}
+		tr:nth-child(even){
+		    background-color: var(--product-bg-color-2);
+		}
     	td{
     		border: #fdf7e4 solid 0.3vh;
     		border-bottom-width: 0.5vh;
@@ -173,10 +179,12 @@
 	    	}
 		}
 		.half_extra_row>td{
+			color: red;
 			padding: 0.2vh 0 1vh;
 			border-top-width:0.1vh;
 		}
 		.full_extra_row>td{
+			color: red;
 			padding: 0.2vh 0 1vh;
 			border-top-width:0.1vh;
 		}

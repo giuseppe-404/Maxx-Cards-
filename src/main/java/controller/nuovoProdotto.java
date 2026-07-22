@@ -26,8 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -261,7 +259,7 @@ public class nuovoProdotto extends HttpServlet {
 					} else valido = false;
 					if(request.getParameter("lingua") != null) {
 						String lingua = request.getParameter("lingua").trim().toLowerCase();
-						if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+						if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 							temp.setLingua(lingua);
 						} else valido = false;
 					} else valido = false;
@@ -327,7 +325,7 @@ public class nuovoProdotto extends HttpServlet {
 					} else valido = false;
 					if(request.getParameter("lingua") != null) {
 						String lingua = request.getParameter("lingua").trim().toLowerCase();
-						if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+						if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 							temp.setLingua(lingua);
 						} else valido = false;
 					} else valido = false;
@@ -398,7 +396,7 @@ public class nuovoProdotto extends HttpServlet {
 					} else valido = false;
 					if(request.getParameter("lingua") != null) {
 						String lingua = request.getParameter("lingua").trim().toLowerCase();
-						if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+						if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 							temp.setLingua(lingua);
 						} else valido = false;
 					} else valido = false;
@@ -476,7 +474,7 @@ public class nuovoProdotto extends HttpServlet {
 					} else valido = false;
 					if(request.getParameter("lingua") != null) {
 						String lingua = request.getParameter("lingua").trim().toLowerCase();
-						if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+						if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 							temp.setLingua(lingua);
 						} else valido = false;
 					} else valido = false;
@@ -547,7 +545,7 @@ public class nuovoProdotto extends HttpServlet {
 					} else valido = false;
 					if(request.getParameter("lingua") != null) {
 						String lingua = request.getParameter("lingua").trim().toLowerCase();
-						if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+						if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 							temp.setLingua(lingua);
 						} else valido = false;
 					} else valido = false;
@@ -618,7 +616,7 @@ public class nuovoProdotto extends HttpServlet {
 					} else valido = false;
 					if(request.getParameter("lingua") != null) {
 						String lingua = request.getParameter("lingua").trim().toLowerCase();
-						if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+						if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 							temp.setLingua(lingua);
 						} else valido = false;
 					} else valido = false;
@@ -688,7 +686,7 @@ public class nuovoProdotto extends HttpServlet {
 					} else valido = false;
 					if(request.getParameter("lingua") != null) {
 						String lingua = request.getParameter("lingua").trim().toLowerCase();
-						if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+						if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 							temp.setLingua(lingua);
 						} else valido = false;
 					} else valido = false;
@@ -758,7 +756,7 @@ public class nuovoProdotto extends HttpServlet {
 					} else valido = false;
 					if(request.getParameter("lingua") != null) {
 						String lingua = request.getParameter("lingua").trim().toLowerCase();
-						if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+						if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 							temp.setLingua(lingua);
 						} else valido = false;
 					} else valido = false;
@@ -905,7 +903,7 @@ public class nuovoProdotto extends HttpServlet {
 							}
 							if(request.getParameter("prodotto_lingua") != null) {
 								String lingua = request.getParameter("lingua").trim().toLowerCase();
-								if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+								if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 									bean.setLingua(lingua);
 									if(!prod.getLingua().equals(bean.getLingua())) {
 										cartasingolaDAO.changeLingua(bean);
@@ -1011,7 +1009,7 @@ public class nuovoProdotto extends HttpServlet {
 							}
 							if(request.getParameter("prodotto_lingua") != null) {
 								String lingua = request.getParameter("lingua").trim().toLowerCase();
-								if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+								if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 									bean.setLingua(lingua);
 									if(!prod.getLingua().equals(bean.getLingua())) {
 										prodottoYGODAO.changeLingua(bean);
@@ -1089,7 +1087,7 @@ public class nuovoProdotto extends HttpServlet {
 							}
 							if(request.getParameter("prodotto_lingua") != null) {
 								String lingua = request.getParameter("prodotto_lingua").trim().toLowerCase();
-								if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+								if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 									bean.setLingua(lingua);
 									if(!prod.getLingua().equals(bean.getLingua())) {
 										confezionatoDAO.changeLingua(bean);
@@ -1185,7 +1183,7 @@ public class nuovoProdotto extends HttpServlet {
 							}
 							if(request.getParameter("prodotto_lingua") != null) {
 								String lingua = request.getParameter("prodotto_lingua").trim().toLowerCase();
-								if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+								if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 									bean.setLingua(lingua);
 									if(!prod.getLingua().equals(bean.getLingua())) {
 										pacchettoDAO.changeLingua(bean);
@@ -1281,7 +1279,7 @@ public class nuovoProdotto extends HttpServlet {
 							}
 							if(request.getParameter("prodotto_lingua") != null) {
 								String lingua = request.getParameter("prodotto_lingua").trim().toLowerCase();
-								if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+								if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 									bean.setLingua(lingua);
 									if(!prod.getLingua().equals(bean.getLingua())) {
 										tinDAO.changeLingua(bean);
@@ -1377,7 +1375,7 @@ public class nuovoProdotto extends HttpServlet {
 							}
 							if(request.getParameter("prodotto_lingua") != null) {
 								String lingua = request.getParameter("prodotto_lingua").trim().toLowerCase();
-								if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+								if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 									bean.setLingua(lingua);
 									if(!prod.getLingua().equals(bean.getLingua())) {
 										boxDAO.changeLingua(bean);
@@ -1473,7 +1471,7 @@ public class nuovoProdotto extends HttpServlet {
 							}
 							if(request.getParameter("prodotto_lingua") != null) {
 								String lingua = request.getParameter("prodotto_lingua").trim().toLowerCase();
-								if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+								if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 									bean.setLingua(lingua);
 									if(!prod.getLingua().equals(bean.getLingua())) {
 										structureDAO.changeLingua(bean);
@@ -1569,7 +1567,7 @@ public class nuovoProdotto extends HttpServlet {
 							}
 							if(request.getParameter("prodotto_lingua") != null) {
 								String lingua = request.getParameter("prodotto_lingua").trim().toLowerCase();
-								if(lingua.equals("italiano") || lingua.equals("inglese") || lingua.equals("giapponese")) {
+								if(lingua.equals("ita") || lingua.equals("eng") || lingua.equals("jap")) {
 									bean.setLingua(lingua);
 									if(!prod.getLingua().equals(bean.getLingua())) {
 										deckDAO.changeLingua(bean);

@@ -179,5 +179,19 @@ public class OrdineDaoImpl implements OrdineDao{
 			return list;
 		}
 	}
+	
+	public List<OrdineBean> retrieveByIdUtenteNull() throws SQLException{
+		String sql = "SELECT * from "+TABLE_NAME+ " where id_utente IS NULL";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ResultSet rs = ps.executeQuery();
+			List<OrdineBean> list = new ArrayList<OrdineBean>();
+			while(rs.next()) {
+				OrdineBean ordine = new OrdineBean(rs.getString(1),rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getInt(5),rs.getDate(6),rs.getDate(7));
+				list.add(ordine);
+			}
+			return list;
+		}
+	}
 
 }

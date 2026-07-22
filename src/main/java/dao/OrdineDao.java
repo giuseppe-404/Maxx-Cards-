@@ -26,6 +26,8 @@ public interface OrdineDao {
 	
 	public List<OrdineBean> retrieveByIdUtente(int idUtente) throws SQLException;
 	
+	public List<OrdineBean> retrieveByIdUtenteNull() throws SQLException;
+	
 	public List<OrdineBean> retrieveAll() throws SQLException;
 	
 	public List<OrdineBean> retrieveAll(int page, int limit) throws SQLException;

@@ -16,6 +16,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import dao.CartaDao;
 import dao.CartaDaoImpl;
@@ -79,7 +80,10 @@ public class ServletCercaCartaDeckJson extends HttpServlet {
     				}
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
 
 
@@ -109,7 +113,10 @@ public class ServletCercaCartaDeckJson extends HttpServlet {
     				}
     				}out.print(array.toString());
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		}
     	}
@@ -138,7 +145,10 @@ public class ServletCercaCartaDeckJson extends HttpServlet {
     			}
     			}
     		}catch(SQLException e) {
-    			e.printStackTrace();
+    			JSONObject obj = new JSONObject();
+        		obj.put("Status", false);
+        		out.print(obj.toString());
+        		return;
     		}
 
 
@@ -168,7 +178,10 @@ public class ServletCercaCartaDeckJson extends HttpServlet {
     			}
     			}out.print(array.toString());
     		}catch(SQLException e) {
-    			e.printStackTrace();
+    			JSONObject obj = new JSONObject();
+        		obj.put("Status", false);
+        		out.print(obj.toString());
+        		return;
     		}
     	}
     }

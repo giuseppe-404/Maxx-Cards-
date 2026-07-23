@@ -26,7 +26,7 @@
 							<c:if test="${prodotto.id == ordinato.idOriginale}">
 								<tr class="prodotto_carrello">
 									<td colspan="1">
-										<img src="image?action=show&prodottoId=${prodotto.id}&isProdotto=true" alt="Immagine di ${prodotto.nome}">
+										<img src="uploadImmagine?action=show&prodottoId=${prodotto.id}&isProdotto=true" alt="Immagine di ${prodotto.nome}">
 									</td>
 									<td colspan="6">
 										<a href="getProdottoPage?id=${prodotto.id}">${prodotto.nome}</a>

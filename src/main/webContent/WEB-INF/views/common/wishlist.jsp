@@ -24,7 +24,7 @@
 					<c:forEach var="prodotto" items="${prodotti}">
 						<tr class="prodotto_carrello prodotto_wishlist">
 							<td colspan="1">
-								<img src="image?action=show&prodottoId=${prodotto.id}&isProdotto=true" alt="Immagine di ${prodotto.nome}">
+								<img src="uploadImmagine?action=show&prodottoId=${prodotto.id}&isProdotto=true" alt="Immagine di ${prodotto.nome}">
 							</td>
 							<td colspan="3">
 								<a href="getProdottoPage?id=${prodotto.id}">${prodotto.nome}</a>

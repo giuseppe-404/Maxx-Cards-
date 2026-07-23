@@ -22,7 +22,7 @@
 	</section>
 	<search id="search_bar">
 		<section>
-			<img src="https://static.thenounproject.com/png/1891820-200.png" alt="zoom_lens">                    
+			<img src="${pageContext.request.contextPath}/images/lente.png" alt="zoom_lens">                    
 		</section>
 		<section >
 			<input type="text" id="ricerca" placeholder="Ricerca...">

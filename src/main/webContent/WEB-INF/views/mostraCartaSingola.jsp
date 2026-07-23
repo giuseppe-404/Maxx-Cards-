@@ -16,7 +16,7 @@
 	<main>
 		<section id=product_section>
 			<section id="img_section">
-				<img src="image?action=show&prodottoId=${carta.id}&isProdotto=true" alt="Immagine di ${carta.nome}">
+				<img src="uploadImmagine?action=show&prodottoId=${carta.id}&isProdotto=true" alt="Immagine di ${carta.nome}">
 			</section>
 			<section id="data_section">
 				<section id="txt_section">

@@ -27,7 +27,7 @@
 							</section>
 						</c:if>
 						<section class="product_image">
-							<img src="image?action=show&prodottoId=${prodotto.id}&isProdotto=true" alt="Immagine di ${prodotto.nome}">
+							<img src="uploadImmagine?action=show&prodottoId=${prodotto.id}&isProdotto=true" alt="Immagine di ${prodotto.nome}">
 						</section>
 						<section class="product_description">
 							<h3>${prodotto.nome}</h3>

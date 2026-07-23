@@ -2,7 +2,7 @@
 <footer>
 	<section>
 		link vari 
-		<a href="">Link</a>
+		<a href="https://ygoprodeck.com/card-database">Link</a>
 	</section>
 	<address>
 		<ul>

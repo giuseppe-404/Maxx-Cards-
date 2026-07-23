@@ -41,6 +41,8 @@
 						<input type="number" min="0" max="${carta.qnt}" value="0" id="buy_qnt">
 						<input type="hidden" value="${carta.id}" id="buy_id">
 						<input type="image" src="${pageContext.request.contextPath}/images/carrello.png" id="buy_button" alt="Aggiungi al carrello">
+						<input type="image" src="${pageContext.request.contextPath}/images/wish.png" class="wish_button" alt="Aggiungi al carrello">
+						<input type="image" src="${pageContext.request.contextPath}/images/wished.png" class="wish_button hidden" alt="Aggiungi al carrello">
 					</section>
 					<p id="carrello_output" class="hidden"></p>
 				</section>

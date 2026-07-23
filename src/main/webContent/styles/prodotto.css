@@ -89,7 +89,7 @@
 					object-fit:contain;
 					margin: 0 0.5vh;
 				}
-				>input[type="image"]{
+				>#buy_button{
 					background-color: #a55911;
 					background-color: var(--icon-color);
 					border-radius:0.5vh;

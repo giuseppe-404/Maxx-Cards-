@@ -143,9 +143,8 @@ public class ServletCartaNomeJson extends HttpServlet {
     				out.print("Carta non trovata");
     			}
     	} catch(SQLException e) {
-    		JSONObject obj = new JSONObject();
-    		obj.put("Status", false);
-    		out.print(obj.toString());
+    		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    		return;
     	}
     }
     

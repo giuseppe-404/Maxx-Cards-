@@ -60,7 +60,8 @@ public class ServletProdottoNomeJson extends HttpServlet {
     					array.put(b.getNome());
     				} out.print(array.toString());
     			} catch(SQLException e) {
-    				e.printStackTrace();
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		} else {
     			String nome = request.getParameter("nome");
@@ -73,7 +74,8 @@ public class ServletProdottoNomeJson extends HttpServlet {
     					array.put(b.getNome());
     				} out.print(array.toString());
     			} catch(SQLException e) {
-    				e.printStackTrace();
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		}
     	} else {
@@ -85,7 +87,8 @@ public class ServletProdottoNomeJson extends HttpServlet {
     					array.put(b.getNome());
     				} out.print(array.toString());
     			} catch(SQLException e) {
-    				e.printStackTrace();
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		} else {
     			String nome = request.getParameter("nome");
@@ -98,7 +101,8 @@ public class ServletProdottoNomeJson extends HttpServlet {
     					array.put(b.getNome());
     				} out.print(array.toString());
     			} catch(SQLException e) {
-    				e.printStackTrace();
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		}
     	}

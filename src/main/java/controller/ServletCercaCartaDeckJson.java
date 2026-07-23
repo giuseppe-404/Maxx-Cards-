@@ -80,10 +80,8 @@ public class ServletCercaCartaDeckJson extends HttpServlet {
     				}
     				}
     			}catch(SQLException e) {
-    				JSONObject obj = new JSONObject();
-    	    		obj.put("Status", false);
-    	    		out.print(obj.toString());
-    	    		return;
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
 
 
@@ -113,10 +111,8 @@ public class ServletCercaCartaDeckJson extends HttpServlet {
     				}
     				}out.print(array.toString());
     			}catch(SQLException e) {
-    				JSONObject obj = new JSONObject();
-    	    		obj.put("Status", false);
-    	    		out.print(obj.toString());
-    	    		return;
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		}
     	}
@@ -145,9 +141,7 @@ public class ServletCercaCartaDeckJson extends HttpServlet {
     			}
     			}
     		}catch(SQLException e) {
-    			JSONObject obj = new JSONObject();
-        		obj.put("Status", false);
-        		out.print(obj.toString());
+    			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         		return;
     		}
 
@@ -178,9 +172,7 @@ public class ServletCercaCartaDeckJson extends HttpServlet {
     			}
     			}out.print(array.toString());
     		}catch(SQLException e) {
-    			JSONObject obj = new JSONObject();
-        		obj.put("Status", false);
-        		out.print(obj.toString());
+    			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         		return;
     		}
     	}

@@ -246,7 +246,8 @@ public class ServletProdottoElencoJson extends HttpServlet {
 				out.print(obj.toString());
     		}
     	} catch(SQLException e) {
-    		
+    		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    		return;
     	}
     }
     

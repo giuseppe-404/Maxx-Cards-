@@ -95,10 +95,8 @@ public class ServletCercaCartaJson extends HttpServlet {
     					result.put(obj);
     				}
     			} catch(SQLException e) {
-    				JSONObject obj = new JSONObject();
-    	    		obj.put("Status", false);
-    	    		out.print(obj.toString());
-    	    		return;
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		} else if(request.getParameter("classe").equals("mostro")) {
     			MostroBean filter = new MostroBean();
@@ -192,10 +190,8 @@ public class ServletCercaCartaJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				JSONObject obj = new JSONObject();
-    	    		obj.put("Status", false);
-    	    		out.print(obj.toString());
-    	    		return;
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		} else if(request.getParameter("classe").equals("magia")) {
     			MagiaBean filter = new MagiaBean();
@@ -226,10 +222,8 @@ public class ServletCercaCartaJson extends HttpServlet {
     					result.put(obj);
     				}
     			} catch (SQLException e) {
-    				JSONObject obj = new JSONObject();
-    	    		obj.put("Status", false);
-    	    		out.print(obj.toString());
-    	    		return;
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		} else if(request.getParameter("classe").equals("trappola")) {
     			TrappolaBean filter = new TrappolaBean();
@@ -260,10 +254,8 @@ public class ServletCercaCartaJson extends HttpServlet {
     					result.put(obj);
     				}
     			} catch (SQLException e) {
-    				JSONObject obj = new JSONObject();
-    	    		obj.put("Status", false);
-    	    		out.print(obj.toString());
-    	    		return;
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		}
     	}else {   	
@@ -290,10 +282,8 @@ public class ServletCercaCartaJson extends HttpServlet {
     					result.put(obj);
     				}
     			} catch(SQLException e) {
-    				JSONObject obj = new JSONObject();
-    	    		obj.put("Status", false);
-    	    		out.print(obj.toString());
-    	    		return;
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		} else if(request.getParameter("classe").equals("mostro")) {
     			MostroBean filter = new MostroBean();
@@ -386,10 +376,8 @@ public class ServletCercaCartaJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				JSONObject obj = new JSONObject();
-    	    		obj.put("Status", false);
-    	    		out.print(obj.toString());
-    	    		return;
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		} else if(request.getParameter("classe").equals("magia")) {
     			MagiaBean filter = new MagiaBean();
@@ -419,10 +407,8 @@ public class ServletCercaCartaJson extends HttpServlet {
     					result.put(obj);
     				}
     			} catch (SQLException e) {
-    				JSONObject obj = new JSONObject();
-    	    		obj.put("Status", false);
-    	    		out.print(obj.toString());
-    				return;
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		} else if(request.getParameter("classe").equals("trappola")) {
     			TrappolaBean filter = new TrappolaBean();
@@ -452,10 +438,8 @@ public class ServletCercaCartaJson extends HttpServlet {
     					result.put(obj);
     				}
     			} catch (SQLException e) {
-    				JSONObject obj = new JSONObject();
-    	    		obj.put("Status", false);
-    	    		out.print(obj.toString());
-    	    		return;
+    				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            		return;
     			}
     		}
     	} out.print(result.toString());

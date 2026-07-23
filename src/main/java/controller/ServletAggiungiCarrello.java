@@ -143,9 +143,8 @@ public class ServletAggiungiCarrello extends HttpServlet {
     	    obj.put("diff", diff);
     	    out.print(obj.toString());
     	} catch(SQLException e) {
-    		JSONObject obj = new JSONObject();
-    		obj.put("Status", false);
-    		out.print(obj.toString());
+    		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    		return;
     	}
     }
     

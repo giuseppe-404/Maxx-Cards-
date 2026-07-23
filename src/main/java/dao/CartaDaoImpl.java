@@ -304,7 +304,7 @@ public class CartaDaoImpl implements CartaDao{
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
-				return rs.getInt(1);
+				return rs.getInt("tipo");
 			}
 			return -1;
 		}

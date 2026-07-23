@@ -8,7 +8,8 @@ public class CartaSingolaBean extends ProdottoYGOBean{
 	
 	public CartaSingolaBean(){
 		super();
-		quality="";
+		quality = "";
+		idSet = "";
 	}
 	
 	public CartaSingolaBean(int idP, String nome, int qnt, int prezzo, String descrizione, int sconto, String pathImg,

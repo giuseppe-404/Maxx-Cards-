@@ -8,8 +8,10 @@ window.addEventListener("load",function(event) {
 	
 	var search = document.getElementById("ricerca");
 	var personal = document.getElementById("personal_area");
-	if (search)
-		autocomplete(search, "servletCercaProdottoJson", "get");  //[{id, nome, qnt, prezzo, descrizione, sconto, lingua, idSet, quality, idCarta, deck:[{nome:"", id:"", qnt:""}]]
+	if (search){
+		var autArgs = [search, "servletCercaProdottoJson", "get", null];
+		autocomplete(...autArgs, true, searchBarAutocomplete.bind(null, ...autArgs));
+	}
 	if (search && personal){
 		search.addEventListener("focus", function(){
 			if (window.matchMedia('screen and (min-width:481px)').matches){
@@ -343,4 +345,55 @@ function closeAllLists(elem) {
     if (elem != lista)
         lista.parentNode.removeChild(lista)
     })
+}
+
+function searchBarAutocomplete(inp, link, method) {
+    closeAllLists();
+
+    if (timer)
+        window.clearTimeout(timer);
+
+    timer = window.setTimeout(function() {
+        var val = inp.value;
+        if (!val)
+            return false;
+
+        var list_div = document.createElement("div");
+        list_div.setAttribute("id", inp.id + "autocomplete-list");
+        list_div.setAttribute("class", "autocomplete-items");
+
+        inp.parentNode.appendChild(list_div);
+
+        var params = "nome=" + inp.val;
+
+        ajax(link, method, params, function(request) {
+            if (request.readyState < 4 || request.status != 200)
+                return;
+            var arr = JSON.parse(request.responseText);
+            console.log(arr);
+            const rg = new RegExp(val, "i");
+            arr.forEach(function(item) {
+                var index = item.search(rg);
+                if (index >= 0) {
+                    var list_elem = document.createElement("div");
+                    list_elem.innerHTML = item.substr(0, index);
+                    list_elem.innerHTML += "<strong>" + item.substr(index, val.length) + "</strong>";
+                    list_elem.innerHTML += item.substr(index + val.length);
+                    list_elem.innerHTML += "<input type='hidden' value='" + item + "'>";
+                    list_elem.addEventListener("click", function(e) {
+                        closeAllLists();
+						ajax("servletProdottoNomeJson", "get", "nome="+this.getElementsByTagName("input")[0].value, function(request){
+							if(request.readyState < 4)
+								return
+							if(request.status != 200)
+								return
+							var id = JSON.parse(request.responseText).id;
+							location.href = 'getProdottoPage?id='+id;
+						});
+                    });
+                    list_div.appendChild(list_elem);
+                }
+            })
+        })
+    }, 1000);
 }

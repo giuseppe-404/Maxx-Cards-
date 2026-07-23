@@ -72,7 +72,8 @@ public class GestioneWishList extends HttpServlet {
     		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/");
     		dispatcher.forward(request, response);
     	} catch(SQLException ex) {
-    		response.sendError(500,"Errore nell'ottenimento della wishlist!");
+    		request.setAttribute("msg", "Errore nell'ottenimento della wishlist!");
+    		response.sendError(500);
     	}
     }
 

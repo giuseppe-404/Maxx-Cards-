@@ -49,9 +49,9 @@ public class GestioneProdotti extends HttpServlet {
 			request.setAttribute("sets", setDao.retrieveAll());
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {
-			response.sendError(500,"Errore nell'ottenimento dei set dal database");
+			request.setAttribute("msg", "Errore nell'ottenimento dei set dal database");
+			response.sendError(500);
 		}
-		
 	}
 
 	/**

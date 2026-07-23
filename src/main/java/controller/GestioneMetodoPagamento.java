@@ -56,7 +56,8 @@ public class GestioneMetodoPagamento extends HttpServlet {
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {
-			response.sendError(500,"Errore nell'ottenimento dei metodi di pagamento dal database!");
+			request.setAttribute("msg", "Errore nell'ottenimento dei metodi di pagamento dal database!");
+			response.sendError(500);
 		}
 		
 	}

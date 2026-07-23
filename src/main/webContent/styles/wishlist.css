@@ -1,0 +1,16 @@
+.wish_update{
+	display: flex;
+	flex-direction: row;
+	padding: 0 1vh;
+	input[type=image]{
+		max-height: 8vh;
+		max-width:100%;
+		object-fit:contain;
+		border-radius:0.5vh;
+		flex: 1;
+	}
+}
+
+.wish_button{
+	background: none;
+}

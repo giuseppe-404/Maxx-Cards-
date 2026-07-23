@@ -6,7 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.OrdineBean;
 import model.ProdottoCompratoBean;
 
 import java.io.IOException;
@@ -16,12 +15,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import dao.OrdineDao;
-import dao.OrdineDaoImpl;
 import dao.ProdottoCompratoDao;
 import dao.ProdottoCompratoDaoImpl;
-import dao.ProdottoDao;
-import dao.ProdottoDaoImpl;
 
 /**
  * Servlet implementation class Fattura
@@ -29,7 +24,6 @@ import dao.ProdottoDaoImpl;
 @WebServlet("/fattura")
 public class Fattura extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private OrdineDao daoOrdine;
     private ProdottoCompratoDao daoProdottoC;
     
     public void init(ServletConfig config) throws ServletException {
@@ -39,7 +33,6 @@ public class Fattura extends HttpServlet {
         if (ds == null) {
             throw new ServletException("DataSource non disponibile nel contesto applicativo.");
         }
-        daoOrdine = new OrdineDaoImpl(ds);
         daoProdottoC = new ProdottoCompratoDaoImpl(ds);
     }
     
@@ -76,7 +69,7 @@ public class Fattura extends HttpServlet {
 			}
 			out.println("\t\t\tTotale: "+Integer.toString(tot/100)+"\n");
 		}catch (SQLException e) {
-			e.printStackTrace();
+			response.sendError(500,"Errore nell'ottenimento delle informazioni dell'ordine dal database!");
 		}
 		
 	}

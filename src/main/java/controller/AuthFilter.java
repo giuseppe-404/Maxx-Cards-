@@ -18,6 +18,7 @@ public class AuthFilter extends HttpFilter {
 	@Override
 	protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 	        throws IOException, ServletException {
+		String msg = "";
 		String path = request.getServletPath();
 		if(!path.startsWith("/admin/") && !path.startsWith("/common/")) {
 			chain.doFilter(request, response);
@@ -46,7 +47,9 @@ public class AuthFilter extends HttpFilter {
 		} else {
 			String requestedUrl = request.getRequestURI();
 			session.setAttribute("redirectedUrl", requestedUrl);
-			response.sendRedirect(request.getContextPath() + "/account.jsp");
+			msg = "";
+			session.setAttribute("msg", msg);
+			response.sendRedirect(request.getContextPath() + "/WEB-INF/views/account.jsp");
 		}
 	}
 }

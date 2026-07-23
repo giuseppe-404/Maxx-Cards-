@@ -150,7 +150,8 @@ public class GetProdottoPage extends HttpServlet {
 				}
 			}
 		}catch(SQLException e) {
-			response.sendError(500,"Errore nell'ottenimento della pagina giusta!");
+			request.setAttribute("msg", "Errore nell'ottenimento della pagina giusta!");
+			response.sendError(500);
 		}
 	}
 

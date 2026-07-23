@@ -65,7 +65,7 @@ window.addEventListener("load", function() {
                         product_sale.getElementsByTagName("p")[1].innerHTMl = (prod.sconto / 100) + "%";
                     }
 
-                    clone.getElementsByTagName("img")[0].src = "image?action=show&prodottoId=" + prod.id + "&isProdotto=true"
+                    clone.getElementsByTagName("img")[0].src = "uploadImmagine?action=show&prodottoId=" + prod.id + "&isProdotto=true"
                     clone.getElementsByTagName("img")[0].alt = "immagine di" + prod.nome;
 
                     var product_description = clone.getElementsByClassName("product_description")[0];

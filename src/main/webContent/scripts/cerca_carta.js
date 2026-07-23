@@ -91,7 +91,7 @@ window.addEventListener("load", function() {
 
                     clone.href = "getCartaPage?id=" + card.id;
 
-                    clone.getElementsByTagName("img")[0].src = "uploadImage?action=show&prodottoId=" + card.id + "&isProdotto=false"
+                    clone.getElementsByTagName("img")[0].src = "uploadImmagine?action=show&prodottoId=" + card.id + "&isProdotto=false"
                     clone.getElementsByTagName("img")[0].alt = "immagine di" + card.nomeIt;
 
                     var product_description = clone.getElementsByClassName("product_description")[0];

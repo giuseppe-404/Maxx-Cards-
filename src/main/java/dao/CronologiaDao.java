@@ -9,7 +9,9 @@ public interface CronologiaDao {
 	
 	public boolean saveCronologia(CronologiaBean cronologia) throws SQLException;
 	
-	public List<CronologiaBean> retrieveByIdUtente(int idUtente) throws SQLException; 
+	public List<CronologiaBean> retrieveByIdUtente(int idUtente) throws SQLException;
+	
+	public List<CronologiaBean> retrieveByIdUtente(int idUtente, int page, int limit) throws SQLException;
 	
 	public void deleteByIdUtente(int idUtente) throws SQLException;
 }

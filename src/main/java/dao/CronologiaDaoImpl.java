@@ -63,6 +63,25 @@ public class CronologiaDaoImpl implements CronologiaDao {
 		}
 	}
 
+	
+	public synchronized List<CronologiaBean> retrieveByIdUtente(int idUtente, int page, int limit) throws SQLException {
+		String sql = "select idUtente, idTarget,  (true) as isProdotto FROM cronologia_prodotto where idUtente = ? UNION select idUtente, idTarget,  (false) as isProdotto FROM cronologia_carta"
+				+ " where idUtente = ?  LIMIT " + limit + " OFFSET " + page*limit;
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setInt(1, idUtente);
+			ps.setInt(2, idUtente);
+			ResultSet rs = ps.executeQuery();
+			List<CronologiaBean> list = new ArrayList<>();
+			while(rs.next()) {
+				CronologiaBean bean = new CronologiaBean();
+				fillBean(bean,rs);
+				list.add(bean);
+			}
+			return list;
+		}
+	}
+	
 	@Override
 	public synchronized void deleteByIdUtente(int idUtente) throws SQLException {
 		String sql1 = "DELETE FROM "+TABLE_NAME_CARTA+" WHERE idUtente = ?";

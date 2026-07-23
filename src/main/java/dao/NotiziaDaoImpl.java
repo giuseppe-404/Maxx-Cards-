@@ -21,7 +21,7 @@ public class NotiziaDaoImpl implements NotiziaDao {
 	}
 	
 	@Override
-	public boolean saveNotizia(NotiziaBean notizia) throws SQLException {
+	public synchronized boolean saveNotizia(NotiziaBean notizia) throws SQLException {
 		String sql = "INSERT INTO "+TABLE_NAME+"(id,titolo,corpo) VALUES (?,?,?)";
 		try ( Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -34,7 +34,7 @@ public class NotiziaDaoImpl implements NotiziaDao {
 	}
 
 	@Override
-	public boolean deleteNotizia(int id) throws SQLException {
+	public synchronized boolean deleteNotizia(int id) throws SQLException {
 		String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 		try( 
 				Connection conn = ds.getConnection();
@@ -47,7 +47,7 @@ public class NotiziaDaoImpl implements NotiziaDao {
 	}
 
 	@Override
-	public List<NotiziaBean> retrieveAll(int limit, int page) throws SQLException {
+	public synchronized List<NotiziaBean> retrieveAll(int limit, int page) throws SQLException {
 		ArrayList<NotiziaBean> list = new ArrayList<NotiziaBean>();
 		String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY id DESC LIMIT " + limit + " OFFSET " + page*limit;
 		try(
@@ -66,7 +66,7 @@ public class NotiziaDaoImpl implements NotiziaDao {
 	}
 
 	@Override
-	public List<NotiziaBean> retrieveAll() throws SQLException {
+	public synchronized List<NotiziaBean> retrieveAll() throws SQLException {
 		ArrayList<NotiziaBean> list = new ArrayList<NotiziaBean>();
 		String sql = "SELECT * FROM " + TABLE_NAME + "ORDER BY id DESC";
 		try(
@@ -85,7 +85,7 @@ public class NotiziaDaoImpl implements NotiziaDao {
 	}
 
 	@Override
-	public boolean changeTitolo(NotiziaBean notizia) throws SQLException {
+	public synchronized boolean changeTitolo(NotiziaBean notizia) throws SQLException {
 		String sql = "UPDATE " + TABLE_NAME + " SET titolo = ? WHERE id = ? ";
         try (
         		Connection conn = ds.getConnection();

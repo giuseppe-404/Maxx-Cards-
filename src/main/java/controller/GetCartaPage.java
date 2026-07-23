@@ -8,6 +8,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.CartaSingolaBean;
+import model.MagiaBean;
+import model.MostroBean;
+import model.TrappolaBean;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -76,7 +79,9 @@ public class GetCartaPage extends HttpServlet {
 				CartaSingolaBean filter = new CartaSingolaBean();
 				filter.setIdCarta(id);
 				filter.setQnt(0);
+				MostroBean mostro = mostroDao.retrieveByKey(id);
 				List<CartaSingolaBean> prodotti = cartaSingolaDao.retrieveFiltered(filter,1,16);
+				request.setAttribute("mostro", mostro);
 				request.setAttribute("prodotti", prodotti);
 				dispatcher.forward(request, response);
 			} else if(type == 2) {
@@ -84,7 +89,9 @@ public class GetCartaPage extends HttpServlet {
 				CartaSingolaBean filter = new CartaSingolaBean();
 				filter.setIdCarta(id);
 				filter.setQnt(0);
+				MagiaBean magia = magiaDao.retrieveByKey(id);
 				List<CartaSingolaBean> prodotti = cartaSingolaDao.retrieveFiltered(filter,1,16);
+				request.setAttribute("magia",magia);
 				request.setAttribute("prodotti", prodotti);
 				dispatcher.forward(request, response);
 			} else if(type == 3) {
@@ -92,7 +99,9 @@ public class GetCartaPage extends HttpServlet {
 				CartaSingolaBean filter = new CartaSingolaBean();
 				filter.setIdCarta(id);
 				filter.setQnt(0);
+				TrappolaBean trappola = trappolaDao.retrieveByKey(id);
 				List<CartaSingolaBean> prodotti = cartaSingolaDao.retrieveFiltered(filter,1,16);
+				request.setAttribute("trappola", trappola);
 				request.setAttribute("prodotti", prodotti);
 				dispatcher.forward(request, response);
 			} else {
@@ -101,7 +110,7 @@ public class GetCartaPage extends HttpServlet {
 				return;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			response.sendError(500,"Errore nell'ottenimento della pagina giusta!");
 		}
 		
 		

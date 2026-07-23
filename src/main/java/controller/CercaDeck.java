@@ -27,7 +27,7 @@ public class CercaDeck extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/cercaDeck.jsp");
+		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/cercaDeck.jsp");
 		dispatcher.forward(request, response);
 	}
 

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +24,12 @@ public class CronologiaDaoImpl implements CronologiaDao {
 	@Override
 	public synchronized boolean saveCronologia(CronologiaBean bean) throws SQLException {
 		if(bean.isProdotto()) {
-			String sql1 = "INSERT INTO "+TABLE_NAME_PRODOTTO+"(idUtente,idTarget) VALUES(?,?)";
+			String sql1 = "INSERT INTO "+TABLE_NAME_PRODOTTO+"(idUtente,idTarget,dataVisita) VALUES(?,?)";
 			try(Connection connection = ds.getConnection();
 					PreparedStatement ps = connection.prepareStatement(sql1)){
 				ps.setInt(1, bean.getIdUtente());
 				ps.setInt(2, bean.getIdTarget());
+				ps.setObject(3, LocalDateTime.now());
 				int rowUpdated = ps.executeUpdate();
 				return rowUpdated != 0;
 			}
@@ -38,6 +40,7 @@ public class CronologiaDaoImpl implements CronologiaDao {
 					PreparedStatement ps = connection.prepareStatement(sql1)){
 				ps.setInt(1, bean.getIdUtente());
 				ps.setInt(2, bean.getIdTarget());
+				ps.setObject(3, LocalDateTime.now());
 				int rowUpdated = ps.executeUpdate();
 				return rowUpdated != 0;
 			}
@@ -46,7 +49,7 @@ public class CronologiaDaoImpl implements CronologiaDao {
 
 	@Override
 	public synchronized List<CronologiaBean> retrieveByIdUtente(int idUtente) throws SQLException {
-		String sql = "select idUtente, idTarget,  (true) as isProdotto FROM cronologia_prodotto where idUtente = ? UNION select idUtente, idTarget,  (false) as isProdotto FROM cronologia_carta"
+		String sql = "select idUtente, idTarget, dataVisita  (true) as isProdotto FROM cronologia_prodotto where idUtente = ? UNION select idUtente, idTarget, dataVisita  (false) as isProdotto FROM cronologia_carta"
 				+ " where idUtente = ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
@@ -66,7 +69,7 @@ public class CronologiaDaoImpl implements CronologiaDao {
 	
 	public synchronized List<CronologiaBean> retrieveByIdUtente(int idUtente, int page, int limit) throws SQLException {
 		String sql = "select idUtente, idTarget,  (true) as isProdotto FROM cronologia_prodotto where idUtente = ? UNION select idUtente, idTarget,  (false) as isProdotto FROM cronologia_carta"
-				+ " where idUtente = ?  LIMIT " + limit + " OFFSET " + page*limit;
+				+ " where idUtente = ? ORDER BY dataVisita DESC LIMIT " + limit + " OFFSET " + page*limit ;
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, idUtente);
@@ -101,6 +104,7 @@ public class CronologiaDaoImpl implements CronologiaDao {
 	protected void fillBean(CronologiaBean bean, ResultSet rs) throws SQLException{
 		bean.setIdTarget(rs.getInt("idTarget"));
 		bean.setIdUtente(rs.getInt("idUtente"));
+		bean.setDataVisita((LocalDateTime)rs.getObject("dataVisita"));
 		bean.setProdotto(rs.getBoolean("isProdotto"));
 	}
 	

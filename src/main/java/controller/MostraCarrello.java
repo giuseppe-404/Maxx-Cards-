@@ -7,8 +7,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.NotiziaBean;
+import jakarta.servlet.http.HttpSession;
 import model.ProdottoBean;
+import model.ProdottoCompratoBean;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,38 +18,35 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import dao.NotiziaDao;
-import dao.NotiziaDaoImpl;
-import dao.ProdottiHomeDao;
-import dao.ProdottiHomeDaoImpl;
+import dao.ProdottoCompratoDao;
+import dao.ProdottoCompratoDaoImpl;
 import dao.ProdottoDao;
 import dao.ProdottoDaoImpl;
 
 /**
- * Servlet implementation class index
+ * Servlet implementation class mostraCarrello
  */
-@WebServlet("/index")
-public class Index extends HttpServlet {
+@WebServlet("/mostraCarrello")
+public class MostraCarrello extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ProdottiHomeDao daoPH;
-	private ProdottoDao daoPR;
-    private NotiziaDao daoN;  
-	
-	public void init(ServletConfig config) throws ServletException {
+    private ProdottoDao prodottoDao = null;
+    private ProdottoCompratoDao prodottoCDao = null;
+    
+    public void init(ServletConfig config) throws ServletException {
         super.init(config);
         System.out.println(getServletContext().getAttributeNames());
         DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
         if (ds == null) {
             throw new ServletException("DataSource non disponibile nel contesto applicativo.");
         }
-        daoPH = new ProdottiHomeDaoImpl(ds);
-        daoPR = new ProdottoDaoImpl(ds);
-        daoN = new NotiziaDaoImpl(ds);
-	}
+        prodottoDao = new ProdottoDaoImpl(ds);
+        prodottoCDao = new ProdottoCompratoDaoImpl(ds);
+    }
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Index() {
+    public MostraCarrello() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -57,22 +55,21 @@ public class Index extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<ProdottoBean> prod = new ArrayList<>();
+		HttpSession session = request.getSession();
+		List<ProdottoCompratoBean> prodCarrello = (List<ProdottoCompratoBean>)session.getAttribute("prodCarrello");
+		List<ProdottoBean> prodotti = new ArrayList<>();
 		try {
-			List<Integer> id = daoPH.retrieveAll();
-			for(Integer i : id) {
-				ProdottoBean temp = daoPR.retrieveByKey(i);
-				prod.add(temp);
+			for(ProdottoCompratoBean prod: prodCarrello) {
+				prodotti.add(prodottoDao.retrieveByKey(prod.getIdOriginale()));
 			}
-			List<NotiziaBean> notizie = daoN.retrieveAll(3,1);
-			request.setAttribute("notizie", notizie);
-			request.setAttribute("prodotti", prod);
-		}catch(SQLException e) {
-			request.setAttribute("", "Errore nell'ottenimento delle informazioni per l'homePage!");
+			request.setAttribute("prodotti", prodotti);
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
+			dispatcher.forward(request, response);
+		} catch(SQLException e) {
+			request.setAttribute("msg", "Errore nell'ottenimento del carrello!");
 			response.sendError(500);
 		}
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/NewFile.html");
-		dispatcher.forward(request,response);
+		
 	}
 
 	/**

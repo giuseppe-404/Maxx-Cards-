@@ -56,7 +56,9 @@ public class LoginAccount extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
+		String msg = "";
 		String pwd = request.getParameter("pwd");
+		HttpSession session = request.getSession();
 		try {
 			UtenteBean utente = utenteDao.retrieveByEmail(email);
 			String storedPwd = utente.getPwd();
@@ -64,9 +66,10 @@ public class LoginAccount extends HttpServlet {
 			try{
 				if(SecurityPassword.validatePassword(pwd, salt, storedPwd,10000 , 256)) {
 					System.out.println("Successo");
-					HttpSession session = request.getSession();
+					
 					session.setAttribute("utente",utente);
 					String redirectUrl = (String) session.getAttribute("redirectedURL");
+					session.setAttribute("msg", msg);
 					if(redirectUrl != null) {
 						session.removeAttribute("redirectedURL");
 						response.sendRedirect(redirectUrl);
@@ -74,13 +77,16 @@ public class LoginAccount extends HttpServlet {
 					else response.sendRedirect("/index");
 				}
 				else {
-					response.sendError(500,"Email o password errata!");
+					msg = "Email o password errata!";
+					session.setAttribute("msg",msg);
 				}
 			}catch(Exception exc) {
-				response.sendError(500,"Errore nella validazione delle informazioni!");
+				request.setAttribute("","Errore nella validazione delle informazioni!");
+				response.sendError(500);
 			}
 		}catch(SQLException e) {
-			response.sendError(500,"Errore nella validazione delle informazioni!");
+			msg = "Email o password errata!";
+			session.setAttribute("msg",msg);
 		}
 		
 	}

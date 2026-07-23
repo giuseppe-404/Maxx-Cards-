@@ -44,13 +44,14 @@ public class GestioneProdotti extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("");
+		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
 		try {
 			request.setAttribute("sets", setDao.retrieveAll());
+			dispatcher.forward(request, response);
 		} catch(SQLException e) {
-			//TODO errore
+			response.sendError(500,"Errore nell'ottenimento dei set dal database");
 		}
-		dispatcher.forward(request, response);
+		
 	}
 
 	/**

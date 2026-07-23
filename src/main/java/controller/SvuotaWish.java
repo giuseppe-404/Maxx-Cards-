@@ -56,7 +56,8 @@ public class SvuotaWish extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/index");
 			dispatcher.forward(request, response);
 		}catch(SQLException e) {
-			response.sendError(500,"Errore nello svuotamento della wishlist!");
+			request.setAttribute("msg","Errore nello svuotamento della wishlist!");	
+			response.sendError(500);
 		}
 	}
 

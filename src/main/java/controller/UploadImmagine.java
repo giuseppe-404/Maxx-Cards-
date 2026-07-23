@@ -86,10 +86,12 @@ public class UploadImmagine extends HttpServlet {
 						OutputStream os = response.getOutputStream();
 						is.transferTo(os);
 					}catch(IOException ioe) {
-						ioe.printStackTrace();
+						request.setAttribute("msg","Errore nel caricamento dell'immagine!");
+						response.sendError(500);
 					}
 				} catch( SQLException e) {
-					e.printStackTrace();
+					request.setAttribute("msg", "Errore nell'ottenimento dell'immagine dal database!");
+					response.sendError(500);
 				}
 			}
 		} else if(temp.equals("false")){
@@ -112,10 +114,12 @@ public class UploadImmagine extends HttpServlet {
 						OutputStream os = response.getOutputStream();
 						is.transferTo(os);
 					}catch(IOException ioe) {
-						
+						request.setAttribute("msg","Errore nel caricamento dell'immagine!");
+						response.sendError(500);
 					}
 				} catch( SQLException e) {
-					e.printStackTrace();
+					request.setAttribute("msg", "Errore nell'ottenimento dell'immagine dal database!");
+					response.sendError(500);
 				}
 			}
 		}

@@ -101,12 +101,6 @@ public class nuovoProdotto extends HttpServlet {
         cartaDAO = new CartaDaoImpl(ds);
         contieneDAO = new ContieneDeckDaoImpl(ds);
         setDAO = new CSetDaoImpl(ds);
-        set = new ArrayList<>();
-        try { 
-        	set = setDAO.retrieveAll();
-        }catch(SQLException e) {
-        	e.printStackTrace();
-        }
         quality = new ArrayList<>();
         quality.add("poor");
         quality.add("played");
@@ -135,6 +129,12 @@ public class nuovoProdotto extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			List<CSetBean> set = setDAO.retrieveAll();
+		}catch (SQLException e){
+			request.setAttribute("msg","Errore nell'ottenimento dei set dal database!");
+			response.sendError(500);
+		}
 		HttpSession session = request.getSession();
 		session.setAttribute("isProdotto", "true");
 		String action_prodotto= request.getParameter("action");
@@ -148,7 +148,7 @@ public class nuovoProdotto extends HttpServlet {
 					try {
 						prodottoDAO.deleteProdotto(oldId);
 					} catch(SQLException e) {
-						e.printStackTrace();
+						response.sendError(500,"Errore nell'eliminazione del prodotto dal Database!");
 					}
 				} else errore = "Errore";
 			} else if (action_prodotto.equals("add")) {
@@ -205,7 +205,8 @@ public class nuovoProdotto extends HttpServlet {
 						try{
 							prodottoDAO.saveProdotto(temp);
 						}catch(SQLException e) {
-							e.printStackTrace();
+							request.setAttribute("msg","Errore nell'aggiunta del prodotto nel database!");
+							response.sendError(500);
 						}break;
 					} else {
 						RequestDispatcher dispatcher =  request.getRequestDispatcher("/index");
@@ -271,7 +272,8 @@ public class nuovoProdotto extends HttpServlet {
 						try{
 							prodottoYGODAO.saveProdotto(temp);
 						}catch(SQLException e) {
-							e.printStackTrace();
+							request.setAttribute("msg","Errore nel salvataggio del prodotto nel database!");
+							response.sendError(500);
 						}break;
 					} else {
 						RequestDispatcher dispatcher =  request.getRequestDispatcher("");
@@ -342,7 +344,8 @@ public class nuovoProdotto extends HttpServlet {
 						try{
 							confezionatoDAO.saveProdotto(temp);
 						}catch(SQLException e) {
-							e.printStackTrace();
+							request.setAttribute("msg","Errore nel salvataggio del prodotto nel database!");
+							response.sendError(500);
 						}break;
 					} else {
 						RequestDispatcher dispatcher =  request.getRequestDispatcher("");
@@ -420,7 +423,8 @@ public class nuovoProdotto extends HttpServlet {
 							temp.setIdCarta(cartaDAO.retrieveByNome(request.getParameter("nome")).getId());
 							cartasingolaDAO.saveCartaSingola(temp);
 						}catch(SQLException e) {
-							e.printStackTrace();
+							request.setAttribute("msg","Errore nel salvataggio del prodotto nel database!");
+							response.sendError(500);
 						}
 					} else {
 						RequestDispatcher dispatcher =  request.getRequestDispatcher("");
@@ -491,7 +495,8 @@ public class nuovoProdotto extends HttpServlet {
 						try{
 							boxDAO.saveProdotto(temp);
 						}catch(SQLException e) {
-							e.printStackTrace();
+							request.setAttribute("msg","Errore nel salvataggio del prodotto nel database!");
+							response.sendError(500);
 						}break;
 					} else {
 						RequestDispatcher dispatcher =  request.getRequestDispatcher("");
@@ -562,7 +567,8 @@ public class nuovoProdotto extends HttpServlet {
 						try{
 							pacchettoDAO.saveProdotto(temp);
 						}catch(SQLException e) {
-							e.printStackTrace();
+							request.setAttribute("msg","Errore nel salvataggio del prodotto nel database!");
+							response.sendError(500);
 						}
 					} else {
 						RequestDispatcher dispatcher =  request.getRequestDispatcher("");
@@ -633,7 +639,8 @@ public class nuovoProdotto extends HttpServlet {
 						try{
 							structureDAO.saveProdotto(temp);
 						}catch(SQLException e) {
-							e.printStackTrace();
+							request.setAttribute("msg","Errore nel salvataggio del prodotto nel database!");
+							response.sendError(500);
 						}
 					} else {
 						RequestDispatcher dispatcher =  request.getRequestDispatcher("");
@@ -703,7 +710,8 @@ public class nuovoProdotto extends HttpServlet {
 						try{
 							tinDAO.saveProdotto(temp);
 						}catch(SQLException e) {
-							e.printStackTrace();
+							request.setAttribute("msg","Errore nel salvataggio del prodotto nel database!");
+							response.sendError(500);
 						}
 					} else {
 						RequestDispatcher dispatcher =  request.getRequestDispatcher("");
@@ -777,7 +785,8 @@ public class nuovoProdotto extends HttpServlet {
 								i++;
 							}
 						}catch(SQLException e) {
-							e.printStackTrace();
+							request.setAttribute("msg","Errore nel salvataggio delle carte contenute nel deck!");
+							response.sendError(500);
 						}break;
 					}	else {
 						RequestDispatcher dispatcher =  request.getRequestDispatcher("/index");
@@ -1611,7 +1620,8 @@ public class nuovoProdotto extends HttpServlet {
 							}
 						}
 					} catch(SQLException e) {
-						
+						request.setAttribute("msg","Errore nella modifica del prodotto nel database!");
+						response.sendError(500);
 					}
 				}
 			}

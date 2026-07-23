@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -69,7 +70,7 @@ public class LoginAccount extends HttpServlet {
 					
 					session.setAttribute("utente",utente);
 					String redirectUrl = (String) session.getAttribute("redirectedURL");
-					session.setAttribute("msg", msg);
+					request.setAttribute("msg", msg);
 					if(redirectUrl != null) {
 						session.removeAttribute("redirectedURL");
 						response.sendRedirect(redirectUrl);
@@ -78,15 +79,17 @@ public class LoginAccount extends HttpServlet {
 				}
 				else {
 					msg = "Email o password errata!";
-					session.setAttribute("msg",msg);
+					request.setAttribute("msg",msg);
 				}
 			}catch(Exception exc) {
-				request.setAttribute("","Errore nella validazione delle informazioni!");
+				request.setAttribute("msg","Errore nella validazione delle informazioni!");
 				response.sendError(500);
 			}
 		}catch(SQLException e) {
 			msg = "Email o password errata!";
-			session.setAttribute("msg",msg);
+			request.setAttribute("msg",msg);
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
+			dispatcher.forward(request,response);
 		}
 		
 	}

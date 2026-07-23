@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -59,7 +60,9 @@ public class RegistraAccount extends HttpServlet {
 		String pwd = request.getParameter("pwd");
 		UtenteBean utente = new UtenteBean();
 		byte[] salt = SecurityPassword.generateSalt();
+		String msg = "";
 		try {
+			HttpSession session = request.getSession();
 			byte[] hashed = SecurityPassword.hashPassword(pwd,salt,10000,256);
 			String password = SecurityPassword.bytesToHex(hashed);
 			utente.setAdmin(false);
@@ -70,11 +73,23 @@ public class RegistraAccount extends HttpServlet {
 				utenteDao.createUtente(utente);
 				HttpSession sessione = request.getSession();
 				sessione.setAttribute("utente",utente);
+				String redirectUrl = (String) session.getAttribute("redirectedURL");
+				request.setAttribute("msg", msg);
+				if(redirectUrl != null) {
+					session.removeAttribute("redirectedURL");
+					response.sendRedirect(redirectUrl);
+				}
+				else {
+					response.sendRedirect("/index");
+				}
 			}catch(SQLException e) {
-				e.printStackTrace();
+				msg = "Email già in uso";
+				request.setAttribute("msg",msg);
+				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
 			}
 		}catch(Exception e) {
-			System.err.println("Errore nell'hashing della password");
+			request.setAttribute("msg","Errore durante la creazione dell'account");
+			response.sendError(500);
 		}
 		
 	}

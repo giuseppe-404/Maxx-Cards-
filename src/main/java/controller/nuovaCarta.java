@@ -128,7 +128,6 @@ public class nuovaCarta extends HttpServlet {
 		boolean img = false;
 		boolean valido = true;
 		String action_carta = request.getParameter("action");
-		String errore = "";
 		if(action_carta != null) {
 			if(action_carta.equals("delete")) {
 				if(request.getParameter("old_id") != null) {
@@ -136,9 +135,13 @@ public class nuovaCarta extends HttpServlet {
 					try{
 						magiaDao.deleteCarta(oldId);
 					} catch (SQLException e) {
-						e.printStackTrace();
+						request.setAttribute("msg", "Errore nell'eliminazione della carta!");
+						response.sendError(500);
 					}
-				} else errore = "blu";
+				} else {
+					request.setAttribute("msg", "Errore nella richiesta, parametro mancante!");
+					response.sendError(400);
+				}
 			} else if(action_carta.equals("alter")) {
 				session.setAttribute("action", "change");
 				if(request.getParameter("old_id") != null) {
@@ -517,9 +520,13 @@ public class nuovaCarta extends HttpServlet {
 							}
 						}
 					} catch (SQLException e) {
-						e.printStackTrace();
+						request.setAttribute("msg","Errore nell'ottenimento della carta richiesta!");
+						response.sendError(500);
 					}
-				} else errore = "blu";
+				} else {
+					request.setAttribute("msg","Errore nella richiesta, parametro mancante!");
+					response.sendError(400);
+				}
 			} else if(action_carta.equals("add")) {
 				request.getSession().setAttribute("action", "upload");
 				if(request.getParameter("classe_carta") != null) {
@@ -656,7 +663,8 @@ public class nuovaCarta extends HttpServlet {
 							try {
 								mostroDao.saveMostro(bean);
 							} catch(SQLException e) {
-								e.printStackTrace();
+								request.setAttribute("msg","Errore nel salvataggio del mostro nel database!");
+								response.sendError(500);
 							}
 						}
 					} else if (classe.equals("magia")) {
@@ -714,7 +722,8 @@ public class nuovaCarta extends HttpServlet {
 							try {
 								magiaDao.saveCarta(bean);
 							}catch(SQLException e) {
-								e.printStackTrace();
+								request.setAttribute("msg","Errore nel salvataggio della magia nel database!");
+								response.sendError(500);
 							}
 						}
 					} else if (classe.equals("trappola")) {
@@ -772,7 +781,8 @@ public class nuovaCarta extends HttpServlet {
 							try {
 								trappolaDao.saveCarta(bean);
 							}catch(SQLException e) {
-								e.printStackTrace();
+								request.setAttribute("msg","Errore nel salvataggio della trappola nel database!");
+								response.sendError(500);
 							}
 						}
 					} 	
@@ -783,7 +793,8 @@ public class nuovaCarta extends HttpServlet {
 						RequestDispatcher dispatcher = request.getRequestDispatcher("");
 						dispatcher.forward(request, response);
 					}
-				}
+				} 	request.setAttribute("msg","Errore nella richiesta, parametro mancante!");
+					response.sendError(400);
 			}
 		}
 	}

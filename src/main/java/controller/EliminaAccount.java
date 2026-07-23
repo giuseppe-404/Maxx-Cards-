@@ -55,7 +55,8 @@ public class EliminaAccount extends HttpServlet {
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/index");
 			dispatcher.forward(request,response);
 		} catch(SQLException e) {
-			response.sendError(500,"Errore nell'eliminazione dell'account!");
+			request.setAttribute("msg", "Errore nell'eliminazione dell'account!");
+			response.sendError(500);
 		}
 	}
 

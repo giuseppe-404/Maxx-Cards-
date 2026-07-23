@@ -190,7 +190,8 @@ public class Checkout extends HttpServlet {
 				}
 				
 			} else {
-				response.sendError(400,"Errore nella scelta del metodo di pagamento!");
+				request.setAttribute("msg","Errore nella scelta del metodo di pagamento!");
+				response.sendError(400);
 			}
 			for(ProdottoCompratoBean p : prodCarrello) {
 				ProdottoBean prodotto = prodottoDao.retrieveByKey(p.getIdOriginale());
@@ -212,7 +213,8 @@ public class Checkout extends HttpServlet {
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/");		
 			dispatcher.forward(request, response);
 			} catch(SQLException e) {
-				response.sendError(500,"Errore nel caricamento delle informazioni nel database!");
+				request.setAttribute("msg", "Errore nel caricamento delle informazioni nel database!");
+				response.sendError(500);
 		}
 	}
 

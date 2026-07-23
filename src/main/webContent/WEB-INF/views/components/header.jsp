@@ -16,8 +16,8 @@
 		</a>
 	</section>
 	<section id="logo">
-		<a href="http://localhost/Max-Cards-/Test">
-			<img src="https://m.media-amazon.com/images/I/51L1AEubvuL._AC_UF1000,1000_QL80_.jpg" alt="Logo">
+		<a href="index">
+			<img src="${pageContext.request.contextPath}/images/logo.jpg" alt="Logo">
 		</a>
 	</section>
 	<search id="search_bar">

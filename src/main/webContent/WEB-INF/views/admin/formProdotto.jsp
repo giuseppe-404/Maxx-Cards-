@@ -10,6 +10,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/components/header.jsp"%>
+	<%@include file="/WEB-INF/views/components/optionsAside.jsp"%>
 	<main>
 		<form action="nuovoProdotto" method="post" class="insertion_form" enctype="multipart/form-data" autocomplete="off" id="prod_form">
 			<fieldset id="product_loader">

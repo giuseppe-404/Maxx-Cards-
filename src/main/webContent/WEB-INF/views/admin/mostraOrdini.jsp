@@ -11,6 +11,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/components/header.jsp"%>
+	<%@include file="/WEB-INF/views/components/optionsAside.jsp"%>
 	<main>
 		<form action="">
 			<fieldset id="email_field">

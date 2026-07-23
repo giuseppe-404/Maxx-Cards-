@@ -8,7 +8,7 @@ public class CronologiaBean implements Serializable{
 	private int idUtente;
 	private int idTarget;
 	private LocalDateTime dataVisita;
-	private boolean isProdotto;
+	private boolean prodotto;
 	
 	public CronologiaBean() {}
 	
@@ -16,7 +16,7 @@ public class CronologiaBean implements Serializable{
 		this.idTarget = idTarget;
 		this.idUtente = idUtente;
 		this.dataVisita = dataVisita;
-		this.isProdotto = isProdotto;
+		this.prodotto = isProdotto;
 	}
 	
 	/**
@@ -37,14 +37,14 @@ public class CronologiaBean implements Serializable{
 	 * @return the isProdotto
 	 */
 	public boolean isProdotto() {
-		return isProdotto;
+		return prodotto;
 	}
 
 	/**
 	 * @param isProdotto the isProdotto to set
 	 */
 	public void setProdotto(boolean isProdotto) {
-		this.isProdotto = isProdotto;
+		this.prodotto = isProdotto;
 	}
 
 	/**

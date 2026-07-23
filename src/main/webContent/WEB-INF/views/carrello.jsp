@@ -60,7 +60,7 @@
 							<button onclick="location.href = 'svuotaCarrello';">Svuota il carrello</button>
 						</td>
 						<td colspan="7">
-							<button onclick="location.href = 'checkout';">Vai al checkout!</button>
+							<button onclick="location.href = 'mostraCheckout';">Vai al checkout!</button>
 						</td>
 					</tr>
 				</table>

@@ -21,6 +21,7 @@
 			</section>
 		</c:if>
 		<section id="common_section">
+			<button onclick="location.href = 'mostraCheckout';">Checkout</button>
 			<button onclick="location.href = 'mostraCarrello';">Carrello</button>
 			<button onclick="location.href = 'mostraStorico';">Storico</button>
 			<button onclick="location.href = 'gestioneInfoSped';">Info Spedizione</button>

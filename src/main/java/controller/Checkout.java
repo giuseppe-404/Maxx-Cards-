@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -40,7 +41,6 @@ import dao.UtenteDaoImpl;
 @WebServlet("/checkout")
 public class Checkout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UtenteDao utenteDao = null;
 	private InfoSpedDao infoSpedDao = null;
 	private MetodoPagamentoDao metodoDao = null;
 	private OrdineDao ordineDao = null;
@@ -54,7 +54,6 @@ public class Checkout extends HttpServlet {
         if (ds == null) {
             throw new ServletException("DataSource non disponibile nel contesto applicativo.");
         }
-        utenteDao = new UtenteDaoImpl(ds);
         infoSpedDao = new InfoSpedDaoImpl(ds);
         metodoDao = new MetodoPagamentoDaoImpl(ds);
         ordineDao = new OrdineDaoImpl(ds);
@@ -90,41 +89,41 @@ public class Checkout extends HttpServlet {
 			InfoSpedBean indirizzo = null;
 			MetodoPagamentoBean metodo = null;
 			if(request.getParameter("infoSped_id") != null) {
-				int id = Integer.parseInt(request.getParameter("infoSped_id"));
+				int id = Integer.parseInt(request.getParameter("info_id"));
 				InfoSpedBean bean = infoSpedDao.retrieveByKey(id, utente.getId());
 				InfoSpedBean filter = new InfoSpedBean();
 				filter.setId(id);
 				filter.setIdUtente(utente.getId());
-				if(request.getParameter("infoSped_nome") != null) {
-					String nome = request.getParameter("infoSped_nome");
+				if(request.getParameter("info_nome") != null) {
+					String nome = request.getParameter("info_nome");
 					if(!nome.equals(bean.getNome())) {
 						filter.setNome(nome);
 						infoSpedDao.changeNome(filter);
 					}
 				}
-				if(request.getParameter("infoSped_cognome") != null) {
-					String cognome = request.getParameter("infoSped_cognome");
+				if(request.getParameter("info_cognome") != null) {
+					String cognome = request.getParameter("info_cognome");
 					if(!cognome.equals(bean.getCognome())) {
 						filter.setCognome(cognome);
 						infoSpedDao.changeCognome(filter);
 					}
 				}
-				if(request.getParameter("infoSped_via") != null) {
-					String via = request.getParameter("infoSped_via");
+				if(request.getParameter("info_via") != null) {
+					String via = request.getParameter("info_via");
 					if(!via.equals(bean.getVia())) {
 						filter.setVia(via);
 						infoSpedDao.changeVia(filter);
 					}
 				}
-				if(request.getParameter("infoSped_civico") != null) {
-					int civico = Integer.parseInt(request.getParameter("infoSped_civico"));
+				if(request.getParameter("info_civico") != null) {
+					int civico = Integer.parseInt(request.getParameter("info_civico"));
 					if(civico != bean.getCivico()) {
 						filter.setCivico(civico);
 						infoSpedDao.changeCivico(filter);
 					}
 				}
-				if(request.getParameter("infoSped_cap") != null) {
-					int cap = Integer.parseInt(request.getParameter("infoSped_cap"));
+				if(request.getParameter("info_cap") != null) {
+					int cap = Integer.parseInt(request.getParameter("info_cap"));
 					if(cap != bean.getCap()) {
 						filter.setCap(cap);
 						infoSpedDao.changeCAP(filter);
@@ -134,24 +133,24 @@ public class Checkout extends HttpServlet {
 			} else {
 				int id = infoSpedDao.retrieveByIdUtente(utente.getId()).size();
 				InfoSpedBean nuovo = new InfoSpedBean();
-				if(request.getParameter("infoSped_nome") != null) {
-					String nome = request.getParameter("infoSped_nome");
+				if(request.getParameter("info_nome") != null) {
+					String nome = request.getParameter("info_nome");
 					nuovo.setNome(nome);
 				}
-				if(request.getParameter("infoSped_cognome") != null) {
-					String cognome = request.getParameter("infoSped_cognome");
+				if(request.getParameter("info_cognome") != null) {
+					String cognome = request.getParameter("info_cognome");
 					nuovo.setCognome(cognome);
 				}
-				if(request.getParameter("infoSped_via") != null) {
-					String via = request.getParameter("infoSped_via");
+				if(request.getParameter("info_via") != null) {
+					String via = request.getParameter("info_via");
 					nuovo.setVia(via);
 				}
-				if(request.getParameter("infoSped_civico") != null) {
-					int civico = Integer.parseInt(request.getParameter("infoSped_civico"));
+				if(request.getParameter("info_civico") != null) {
+					int civico = Integer.parseInt(request.getParameter("info_civico"));
 					nuovo.setCivico(civico);
 				}
-				if(request.getParameter("infoSped_cap") != null) {
-					int cap = Integer.parseInt(request.getParameter("infoSped_cap"));
+				if(request.getParameter("info_cap") != null) {
+					int cap = Integer.parseInt(request.getParameter("info_cap"));
 					nuovo.setCap(cap);
 				}
 				nuovo.setIdUtente(utente.getId());
@@ -159,31 +158,39 @@ public class Checkout extends HttpServlet {
 				infoSpedDao.saveInfoSped(nuovo);
 				indirizzo = nuovo;
 			}
-			if(request.getParameter("metodoPagamento_id") != null) {
-				int id = Integer.parseInt(request.getParameter("metodoPagamento_id"));
-				MetodoPagamentoBean bean = metodoDao.retrieveByKey(id, utente.getId());
-				MetodoPagamentoBean filter = new MetodoPagamentoBean();
-				filter.setId(id);
-				filter.setIdUtente(utente.getId());
-				if(request.getParameter("metodoPagamento_metodo") != null) {
-					String nome = request.getParameter("metodoPagamento_metodo");
-					if(!nome.equals(bean.getMetodo())) {
-						filter.setMetodo(nome);
-						metodoDao.changeMetodoPagamento(filter);
+			if(request.getParameter("metodo_scelto") != null) {
+				if(!request.getParameter("metodo_scelto").equals("nuovo")) {
+					int id = Integer.parseInt(request.getParameter("metodo_scelto"));
+					MetodoPagamentoBean filter = new MetodoPagamentoBean();
+					filter.setId(id);
+					filter.setIdUtente(utente.getId());
+					MetodoPagamentoBean bean = metodoDao.retrieveByKey(id, utente.getId());
+					if(request.getParameter("metodo") != null) {
+						String nome = request.getParameter("metodoPagamento_metodo");
+						if(!nome.equals(bean.getMetodo())) {
+							filter.setMetodo(nome);
+							metodoDao.changeMetodoPagamento(filter);
+							metodo = filter;
+						}
+					} else {
+						metodo = bean;
+					}	
+				} else {
+					int id = metodoDao.retrieveByIdUtente(utente.getId()).size() + 1;
+					MetodoPagamentoBean filter = new MetodoPagamentoBean();
+					filter.setId(id);
+					filter.setIdUtente(utente.getId());
+					if(request.getParameter("metodo") != null) {
+						filter.setMetodo(request.getParameter("metodo"));
+					} else {
+						response.sendError(400,"Metodo mancante!");
 					}
-				}metodo = bean;
-			} else {
-				int id = metodoDao.retrieveByIdUtente(utente.getId()).size();
-				MetodoPagamentoBean bean = metodoDao.retrieveByKey(id, utente.getId());
-				MetodoPagamentoBean filter = new MetodoPagamentoBean();
-				filter.setId(id+1);
-				filter.setIdUtente(utente.getId());
-				if(request.getParameter("metodoPagamento_metodo") != null) {
-					String met = request.getParameter("metodoPagamento_metodo");
-					filter.setMetodo(met);
+					metodoDao.saveMetodoPagamento(filter);
+					metodo = filter;
 				}
-				metodoDao.saveMetodoPagamento(filter);
-				metodo = metodoDao.retrieveByKey(id+1,utente.getId());
+				
+			} else {
+				response.sendError(400,"Errore nella scelta del metodo di pagamento!");
 			}
 			for(ProdottoCompratoBean p : prodCarrello) {
 				ProdottoBean prodotto = prodottoDao.retrieveByKey(p.getIdOriginale());
@@ -202,8 +209,10 @@ public class Checkout extends HttpServlet {
 			ordineDao.changeStato(carrello);
 			ordineDao.changeInfoSped(carrello);
 			ordineDao.changeMetodoPagamento(carrello);
-		} catch(SQLException e) {
-				e.printStackTrace();
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/");		
+			dispatcher.forward(request, response);
+			} catch(SQLException e) {
+				response.sendError(500,"Errore nel caricamento delle informazioni nel database!");
 		}
 	}
 

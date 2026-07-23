@@ -101,28 +101,28 @@ public class GetProdottoPage extends HttpServlet {
 				}
 				case 4:{
 					ConfezionatoBean prodotto = daoConf.retrieveByKey(id);
-					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraPacchetto.jsp");
+					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraConfezionato.jsp");
 					request.setAttribute("confezionato", prodotto);
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 5: {
 					ConfezionatoBean prodotto = daoConf.retrieveByKey(id);
-					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraTin.jsp");
+					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraConfezionato.jsp");
 					request.setAttribute("confezionato", prodotto);
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 6 : {
 					ConfezionatoBean prodotto = daoConf.retrieveByKey(id);
-					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraBox.jsp");
+					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraConfezionato.jsp");
 					request.setAttribute("confezionato", prodotto);
 					dispatcher.forward(request, response);
 					break;
 				}
 				case 7 : {
 					ConfezionatoBean prodotto = daoConf.retrieveByKey(id);
-					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraStructureDeck.jsp");
+					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/mostraConfezionato.jsp");
 					request.setAttribute("confezionato", prodotto);
 					dispatcher.forward(request, response);
 					break;

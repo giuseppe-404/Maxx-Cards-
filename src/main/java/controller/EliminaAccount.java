@@ -21,7 +21,7 @@ import dao.UtenteDaoImpl;
 /**
  * Servlet implementation class EliminaAccount
  */
-@WebServlet("/eliminaAccount")
+@WebServlet("/common/eliminaAccount")
 public class EliminaAccount extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtenteDao utenteDao = null;

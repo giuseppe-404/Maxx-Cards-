@@ -36,7 +36,7 @@ import dao.ProdottoDaoImpl;
 /**
  * Servlet implementation class MostraStorico
  */
-@WebServlet("/mostraStorico")
+@WebServlet("/common/mostraStorico")
 public class MostraStorico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private ProdottoDao prodottoDao = null;
@@ -92,7 +92,7 @@ public class MostraStorico extends HttpServlet {
 			request.setAttribute("prodotti", prodotti);
 			request.setAttribute("infos", infos);
 			request.setAttribute("metodi",metodi);
-			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/common/storico.jsp");
 			dispatcher.forward(request,response);
 		} catch(SQLException e) {
 			request.setAttribute("msg","Errore nell'ottenimento degli ordini!");

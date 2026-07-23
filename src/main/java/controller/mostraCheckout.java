@@ -73,7 +73,7 @@ public class mostraCheckout extends HttpServlet {
 			request.setAttribute("msg", "Errore nella ricerca dei parametri dal database!");
 			response.sendError(500);
 		}
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
+		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/recap.jsp");
 		dispatcher.forward(request, response);
 	}
 

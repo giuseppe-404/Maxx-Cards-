@@ -18,7 +18,7 @@ import dao.CSetDaoImpl;
 /**
  * Servlet implementation class GestioneProdotti
  */
-@WebServlet("/gestioneProdotti")
+@WebServlet("/admin/gestioneProdotti")
 public class GestioneProdotti extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private CSetDao setDao = null;
@@ -44,7 +44,7 @@ public class GestioneProdotti extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
+		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/admin/formProdotto.jsp");
 		try {
 			request.setAttribute("sets", setDao.retrieveAll());
 			dispatcher.forward(request, response);

@@ -22,7 +22,7 @@ import dao.MetodoPagamentoDaoImpl;
 /**
  * Servlet implementation class GestioneMetodoPagamento
  */
-@WebServlet("/gestioneMetodoPagamento")
+@WebServlet("/common/gestioneMetodoPagamento")
 public class GestioneMetodoPagamento extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MetodoPagamentoDao metodoPagamentoDao = null;

@@ -39,6 +39,7 @@ public class Index extends HttpServlet {
         System.out.println(getServletContext().getAttributeNames());
         DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
         if (ds == null) {
+        	System.out.println("ciao");
             throw new ServletException("DataSource non disponibile nel contesto applicativo.");
         }
         daoPH = new ProdottiHomeDaoImpl(ds);
@@ -68,10 +69,11 @@ public class Index extends HttpServlet {
 			request.setAttribute("notizie", notizie);
 			request.setAttribute("prodotti", prod);
 		}catch(SQLException e) {
-			request.setAttribute("", "Errore nell'ottenimento delle informazioni per l'homePage!");
+			request.setAttribute("msg", "Errore nell'ottenimento delle informazioni per l'homePage!");
 			response.sendError(500);
+			return;
 		}
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/NewFile.html");
+		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/homepage.jsp");
 		dispatcher.forward(request,response);
 	}
 

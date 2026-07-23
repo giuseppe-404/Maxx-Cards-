@@ -18,7 +18,7 @@ import dao.TipoDaoImpl;
 /**
  * Servlet implementation class GestioneCarte
  */
-@WebServlet("/gestioneCarte")
+@WebServlet("/admin/gestioneCarte")
 public class GestioneCarte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TipoDao tipoDao = null;

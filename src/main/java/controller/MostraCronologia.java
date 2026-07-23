@@ -30,7 +30,7 @@ import dao.ProdottoDaoImpl;
 /**
  * Servlet implementation class MostraCronologia
  */
-@WebServlet("/mostraCronologia")
+@WebServlet("/common/mostraCronologia")
 public class MostraCronologia extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private CronologiaDao cronologiaDao = null;
@@ -83,7 +83,7 @@ public class MostraCronologia extends HttpServlet {
 			request.setAttribute("ricerche", list);
 			request.setAttribute("carte", carte);
 			request.setAttribute("prodotti", prodotti);
-			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/common/cronologia.jsp");
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {
 			response.sendError(500,"Errore nell'ottenimento della cronologia!");

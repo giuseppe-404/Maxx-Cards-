@@ -22,7 +22,7 @@ import dao.InfoSpedDaoImpl;
 /**
  * Servlet implementation class GestioneInfoSped
  */
-@WebServlet("/gestioneInfoSped")
+@WebServlet("/common/gestioneInfoSped")
 public class GestioneInfoSped extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private InfoSpedDao infoSpedDao = null;

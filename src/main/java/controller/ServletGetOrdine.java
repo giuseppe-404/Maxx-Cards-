@@ -29,7 +29,7 @@ import dao.ProdottoCompratoDaoImpl;
 /**
  * Servlet implementation class ServletGetOrdine
  */
-@WebServlet("/servletGetOrdine")
+@WebServlet("/admin/servletGetOrdine")
 public class ServletGetOrdine extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private OrdineDao ordineDao = null;

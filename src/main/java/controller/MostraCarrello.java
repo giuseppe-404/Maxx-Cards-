@@ -57,13 +57,17 @@ public class MostraCarrello extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		List<ProdottoCompratoBean> prodCarrello = (List<ProdottoCompratoBean>)session.getAttribute("prodCarrello");
+		if(prodCarrello == null) {
+			prodCarrello = new ArrayList<ProdottoCompratoBean>();
+			session.setAttribute("prodCarrello", prodCarrello);
+		}
 		List<ProdottoBean> prodotti = new ArrayList<>();
 		try {
 			for(ProdottoCompratoBean prod: prodCarrello) {
 				prodotti.add(prodottoDao.retrieveByKey(prod.getIdOriginale()));
 			}
 			request.setAttribute("prodotti", prodotti);
-			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/carrello.jsp");
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {
 			request.setAttribute("msg", "Errore nell'ottenimento del carrello!");

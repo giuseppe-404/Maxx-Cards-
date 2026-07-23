@@ -85,7 +85,7 @@ public class RegistraAccount extends HttpServlet {
 			}catch(SQLException e) {
 				msg = "Email già in uso";
 				request.setAttribute("msg",msg);
-				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
+				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/account.jsp");
 			}
 		}catch(Exception e) {
 			request.setAttribute("msg","Errore durante la creazione dell'account");

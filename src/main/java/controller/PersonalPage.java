@@ -29,6 +29,7 @@ public class PersonalPage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/common/areaUtente.jsp");
 		dispatcher.forward(request, response);
+//		response.sendRedirect(request.getContextPath() + "/WEB-INF/views/common/areaUtente.jsp");
 	}
 
 	/**

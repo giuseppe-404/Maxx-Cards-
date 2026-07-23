@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class GestioneOrdine
  */
-@WebServlet("/gestioneOrdine")
+@WebServlet("/admin/gestioneOrdine")
 public class GestioneOrdine extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,7 +27,7 @@ public class GestioneOrdine extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/admin/mostraOrdini.jsp");
 		dispatcher.forward(request, response);
 	}
 

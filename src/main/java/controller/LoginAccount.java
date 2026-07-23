@@ -88,7 +88,7 @@ public class LoginAccount extends HttpServlet {
 		}catch(SQLException e) {
 			msg = "Email o password errata!";
 			request.setAttribute("msg",msg);
-			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/account.jsp");
 			dispatcher.forward(request,response);
 		}
 		

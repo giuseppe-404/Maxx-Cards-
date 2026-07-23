@@ -20,7 +20,7 @@ import dao.OrdineDaoImpl;
 /**
  * Servlet implementation class ServletSetStatoOrdine
  */
-@WebServlet("/servletSetStatoOrdine")
+@WebServlet("/admin/servletSetStatoOrdine")
 public class ServletSetStatoOrdine extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private OrdineDao ordineDao = null;

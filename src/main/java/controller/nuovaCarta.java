@@ -39,7 +39,7 @@ import dao.TrappolaDaoImpl;
 /**
  * Servlet implementation class nuovaCarta
  */
-@WebServlet("/nuovaCarta")
+@WebServlet("/admin/nuovaCarta")
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024, fileSizeThreshold = 2* 1024 * 1024)
 public class nuovaCarta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -211,7 +211,7 @@ public class nuovaCarta extends HttpServlet {
 									bean.setMimeType(mimeType);
 									bean.setPathImg(uploadPath);
 									cartaDao.changeImage(bean);
-									RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+									RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 									dispatcher.forward(request, response);
 								}
 							}
@@ -372,7 +372,7 @@ public class nuovaCarta extends HttpServlet {
 										bean.setMimeType(mimeType);
 										bean.setPathImg(uploadPath);
 										mostroDao.changeImage(bean);
-										RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+										RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 										dispatcher.forward(request, response);
 									}
 								}break;
@@ -442,7 +442,7 @@ public class nuovaCarta extends HttpServlet {
 										bean.setMimeType(mimeType);
 										bean.setPathImg(uploadPath);
 										magiaDao.changeImage(bean);
-										RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+										RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 										dispatcher.forward(request, response);
 									}
 								}break;
@@ -513,7 +513,7 @@ public class nuovaCarta extends HttpServlet {
 										bean.setMimeType(mimeType);
 										bean.setPathImg(uploadPath);
 										trappolaDao.changeImage(bean);
-										RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+										RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 										dispatcher.forward(request, response);
 									}
 								}break;
@@ -787,7 +787,7 @@ public class nuovaCarta extends HttpServlet {
 						}
 					} 	
 					if(img) {
-						RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+						RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 						dispatcher.forward(request, response);
 					} else {
 						RequestDispatcher dispatcher = request.getRequestDispatcher("");

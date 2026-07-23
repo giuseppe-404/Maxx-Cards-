@@ -60,7 +60,7 @@ import dao.TinDaoImpl;
 /**
  * Servlet implementation class nuovoProdotto
  */
-@WebServlet("/nuovoProdotto")
+@WebServlet("/admin/nuovoProdotto")
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024, fileSizeThreshold = 2* 1024 * 1024)
 public class nuovoProdotto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -857,7 +857,7 @@ public class nuovoProdotto extends HttpServlet {
 									bean.setMimeType(mimeType);
 									bean.setPathImg(uploadPath);
 									prodottoDAO.changeImage(bean);
-									RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+									RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 									dispatcher.forward(request, response);
 								}
 							} //immagine
@@ -963,7 +963,7 @@ public class nuovoProdotto extends HttpServlet {
 									bean.setMimeType(mimeType);
 									bean.setPathImg(uploadPath);
 									cartasingolaDAO.changeImage(bean);
-									RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+									RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 									dispatcher.forward(request, response);
 								}
 							}
@@ -1041,7 +1041,7 @@ public class nuovoProdotto extends HttpServlet {
 									bean.setMimeType(mimeType);
 									bean.setPathImg(uploadPath);
 									prodottoYGODAO.changeImage(bean);
-									RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+									RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 									dispatcher.forward(request, response);
 								}
 							}
@@ -1137,7 +1137,7 @@ public class nuovoProdotto extends HttpServlet {
 									bean.setMimeType(mimeType);
 									bean.setPathImg(uploadPath);
 									confezionatoDAO.changeImage(bean);
-									RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+									RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 									dispatcher.forward(request, response);
 								}
 							}
@@ -1233,7 +1233,7 @@ public class nuovoProdotto extends HttpServlet {
 									bean.setMimeType(mimeType);
 									bean.setPathImg(uploadPath);
 									pacchettoDAO.changeImage(bean);
-									RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+									RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 									dispatcher.forward(request, response);
 								}
 							}
@@ -1329,7 +1329,7 @@ public class nuovoProdotto extends HttpServlet {
 									bean.setMimeType(mimeType);
 									bean.setPathImg(uploadPath);
 									tinDAO.changeImage(bean);
-									RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+									RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 									dispatcher.forward(request, response);
 								}
 							}
@@ -1425,7 +1425,7 @@ public class nuovoProdotto extends HttpServlet {
 									bean.setMimeType(mimeType);
 									bean.setPathImg(uploadPath);
 									boxDAO.changeImage(bean);
-									RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+									RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 									dispatcher.forward(request, response);
 								}
 							}
@@ -1521,7 +1521,7 @@ public class nuovoProdotto extends HttpServlet {
 									bean.setMimeType(mimeType);
 									bean.setPathImg(uploadPath);
 									structureDAO.changeImage(bean);
-									RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+									RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 									dispatcher.forward(request, response);
 								}
 							}
@@ -1614,7 +1614,7 @@ public class nuovoProdotto extends HttpServlet {
 									bean.setMimeType(mimeType);
 									bean.setPathImg(uploadPath);
 									deckDAO.changeImage(bean);
-									RequestDispatcher dispatcher = request.getRequestDispatcher("/UploadImmagine");
+									RequestDispatcher dispatcher = request.getRequestDispatcher("/uploadImmagine");
 									dispatcher.forward(request, response);
 								}
 							}

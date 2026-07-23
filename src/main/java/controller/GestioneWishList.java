@@ -27,7 +27,7 @@ import dao.WantsDaoImpl;
 /**
  * Servlet implementation class GestioneWishListProdotti
  */
-@WebServlet("/gestioneWishList")
+@WebServlet("/common/gestioneWishList")
 public class GestioneWishList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private WantsDao wantsDao = null;
@@ -69,7 +69,7 @@ public class GestioneWishList extends HttpServlet {
     			}	
     		}
     		request.setAttribute("prodotti", prodotti);
-    		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/");
+    		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/common/wishList.jsp");
     		dispatcher.forward(request, response);
     	} catch(SQLException ex) {
     		request.setAttribute("msg", "Errore nell'ottenimento della wishlist!");

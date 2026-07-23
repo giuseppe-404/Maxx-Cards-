@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>${deck.nome}</title>
+	<title>Storico</title>
 	<%@include file="/WEB-INF/views/components/ext.jsp"%>
 	<link href="${pageContext.request.contextPath}/styles/ordini.css" rel="stylesheet" type="text/css">
 </head>

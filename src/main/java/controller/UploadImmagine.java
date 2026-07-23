@@ -73,9 +73,9 @@ public class UploadImmagine extends HttpServlet {
 					ProdottoBean bean = prodottoDao.retrieveByKey(id);
 					String mimeType = bean.getMimeType();
 					String path = bean.getPathImg();
-
+					
 					File file = new File(path);
-					if(!file.exists()) {
+					if(!file.exists() || path.equals("")) {
 						path = getServletContext().getRealPath(""); 
 						path = path + "images" + File.separator + "no_image_available.jpeg";
 						mimeType = "image/jpeg";
@@ -96,17 +96,23 @@ public class UploadImmagine extends HttpServlet {
 			}
 		} else if(temp.equals("false")){
 			if(action.equalsIgnoreCase("show")) {
-				int id = Integer.parseInt(request.getParameter("cartaId"));
+				int id = Integer.parseInt(request.getParameter("prodottoId"));
 				try {
 					CartaBean bean = cartaDao.retrieveByKey(id);
 					String mimeType = bean.getMimeType();
 					String path = bean.getPathImg();
-					
+					if(path == null || path.equals("")) {
+						path = getServletContext().getRealPath(""); 
+						path = path + "images" +
+							File.separator	+ "no_image_available.jpeg";
+						mimeType = "image/jpeg";
+					}
+					System.out.println(path + "\n" +  mimeType);
 					File file = new File(path);
 					if(!file.exists()) {
 						path = getServletContext().getRealPath(""); 
-						path = path + File.separator + "src" + File.separator + "main" + File.separator + "webContent" + File.separator + "images" +
-								"no_image_available.jpeg";
+						path = path + "images" +
+								File.separator + "no_image_available.jpeg";
 						mimeType = "image/jpeg";
 					}
 					response.setContentType(mimeType);

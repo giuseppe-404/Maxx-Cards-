@@ -11,9 +11,9 @@ window.addEventListener("load", function(event){
 
 function bannerScrollSetup(){
     banner = document.getElementById("product_selection");
-    if(!banner)
+    if(!banner || banner.children.length == 0)
         return false;
-	
+
 	do{
 	    var children = banner.children;
 	    children_number = children.length;

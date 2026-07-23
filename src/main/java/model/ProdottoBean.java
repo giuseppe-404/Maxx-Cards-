@@ -13,7 +13,12 @@ public class ProdottoBean implements Serializable{
 	private String pathImg;
 	private String mimeType;
 	
-	public ProdottoBean(){}
+	public ProdottoBean(){
+		this.nome = "";
+		this.descrizione = "";
+		this.pathImg = "";
+		this.mimeType = "";
+	}
 	
 	public ProdottoBean(int id, String nome, int qnt, int prezzo, String descrizione, int sconto, String pathImg,
 			String mimeType) {

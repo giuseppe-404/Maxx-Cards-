@@ -1,0 +1,33 @@
+main{
+	padding: 5vh;
+	>form>fieldset{
+		margin: 3vh 0;
+		.order_section{
+			.order_data{
+
+			}
+			.order_product{
+				table{
+					max-width:100%;
+					min-width:100%;
+					table-layout: fixed;
+					box-sizing: border-box;
+					tr{
+						>th{
+							width:20%;
+						}
+						>th:first-child{
+							width:60%;
+						}
+					}
+					tr:nth-child(4n),tr:nth-child(4n+1){
+						background-color: var(--product-bg-color-1);
+					}
+					tr:nth-child(4n+2),tr:nth-child(4n+3){
+						background-color: var(--product-bg-color-2);
+					}
+				}
+			}
+		}
+	}
+}

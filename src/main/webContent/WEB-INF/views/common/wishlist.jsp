@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Carrello</title>
+	<title>Wishlist</title>
 	<%@include file="/WEB-INF/views/components/ext.jsp"%>
 	<link href="${pageContext.request.contextPath}/styles/carrello.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/styles/wishlist.css" rel="stylesheet" type="text/css">

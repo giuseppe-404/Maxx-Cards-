@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 import dao.CartaDao;
 import dao.CartaDaoImpl;
 import dao.CartaSingolaDao;
+import dao.CartaSingolaDaoImpl;
 import dao.MagiaDao;
 import dao.MagiaDaoImpl;
 import dao.MostroDao;
@@ -43,7 +44,6 @@ public class GetCartaPage extends HttpServlet {
     
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        System.out.println(getServletContext().getAttributeNames());
         DataSource ds = (DataSource) getServletContext().getAttribute("DataSource");
         if (ds == null) {
             throw new ServletException("DataSource non disponibile nel contesto applicativo.");
@@ -52,6 +52,7 @@ public class GetCartaPage extends HttpServlet {
         mostroDao = new MostroDaoImpl(ds);
         magiaDao = new MagiaDaoImpl(ds);
         trappolaDao = new TrappolaDaoImpl(ds);
+        cartaSingolaDao = new CartaSingolaDaoImpl(ds);
     }
     
     /**
@@ -66,7 +67,7 @@ public class GetCartaPage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("id") != null) {
+		if(request.getParameter("id") == null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/index");
 			dispatcher.forward(request, response);
 			return;

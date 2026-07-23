@@ -66,13 +66,21 @@ public class LoginAccount extends HttpServlet {
 					System.out.println("Successo");
 					HttpSession session = request.getSession();
 					session.setAttribute("utente",utente);
+					String redirectUrl = (String) session.getAttribute("redirectedURL");
+					if(redirectUrl != null) {
+						session.removeAttribute("redirectedURL");
+						response.sendRedirect(redirectUrl);
+					}
+					else response.sendRedirect("/index");
 				}
-				else System.out.println("Fallimento");
+				else {
+					response.sendError(500,"Email o password errata!");
+				}
 			}catch(Exception exc) {
-				exc.printStackTrace();
+				response.sendError(500,"Errore nella validazione delle informazioni!");
 			}
 		}catch(SQLException e) {
-			e.printStackTrace();
+			response.sendError(500,"Errore nella validazione delle informazioni!");
 		}
 		
 	}

@@ -3,31 +3,36 @@ main{
 	>form>fieldset{
 		margin: 3vh 0;
 		.order_section{
-			.order_data{
+			border:none;
+			padding: 0;
+		}
+	}
+}
 
+.order_section{
+	border: #ffffff solid 0.5vh;
+	padding: 1vh 2vh;
+}
+
+.order_product{
+	table{
+		max-width:100%;
+		min-width:100%;
+		table-layout: fixed;
+		box-sizing: border-box;
+		tr{
+			>th{
+				width:20%;
 			}
-			.order_product{
-				table{
-					max-width:100%;
-					min-width:100%;
-					table-layout: fixed;
-					box-sizing: border-box;
-					tr{
-						>th{
-							width:20%;
-						}
-						>th:first-child{
-							width:60%;
-						}
-					}
-					tr:nth-child(4n),tr:nth-child(4n+1){
-						background-color: var(--product-bg-color-1);
-					}
-					tr:nth-child(4n+2),tr:nth-child(4n+3){
-						background-color: var(--product-bg-color-2);
-					}
-				}
+			>th:first-child{
+				width:60%;
 			}
+		}
+		tr:nth-child(4n),tr:nth-child(4n+1){
+			background-color: var(--product-bg-color-1);
+		}
+		tr:nth-child(4n+2),tr:nth-child(4n+3){
+			background-color: var(--product-bg-color-2);
 		}
 	}
 }

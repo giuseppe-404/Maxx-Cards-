@@ -49,7 +49,7 @@ public class GestioneCarte extends HttpServlet {
 		try {
 			request.setAttribute("",tipoDao.retrieveAll());
 		} catch(SQLException e) {
-			//TODO 
+			response.sendError(500,"Errore nell'ottenimento dei tipi dal database!");
 		}
 		dispatcher.forward(request, response);
 		

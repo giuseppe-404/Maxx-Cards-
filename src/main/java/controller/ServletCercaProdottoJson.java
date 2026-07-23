@@ -127,7 +127,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		} else {
     			ProdottoBean filter = new ProdottoBean();
@@ -156,7 +159,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		}
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 2) {
@@ -193,7 +199,9 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
     			}
     		} else {
     			ProdottoYGOBean filter = new ProdottoYGOBean();
@@ -226,7 +234,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		}
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 1) {
@@ -275,7 +286,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		} else {
     			CartaSingolaBean filter = new CartaSingolaBean();
@@ -320,7 +334,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    				return;
     			} 
     		}
     	}else if(Integer.parseInt(request.getParameter("idProdotto")) == 8) {
@@ -368,7 +385,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		} else {
     			DeckBean filter = new DeckBean();
@@ -411,7 +431,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    				return;
     			} }
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 3) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
@@ -451,7 +474,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		} else {
     			ConfezionatoBean filter = new ConfezionatoBean();
@@ -488,7 +514,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			} }
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 4) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
@@ -528,7 +557,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		} else {
     			PacchettoBean filter = new PacchettoBean();
@@ -565,7 +597,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			} }
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 5) {
     		if(request.getParameter("limit") != null && request.getParameter("page") != null) {
@@ -605,7 +640,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		} else {
     			TinBean filter = new TinBean();
@@ -642,7 +680,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		}
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 6) {
@@ -683,7 +724,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		} else {
     			BoxBean filter = new BoxBean();
@@ -720,7 +764,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			}
     		}
     	} else if(Integer.parseInt(request.getParameter("idProdotto")) == 7) {
@@ -761,7 +808,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
             			result.put(obj);
             		}
             	}catch(SQLException e) {
-            		e.printStackTrace();
+            		JSONObject obj = new JSONObject();
+            		obj.put("Status", false);
+            		out.print(obj.toString());
+            		return;
             	}
     		} else {
     			StructureDeckBean filter = new StructureDeckBean();
@@ -798,7 +848,10 @@ public class ServletCercaProdottoJson extends HttpServlet {
     					result.put(obj);
     				}
     			}catch(SQLException e) {
-    				e.printStackTrace();
+    				JSONObject obj = new JSONObject();
+    	    		obj.put("Status", false);
+    	    		out.print(obj.toString());
+    	    		return;
     			} 
     			System.out.println(result.isEmpty());
     		}

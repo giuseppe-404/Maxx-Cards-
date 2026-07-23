@@ -7,24 +7,14 @@ public class CSetBean implements Serializable{
 	
 	private static final long serialVersionUID = 1l;
 	
-	private int id;
 	private String nome;
 	private Date releaseDate;
 	
 	public CSetBean(){};
 	
-	public CSetBean(int id, String nome, Date releaseDate) {
-		this.id = id;
+	public CSetBean(String nome, Date releaseDate) {
 		this.nome = nome;
 		this.releaseDate = releaseDate;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getNome() {

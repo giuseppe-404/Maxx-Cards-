@@ -10,11 +10,11 @@ public interface CSetDao {
 	
 	public void saveCSet(CSetBean set) throws SQLException;
 	
-	public CSetBean retrieveByKey(int id) throws SQLException;
+	public CSetBean retrieveByKey(String nome) throws SQLException;
 	
-	public boolean deleteCSet(int id) throws SQLException;
+	public boolean deleteCSet(String nome) throws SQLException;
 	
-	public boolean changeNome(CSetBean set) throws SQLException;
+	public boolean changeNome(CSetBean set, String nome) throws SQLException;
 	
 	public boolean changeReleaseDate(CSetBean set) throws SQLException;
 	

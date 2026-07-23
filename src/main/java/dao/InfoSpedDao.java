@@ -17,14 +17,14 @@ public interface InfoSpedDao{
 	
 	public boolean deleteByIdUtente(int idUtente) throws SQLException;
 	
-	public boolean updateNome(InfoSpedBean info) throws SQLException;
+	public boolean changeNome(InfoSpedBean info) throws SQLException;
 	
-	public boolean updateCognome(InfoSpedBean info) throws SQLException;
+	public boolean changeCognome(InfoSpedBean info) throws SQLException;
 	
-	public boolean updateVia(InfoSpedBean info) throws SQLException;
+	public boolean changeVia(InfoSpedBean info) throws SQLException;
 
-	public boolean updateCivico(InfoSpedBean info) throws SQLException;
+	public boolean changeCivico(InfoSpedBean info) throws SQLException;
 
-	public boolean updateCAP(InfoSpedBean info) throws SQLException;
+	public boolean changeCAP(InfoSpedBean info) throws SQLException;
 
 }

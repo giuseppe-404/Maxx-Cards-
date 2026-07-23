@@ -49,7 +49,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, confezionato.getId());
-			ps.setInt(2, confezionato.getIdSet());
+			ps.setString(2, confezionato.getIdSet());
 			System.out.println(ps.toString());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
@@ -277,7 +277,7 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 		String sql = "UPDATE "+ TABLE_NAME + " SET id_set = ? where id=?";
 		try(Connection connection = ds.getConnection();
 				 PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, confezionato.getIdSet());
+			ps.setString(1, confezionato.getIdSet());
 			ps.setInt(2, confezionato.getId());
 			int rowChanged = ps.executeUpdate();
 			return rowChanged != 0;
@@ -286,16 +286,16 @@ public class ConfezionatoDaoImpl extends ProdottoYGODaoImpl implements Confezion
 
 	protected  synchronized void fillBean(ConfezionatoBean confezionato, ResultSet rs) throws SQLException {
 		super.fillBean(confezionato, rs);
-		confezionato.setIdSet(rs.getInt("id_set"));
+		confezionato.setIdSet(rs.getString("id_set"));
 	}
 	
 	protected synchronized boolean buildProdottoFilter(StringBuilder sql, ArrayList<String> attribute, ConfezionatoBean confezionato) {
 		boolean primo = super.buildProdottoFilter(sql, attribute, confezionato);
-		if(confezionato.getIdSet() != 0) {
+		if(!confezionato.getIdSet().equals("")) {
 			if(primo) sql.append(" WHERE ");
 			else sql.append(" AND ");
-			sql.append(" id_set = ? ");
-			attribute.add(Integer.toString(confezionato.getIdSet()));
+			sql.append(" id_set LIKE ? ");
+			attribute.add(confezionato.getIdSet());
 		}return primo;
 	}
 	

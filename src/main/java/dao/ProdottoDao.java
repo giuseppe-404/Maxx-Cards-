@@ -11,6 +11,8 @@ public interface ProdottoDao {
 	
 	public ProdottoBean retrieveByKey(int idProdotto) throws SQLException;
 	
+	public ProdottoBean retrieveByNome(String nome) throws SQLException;
+	
 	public List<ProdottoBean> retrieveFiltered(ProdottoBean prodotto)throws SQLException; 
 	
 	public List<ProdottoBean> retrieveAll(int page, int limit) throws SQLException;
@@ -33,4 +35,7 @@ public interface ProdottoDao {
 	
 	public boolean changeImage(ProdottoBean prodotto) throws SQLException;
 	
+	public int prodottoType(int prodotto) throws SQLException;
+
+	public boolean changeId(ProdottoBean bean, int oldId) throws SQLException;
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
@@ -19,18 +20,22 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	
 	@Override
 	public synchronized boolean saveProdottoComprato(ProdottoCompratoBean prodotto) throws SQLException {
-		String sql = "INSERT "+TABLE_NAME+"(id,id_ordine,id_originale,prezzo,nome,qnt,info) "
+		String sql = "INSERT "+TABLE_NAME+"(id_ordine,id_originale,prezzo,nome,qnt,info) "
 				+ "VALUES (?,?,?,?,?,?,?)";
 		try(Connection connection = ds.getConnection();
-				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, prodotto.getId());
-			ps.setInt(2, prodotto.getIdOrdine());
-			ps.setInt(3, prodotto.getIdOriginale());
-			ps.setInt(4, prodotto.getPrezzo());
-			ps.setString(5, prodotto.getNome());
-			ps.setInt(6, prodotto.getQnt());
-			ps.setString(7, prodotto.getInfo());
+				PreparedStatement ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)){
+			ps.setInt(1, prodotto.getIdOrdine());
+			ps.setInt(2, prodotto.getIdOriginale());
+			ps.setInt(3, prodotto.getPrezzo());
+			ps.setString(4, prodotto.getNome());
+			ps.setInt(5, prodotto.getQnt());
+			ps.setString(6, prodotto.getInfo());
 			int rowUpdated = ps.executeUpdate();
+			try(ResultSet rs = ps.getGeneratedKeys()){
+				if(rs.next()) {
+					prodotto.setId(rs.getInt(1));
+				}
+			}
 			return rowUpdated != 0;
 		}
 	}
@@ -68,7 +73,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 			return list;
 		}
 	}
-
+	
 	@Override
 	public synchronized boolean deleteProdottoComprato(int id, int idOrdine) throws SQLException {
 		String sql = "DELETE FROM "+TABLE_NAME+" WHERE id=? and id_ordine=?";
@@ -83,15 +88,19 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 
 	@Override
 	public synchronized boolean deleteProdottoCompratoByIdOrdine(int idOrdine) throws SQLException {
-		String sql = " SET SQL_SAFE_UPDATES = 0; DELETE FROM "+TABLE_NAME+" WHERE id_ordine=?; SET SQL_SAFE_UPDATE = 1;";
+		String sql = "DELETE FROM "+TABLE_NAME+" WHERE id_ordine=?;";
 		try (Connection connection = ds.getConnection()){
-			connection.setAutoCommit(false);
+			try(Statement stmt = connection.createStatement()) {
+				stmt.execute("SET SQL_SAFE_UPDATES = 0;");
+			}
 			try(PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, idOrdine);
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 			}finally{
-				connection.setAutoCommit(true);
+				try(Statement stmt = connection.createStatement()) { 
+					stmt.execute("SET SQL_SAFE_UPDATES = 1;");
+				}
 			}	
 		}
 	}

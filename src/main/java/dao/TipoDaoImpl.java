@@ -21,7 +21,7 @@ public class TipoDaoImpl implements TipoDao {
 	}
 
 	@Override
-	public void saveTipo(TipoBean tipo) throws SQLException {
+	public synchronized void saveTipo(TipoBean tipo) throws SQLException {
 		String sql = "INSERT INTO " + TABLE_NAME + " (tipo) VALUES (?)";
 		try( 
 				Connection conn = ds.getConnection();
@@ -33,7 +33,7 @@ public class TipoDaoImpl implements TipoDao {
 	}
 
 	@Override
-	public boolean deleteTipo(String id) throws SQLException {
+	public synchronized boolean deleteTipo(String id) throws SQLException {
 		String sql = "DELETE FROM " + TABLE_NAME + " WHERE tipo = ?";
 		try( 
 				Connection conn = ds.getConnection();
@@ -46,7 +46,7 @@ public class TipoDaoImpl implements TipoDao {
 	}
 
 	@Override
-	public TipoBean retrieveByKey(String id) throws SQLException {
+	public synchronized TipoBean retrieveByKey(String id) throws SQLException {
 		TipoBean tipo = new TipoBean();
 		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE tipo = ?";
 		try( 
@@ -64,7 +64,7 @@ public class TipoDaoImpl implements TipoDao {
 	}
 
 	@Override
-	public List<TipoBean> retrieveAll() throws SQLException {
+	public synchronized List<TipoBean> retrieveAll() throws SQLException {
 		ArrayList<TipoBean> lista = new ArrayList<TipoBean>();
 		String sql = "SELECT * FROM " + TABLE_NAME;
 		try(
@@ -83,7 +83,7 @@ public class TipoDaoImpl implements TipoDao {
 	}
 
 	@Override
-	public boolean changeTipo(TipoBean tipo, String originalId) throws SQLException {
+	public synchronized boolean changeTipo(TipoBean tipo, String originalId) throws SQLException {
 		String sql = "UPDATE " + TABLE_NAME + " SET tipo = ? WHERE tipo = ? ";
         try (
         		Connection conn = ds.getConnection();

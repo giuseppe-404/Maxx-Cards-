@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
-import javax.sql.rowset.serial.SerialBlob;
 
 import model.CartaBean;
 
@@ -272,7 +271,45 @@ public class CartaDaoImpl implements CartaDao{
         }
 	}
 
-
+	@Override
+	public synchronized CartaBean retrieveByNome(String nome) throws SQLException {
+		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE nome_it LIKE ? OR nome_jp LIKE ? OR nome_en LIKE ?";
+		CartaBean carta = new CartaBean();
+		try( Connection conn = ds.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql)){
+			ps.setString(1, nome);
+			ps.setString(2, nome);
+			ps.setString(3, nome);
+			try (ResultSet rs = ps.executeQuery()){
+				if (rs.next()) {
+					fillBean(carta, rs);
+				}
+			}
+		}
+		return carta;
+	}
+	@Override
+	public synchronized int cartaType(int id) throws SQLException{
+		String sql = """
+				SELECT t.tipo from carta LEFT JOIN (
+					SELECT id, 1 as tipo FROM mostro
+					UNION ALL
+					SELECT id, 2 as tipo FROM magia
+					UNION ALL
+					SELECT id, 3 as tipo FROM trappola)
+					as t ON carta.id = t.id WHERE carta.id = ?
+				""";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			return -1;
+		}
+	}
+	
 	protected void fillBean(CartaBean carta, ResultSet rs) throws SQLException {
 		carta.setId(rs.getInt("id"));
 		carta.setPunteggio(rs.getInt("punteggio"));

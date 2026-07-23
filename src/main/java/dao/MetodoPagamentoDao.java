@@ -17,6 +17,6 @@ public interface MetodoPagamentoDao {
 	
 	public boolean deleteByIdUtente(int idUtente) throws SQLException;
 	
-	public boolean updateMetodoPagamento(MetodoPagamentoBean met) throws SQLException;
+	public boolean changeMetodoPagamento(MetodoPagamentoBean met) throws SQLException;
 	
 }

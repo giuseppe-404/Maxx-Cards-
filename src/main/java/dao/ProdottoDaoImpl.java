@@ -97,6 +97,20 @@ public class ProdottoDaoImpl implements ProdottoDao {
 	}
 	
 	@Override
+	public synchronized ProdottoBean retrieveByNome(String nome) throws SQLException{
+		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE nome LIKE ?";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setString(1, nome);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				ProdottoBean prodotto = new ProdottoBean(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getString(7),rs.getString(8));
+				return prodotto;
+			}
+		} return null;
+	}
+	
+	@Override
 	public synchronized List<ProdottoBean> retrieveAll(int page, int limit) throws SQLException {
 		String sql = "SELECT * FROM "+TABLE_NAME+" LIMIT "+limit+" OFFSET "+page*limit+";";
 		try(Connection connection = ds.getConnection();
@@ -212,6 +226,49 @@ public class ProdottoDaoImpl implements ProdottoDao {
 		}
 	}
 	
+	public synchronized boolean changeId(ProdottoBean bean, int oldId) throws SQLException{
+		String sql = "UPDATE "+TABLE_NAME+" SET id=? WHERE id=?";
+		 try (Connection conn = ds.getConnection();
+				 PreparedStatement ps = conn.prepareStatement(sql)) {
+	        	ps.setInt(1, bean.getId());
+	        	ps.setInt(2, oldId);
+				
+				int result = ps.executeUpdate();
+				return result != 0;
+	        }
+	}
+	
+	public synchronized int prodottoType(int prodotto) throws SQLException {
+		String sql = """
+				SELECT t.tipo FROM prodotto LEFT JOIN
+					( SELECT id, 1 as tipo FROM cartaSingola
+					  UNION ALL
+					  SELECT id, 2 as tipo FROM ProdottoYGO
+					  UNION ALL
+					  SELECT id, 3 as tipo FROM confezionato
+					  UNION ALL
+					  SELECT id, 4 as tipo FROM pacchetto
+					  UNION ALL
+					  SELECT id, 5 as tipo FROM tin
+					  UNION ALL
+					  SELECT id, 6 as tipo FROM box
+					  UNION ALL
+					  SELECT id, 7 as tipo FROM structure_deck
+					  UNION ALL
+					  SELECT id, 8 as tipo FROM deck
+					 ) as t ON prodotto.id = t.id WHERE prodotto.id = ?
+				""";
+		try(Connection connection = ds.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql)){
+			ps.setInt(1,prodotto);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			return -1;
+		}
+	}
+	
 	protected void fillBean(ProdottoBean prodotto, ResultSet rs) throws SQLException{
 		prodotto.setId(rs.getInt(1));
 		prodotto.setNome(rs.getString(2));
@@ -233,20 +290,20 @@ public class ProdottoDaoImpl implements ProdottoDao {
 			filter.append(" nome LIKE ? ");
 			attributi.add("%"+prodotto.getNome()+"%");
 		}
-		if(prodotto.getQnt() < 0) {
+		if(prodotto.getQnt() >= 0) {
 			if(primo) {
 				primo = false;
 				filter.append("WHERE ");
 			}else filter.append(" AND ");
-			filter.append(" qnt=? ");
+			filter.append(" qnt >= ? ");
 			attributi.add(Integer.toString(prodotto.getQnt()));
 		}
-		if(prodotto.getPrezzo() < 0) {
+		if(prodotto.getPrezzo() > 0) {
 			if(primo) {
 				primo = false;
 				filter.append("WHERE ");
 			}else filter.append(" AND ");
-			filter.append(" (prezzo*(100-sconto)/100)<=? ");
+			filter.append(" (prezzo * (100 - sconto) / 100) <= ? ");
 			attributi.add(Integer.toString(prodotto.getPrezzo()));
 		}
 		if(!prodotto.getDescrizione().equals("")) {

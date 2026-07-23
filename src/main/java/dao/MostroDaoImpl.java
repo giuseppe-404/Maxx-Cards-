@@ -390,6 +390,25 @@ public class MostroDaoImpl extends CartaDaoImpl implements MostroDao {
 			return result != 0;
         }
 	}
+	
+	@Override
+	public synchronized MostroBean retrieveByNome(String nome) throws SQLException {
+		CartaBean carta = super.retrieveByNome(nome);
+		MostroBean mostro = null;
+		if(carta.getId() != 0) {
+			String sql = "SELECT * FROM mostro WHERE nome_it LIKE ? OR nome_en LIKE ? OR nome_jp LIKE ?";
+			try(Connection conn = ds.getConnection();
+					PreparedStatement ps = conn.prepareStatement(sql)){
+				ps.setString(1, nome);
+				ps.setString(2, nome);
+				ps.setString(3, nome);
+				ResultSet rs = ps.executeQuery();
+				if(rs.next()) {
+					fillBean(mostro, rs);
+				}
+			}
+		} return mostro;
+	}
 
 	private static int bitSetToInt(BitSet bs) {
 		int x = 0;

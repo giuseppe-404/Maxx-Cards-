@@ -11,6 +11,8 @@ public interface ContieneDeckDao {
 	
 	public boolean deleteContieneDeck(int idDeck, int idCarta) throws SQLException;
 	
+	public boolean deleteContieneDeckByIdDeck(int idDeck) throws SQLException;
+	
 	public boolean changeQnt(ContieneDeckBean cont) throws SQLException;
 	
 	public List<ContieneDeckBean> retrieveByIdDeck(int idDeck) throws SQLException;

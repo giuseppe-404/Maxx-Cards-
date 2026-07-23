@@ -22,7 +22,11 @@ public interface OrdineDao {
 	
 	public OrdineBean retrieveByKey(int idOrdine) throws SQLException;
 	
+	public OrdineBean retrieveCarrello(int idUtente) throws SQLException;
+	
 	public List<OrdineBean> retrieveByIdUtente(int idUtente) throws SQLException;
+	
+	public List<OrdineBean> retrieveByIdUtenteNull() throws SQLException;
 	
 	public List<OrdineBean> retrieveAll() throws SQLException;
 	

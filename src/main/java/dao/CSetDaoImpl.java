@@ -23,25 +23,24 @@ public class CSetDaoImpl implements CSetDao {
 	
 	@Override
 	public synchronized void saveCSet(CSetBean set) throws SQLException {
-		String sql = "INSERT INTO "+TABLE_NAME+"(id,nome,release_date) VALUES (?,?,?);";
+		String sql = "INSERT INTO "+TABLE_NAME+"(nome,release_date) VALUES (?,?);";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, set.getId());
-			ps.setString(2, set.getNome());
-			ps.setDate(3, set.getReleaseDate());
+			ps.setString(1, set.getNome());
+			ps.setDate(2, set.getReleaseDate());
 			ps.executeUpdate();
 		}
 	}
 
 	@Override
-	public synchronized CSetBean retrieveByKey(int id) throws SQLException {
-		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE id=?;";
+	public synchronized CSetBean retrieveByKey(String nome) throws SQLException {
+		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE nome LIKE ?;";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, id);
+			ps.setString(1, nome);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
-				CSetBean set = new CSetBean(rs.getInt(1),rs.getString(2),rs.getDate(3));
+				CSetBean set = new CSetBean(rs.getString(1),rs.getDate(2));
 				return set;
 			} return null;
 		}
@@ -54,7 +53,7 @@ public class CSetDaoImpl implements CSetDao {
 			ResultSet rs = ps.executeQuery();
 			List<CSetBean> list = new ArrayList<>();
 			if(rs.next()) {
-				CSetBean set = new CSetBean(rs.getInt(1),rs.getString(2),rs.getDate(3));
+				CSetBean set = new CSetBean(rs.getString(1),rs.getDate(2));
 				list.add(set);
 			} return list;
 		}
@@ -67,7 +66,7 @@ public class CSetDaoImpl implements CSetDao {
 			ResultSet rs = ps.executeQuery();
 			List<CSetBean> list = new ArrayList<>();
 			if(rs.next()) {
-				CSetBean set = new CSetBean(rs.getInt(1),rs.getString(2),rs.getDate(3));
+				CSetBean set = new CSetBean(rs.getString(1),rs.getDate(2));
 				list.add(set);
 			} return list;
 		}
@@ -109,7 +108,7 @@ public class CSetDaoImpl implements CSetDao {
 				ResultSet rs = ps.executeQuery();
 				List<CSetBean> list = new ArrayList<>();
 				while(rs.next()) {
-					CSetBean temp = new CSetBean(rs.getInt(1),rs.getString(2),rs.getDate(3));
+					CSetBean temp = new CSetBean(rs.getString(1),rs.getDate(2));
 					list.add(temp);
 				}
 				return list;
@@ -154,7 +153,7 @@ public class CSetDaoImpl implements CSetDao {
 				ResultSet rs = ps.executeQuery();
 				List<CSetBean> list = new ArrayList<>();
 				while(rs.next()) {
-					CSetBean temp = new CSetBean(rs.getInt(1),rs.getString(2),rs.getDate(3));
+					CSetBean temp = new CSetBean(rs.getString(1),rs.getDate(2));
 					list.add(temp);
 				}
 				return list;
@@ -162,23 +161,23 @@ public class CSetDaoImpl implements CSetDao {
 	}
 
 	@Override
-	public synchronized boolean deleteCSet(int id) throws SQLException {
-		String sql = "DELETE FROM "+TABLE_NAME+" WHERE id=?";
+	public synchronized boolean deleteCSet(String nome) throws SQLException {
+		String sql = "DELETE FROM "+TABLE_NAME+" WHERE nome LIKE ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, id);
+			ps.setString(1, nome);
 			int rowDeleted = ps.executeUpdate();
 			return rowDeleted != 0;
 		}
 	}
 
 	@Override
-	public synchronized boolean changeNome(CSetBean set) throws SQLException {
-		String sql = "UPDATE "+TABLE_NAME+" SET nome=? WHERE id=?";
+	public synchronized boolean changeNome(CSetBean set, String nome) throws SQLException {
+		String sql = "UPDATE "+TABLE_NAME+" SET nome=? WHERE nome LIKE ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setString(1, set.getNome());
-			ps.setInt(2, set.getId());
+			ps.setString(2, nome);
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}
@@ -186,11 +185,11 @@ public class CSetDaoImpl implements CSetDao {
 
 	@Override
 	public synchronized boolean changeReleaseDate(CSetBean set) throws SQLException {
-		String sql = "UPDATE "+TABLE_NAME+" SET releaseDate=? WHERE id=?";
+		String sql = "UPDATE "+TABLE_NAME+" SET releaseDate=? WHERE nome LIKE ?";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setDate(1, set.getReleaseDate());
-			ps.setInt(2, set.getId());
+			ps.setString(2, set.getNome());
 			int rowUpdated = ps.executeUpdate();
 			return rowUpdated != 0;
 		}

@@ -82,5 +82,8 @@ public class ProdottoCompratoBean implements Serializable{
 		this.info = info;
 	}
 	
+	public String toFattura() {
+		return "; "+this.nome + " ; "+ Integer.toString(this.qnt)+" ; "+this.info+" ;"+ Integer.toString(this.qnt)+"x"+Integer.toString(this.prezzo/100)+ "\n";
+	}
 	
 }

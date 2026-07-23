@@ -39,13 +39,6 @@ public class DeckDaoImpl extends ProdottoYGODaoImpl implements DeckDao{
 			return saveDeck(prodotto);
 		}
 	}
-	@Override
-	public synchronized boolean saveConfezionato(DeckBean prodotto) throws SQLException {
-		try(Connection connection = ds.getConnection()){
-			saveConfezionato(prodotto);
-			return saveDeck(prodotto);
-		}
-	}
 	
 	@Override
 	public synchronized boolean saveDeck(DeckBean deck) throws SQLException {
@@ -275,6 +268,21 @@ public class DeckDaoImpl extends ProdottoYGODaoImpl implements DeckDao{
 				}
 			}
 		} return deck;
+	}
+	
+	public synchronized DeckBean retrieveByNome(String nome) throws SQLException {
+		String sql = "SELECT * FROM "+TABLE_NAME+" WHERE nome LIKE ?";
+		DeckBean deck = new DeckBean();
+		try( Connection conn = ds.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql)){
+			ps.setString(1, nome);
+			try (ResultSet rs = ps.executeQuery()){
+				if (rs.next()) {
+					fillBean(deck, rs);
+				}
+			}
+		}
+		return deck;
 	}
 	
 	protected  synchronized void fillBean(DeckBean deck, ResultSet rs) throws SQLException {

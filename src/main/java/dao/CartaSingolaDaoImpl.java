@@ -49,7 +49,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, carta.getId());
 			ps.setString(2, carta.getQuality());
-			ps.setInt(3,carta.getIdSet());
+			ps.setString(3,carta.getIdSet());
 		}
 		return false;
 	}
@@ -284,7 +284,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 		String sql = "UPDATE "+ TABLE_NAME + " SET id_set = ? where id=?";
 		try(Connection connection = ds.getConnection();
 				 PreparedStatement ps = connection.prepareStatement(sql)){
-			ps.setInt(1, carta.getIdSet());
+			ps.setString(1, carta.getIdSet());
 			ps.setInt(2, carta.getId());
 			int rowChanged = ps.executeUpdate();
 			return rowChanged != 0;
@@ -306,7 +306,7 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 	protected synchronized void fillBean(CartaSingolaBean carta, ResultSet rs) throws SQLException {
 		super.fillBean(carta, rs);
 		carta.setQuality(rs.getString("quality"));
-		carta.setIdSet(rs.getInt("id_set"));
+		carta.setIdSet(rs.getString("id_set"));
 		carta.setIdCarta(rs.getInt("id_carta"));
 	}
 	
@@ -319,12 +319,12 @@ public class CartaSingolaDaoImpl extends ProdottoYGODaoImpl implements CartaSing
 			st.append(" quality = ? ");
 			attribute.add(carta.getQuality());
 		}
-		if(carta.getIdSet() != 0) {
+		if(!carta.getIdSet().equals("")) {
 			if(primo) {
 				st.append(" WHERE ");
 			}else st.append(" AND "); 
-			st.append(" id_set = ? ");
-			attribute.add(Integer.toString(carta.getIdSet()));
+			st.append(" id_set LIKE ? ");
+			attribute.add(carta.getIdSet());
 		}
 		if(carta.getIdCarta() != 0) {
 			if(primo) {

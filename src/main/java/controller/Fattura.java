@@ -69,7 +69,8 @@ public class Fattura extends HttpServlet {
 			}
 			out.println("\t\t\tTotale: "+Integer.toString(tot/100)+"\n");
 		}catch (SQLException e) {
-			response.sendError(500,"Errore nell'ottenimento delle informazioni dell'ordine dal database!");
+			request.setAttribute("msg", "Errore nell'ottenimento delle informazioni dell'ordine dal database!");
+			response.sendError(500);
 		}
 		
 	}

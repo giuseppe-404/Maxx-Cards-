@@ -56,7 +56,8 @@ public class GestioneInfoSped extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("");
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {
-			response.sendError(500,"Errore nell'ottenimento delle informazioni di spedizione dal database!");
+			request.setAttribute("msg", "Errore nell'ottenimento delle informazioni di spedizione dal database!");
+			response.sendError(500);
 		}
 		
 	}

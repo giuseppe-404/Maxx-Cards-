@@ -55,7 +55,8 @@ public class CercaCartaSingola extends HttpServlet {
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/cercaCartaSingola");
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {
-			//TODO
+			request.setAttribute("msg", "Errore nell'ottenimento dei set!");
+			response.sendError(500);
 		}
 	}
 

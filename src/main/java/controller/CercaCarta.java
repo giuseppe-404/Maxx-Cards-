@@ -53,7 +53,8 @@ public class CercaCarta extends HttpServlet {
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/cercaCarta.jsp");
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {
-			
+			request.setAttribute("msg", "Errore nell'ottenimento dei tipi!");
+			response.sendError(500);
 		}
 	}
 

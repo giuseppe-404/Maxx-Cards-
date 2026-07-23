@@ -39,6 +39,9 @@
 				<div id="conf_msg" class="hidden">
 					<h3>Le password non corrispondono</h3>
 				</div>
+				<c:if test="${msg != ''}">
+					<p>${msg}</p>
+				</c:if>
 			</form>
 			
 		</main>

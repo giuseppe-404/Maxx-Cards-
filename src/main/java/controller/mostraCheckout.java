@@ -10,11 +10,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.InfoSpedBean;
 import model.MetodoPagamentoBean;
+import model.ProdottoBean;
 import model.ProdottoCompratoBean;
 import model.UtenteBean;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -25,6 +27,8 @@ import dao.MetodoPagamentoDao;
 import dao.MetodoPagamentoDaoImpl;
 import dao.ProdottoCompratoDao;
 import dao.ProdottoCompratoDaoImpl;
+import dao.ProdottoDao;
+import dao.ProdottoDaoImpl;
 
 /**
  * Servlet implementation class mostraCheckout
@@ -35,6 +39,7 @@ public class mostraCheckout extends HttpServlet {
 	private InfoSpedDao infoDao = null;
 	private MetodoPagamentoDao metodoDao = null;
 	private ProdottoCompratoDao prodottoCDao = null;
+	 private ProdottoDao prodottoDao = null;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -49,6 +54,7 @@ public class mostraCheckout extends HttpServlet {
 	        infoDao = new InfoSpedDaoImpl(ds);
 	        metodoDao = new MetodoPagamentoDaoImpl(ds);
 	        prodottoCDao = new ProdottoCompratoDaoImpl(ds);
+	        prodottoDao = new ProdottoDaoImpl(ds);
 	 }
 	
     public mostraCheckout() {
@@ -62,10 +68,19 @@ public class mostraCheckout extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		UtenteBean utente = (UtenteBean) session.getAttribute("utente");
+		List<MetodoPagamentoBean> metodi = new ArrayList<>();
+		List<InfoSpedBean> infos = new ArrayList<>();
 		try {
-			List<MetodoPagamentoBean> metodi = metodoDao.retrieveByIdUtente(utente.getId());
-			List<InfoSpedBean> infos = infoDao.retrieveByIdUtente(utente.getId());
+			if(utente != null) {	
+				metodi = metodoDao.retrieveByIdUtente(utente.getId());
+				infos = infoDao.retrieveByIdUtente(utente.getId());
+			}
 			List<ProdottoCompratoBean> prodCarrello = (List<ProdottoCompratoBean>) session.getAttribute("prodCarrello");
+			List<ProdottoBean> prodotti = new ArrayList<>();
+			for(ProdottoCompratoBean prod: prodCarrello) {
+				prodotti.add(prodottoDao.retrieveByKey(prod.getIdOriginale()));
+			}
+			request.setAttribute("prodotti", prodotti);
 			request.setAttribute("metodi", metodi);
 			request.setAttribute("infos", infos);
 			request.setAttribute("prodC",prodCarrello);
@@ -73,7 +88,7 @@ public class mostraCheckout extends HttpServlet {
 			request.setAttribute("msg", "Errore nella ricerca dei parametri dal database!");
 			response.sendError(500);
 		}
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/recap.jsp");
+		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/checkout.jsp");
 		dispatcher.forward(request, response);
 	}
 

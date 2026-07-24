@@ -144,6 +144,7 @@ public class nuovoProdotto extends HttpServlet {
 		if(action_prodotto != null) {
 			if(action_prodotto.equals("delete")) {
 				if(request.getParameter("old_id") != null) {
+					System.out.println(request.getParameter("old_id").trim());
 					int oldId = Integer.parseInt(request.getParameter("old_id").trim());
 					try {
 						prodottoDAO.deleteProdotto(oldId);
@@ -801,8 +802,9 @@ public class nuovoProdotto extends HttpServlet {
 					int oldId = Integer.parseInt(request.getParameter("old_id").trim());
 					try {
 						int prec = prodottoDAO.prodottoType(oldId);
+						System.out.println(prec);
 						if(prec == 0) {
-							ProdottoBean prod = prodottoDAO.retrieveByKey(prec);
+							ProdottoBean prod = prodottoDAO.retrieveByKey(oldId);
 							ProdottoBean bean = new ProdottoBean();
 							bean.setId(oldId);
 							if(request.getParameter("prodotto_id") != null) {
@@ -920,7 +922,7 @@ public class nuovoProdotto extends HttpServlet {
 								}
 								
 							}
-							if(request.getParameter("prodotto_idSet") != null) {
+							if(request.getParameter("idSet") != null) {
 								String set = request.getParameter("idSet").trim();
 								if(set.equals("nuovo")) {
 									String nuovoSet = request.getParameter("nuovo_idSet").trim();
@@ -1103,8 +1105,8 @@ public class nuovoProdotto extends HttpServlet {
 									}
 								}
 							}
-							if(request.getParameter("prodotto_idSet") != null) {
-								String set = request.getParameter("prodotto_idSet").trim();
+							if(request.getParameter("idSet") != null) {
+								String set = request.getParameter("idSet").trim();
 								if(set.equals("nuovo")) {
 									String nuovoSet = request.getParameter("nuovo_idSet").trim();
 									String release = request.getParameter("nuovo_data").trim();
@@ -1199,8 +1201,8 @@ public class nuovoProdotto extends HttpServlet {
 									}
 								}
 							}
-							if(request.getParameter("prodotto_idSet") != null) {
-								String set = request.getParameter("prodotto_idSet").trim();
+							if(request.getParameter("idSet") != null) {
+								String set = request.getParameter("idSet").trim();
 								if(set.equals("nuovo")) {
 									String nuovoSet = request.getParameter("nuovo_idSet").trim();
 									String release = request.getParameter("nuovo_data").trim();
@@ -1295,8 +1297,8 @@ public class nuovoProdotto extends HttpServlet {
 									}
 								}
 							}
-							if(request.getParameter("prodotto_idSet") != null) {
-								String set = request.getParameter("prodotto_idSet").trim();
+							if(request.getParameter("idSet") != null) {
+								String set = request.getParameter("idSet").trim();
 								if(set.equals("nuovo")) {
 									String nuovoSet = request.getParameter("nuovo_idSet").trim();
 									String release = request.getParameter("nuovo_data").trim();
@@ -1391,8 +1393,8 @@ public class nuovoProdotto extends HttpServlet {
 									}
 								}
 							}
-							if(request.getParameter("prodotto_idSet") != null) {
-								String set = request.getParameter("prodotto_idSet").trim();
+							if(request.getParameter("idSet") != null) {
+								String set = request.getParameter("idSet").trim();
 								if(set.equals("nuovo")) {
 									String nuovoSet = request.getParameter("nuovo_idSet").trim();
 									String release = request.getParameter("nuovo_data").trim();
@@ -1487,8 +1489,8 @@ public class nuovoProdotto extends HttpServlet {
 									}
 								}
 							}
-							if(request.getParameter("prodotto_idSet") != null) {
-								String set = request.getParameter("prodotto_idSet").trim();
+							if(request.getParameter("idSet") != null) {
+								String set = request.getParameter("idSet").trim();
 								if(set.equals("nuovo")) {
 									String nuovoSet = request.getParameter("nuovo_set").trim();
 									String release = request.getParameter("data_set").trim();
@@ -1626,6 +1628,8 @@ public class nuovoProdotto extends HttpServlet {
 				}
 			}
 		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/index");
+		dispatcher.forward(request, response);
 	}
 
 	private String buildUniqueFileName(Part part) {

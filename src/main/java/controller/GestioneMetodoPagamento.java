@@ -52,7 +52,7 @@ public class GestioneMetodoPagamento extends HttpServlet {
 		UtenteBean utente = (UtenteBean)request.getSession().getAttribute("utente");
 		try {
 			List<MetodoPagamentoBean> metodoPagamento = metodoPagamentoDao.retrieveByIdUtente(utente.getId());
-			request.setAttribute("info", metodoPagamento);
+			request.setAttribute("metodi", metodoPagamento);
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/common/metodopag.jsp");
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {

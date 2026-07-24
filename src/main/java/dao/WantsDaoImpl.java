@@ -22,7 +22,7 @@ public class WantsDaoImpl implements WantsDao {
 
 	@Override
 	public synchronized boolean saveWants(WantsBean wants) throws SQLException {
-		String sql ="INSERT into "+TABLE_NAME+"(id_utente,id_prodotto) VALUES (?.?);";
+		String sql ="INSERT into "+TABLE_NAME+"(id_utente,id_prodotto) VALUES (?,?);";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql)){
 			ps.setInt(1, wants.getIdUtente());

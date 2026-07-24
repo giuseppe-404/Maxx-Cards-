@@ -26,7 +26,7 @@
 			</fieldset>
 			<fieldset id="product_data">
 				<label for="tipo_prodotto">Tipo di prodotto: 
-					<select name="tipo_prodotto" id="tipo_prodotto" required>
+					<select name="prodotto_tipo" id="tipo_prodotto" required>
 						<option disabled selected value>-- Tipo --</option>
 						<option value="prodotto">Prodotto semplice</option>
 						<option value="carta">Carta Singola</option>
@@ -38,23 +38,23 @@
 					</select>
 				</label> 
 				<label for="nome_prodotto">Nome: 
-					<input type="text" name="nome" id="nome_prodotto" placeholder="Maxx &quot C &quot" required>
+					<input type="text" name="prodotto_nome" id="nome_prodotto" placeholder="Maxx &quot C &quot" required>
 				</label> 
 				<label for="qnt_prodotto">Quantità: 
-					<input type="number" name="qnt" id="qnt_prodotto" placeholder="0" min="0" step="1" required>
+					<input type="number" name="prodotto_qnt" id="qnt_prodotto" placeholder="0" min="0" step="1" required>
 				</label> 
 				<label for="descr_prodotto">Descrizione: 
-					<textarea name="descr" id="descr_prodotto" rows="5" placeholder="Descrizione..." required></textarea>
+					<textarea name="prodotto_descr" id="descr_prodotto" rows="5" placeholder="Descrizione..." required></textarea>
 				</label> 
 				<input type="button" value="Reset" class="reset_button">
 			</fieldset>
 
 			<fieldset id="product_price">
 				<label for="prezzo_prodotto">Prezzo: 
-					<input type="number" min="0.01" step="0.01" name="prezzo" id="prezzo_prodotto" placeholder="0.00" required> €
+					<input type="number" min="0.01" step="0.01" name="prodotto_prezzo" id="prezzo_prodotto" placeholder="0.00" required> €
 				</label> 
 				<label for="sconto_prodotto">Sconto: 
-					<input type="number" min="0" step="0.01" max="100" name="sconto" id="sconto_prodotto" placeholder="0"> %
+					<input type="number" min="0" step="0.01" max="100" name="prodotto_sconto" id="sconto_prodotto" placeholder="0"> %
 				</label>
 				<p id="prezzo_finale"></p>
 				<input type="button" value="Reset" class="reset_button">
@@ -72,7 +72,7 @@
 
 			<fieldset id="product_language" class="hidden">
 				<label for="lingua_prodotto">Lingua: 
-					<select name="lingua_prodotto" id="lingua_prodotto">
+					<select name="prodotto_lingua" id="lingua_prodotto">
 						<option disabled selected value="">-- Lingua --</option>
 						<option value="italiano">Italiano</option>
 						<option value="inglese">Inglese</option>
@@ -95,10 +95,10 @@
 					</select>
 				</label> 
 				<label for="nuovo_set" class="invisible">Nome del nuovo set 
-					<input type="text" name="nuovo_set" id="nuovo_set">
+					<input type="text" name="nuovo_idSet" id="nuovo_set">
 				</label> 
 				<label for="data_set" class="invisible">Data di rilascio 
-					<input type="date" name="data_set" id="data_set">
+					<input type="date" name="nuova_data" id="data_set">
 				</label> 
 				<input type="button" value="Reset" class="reset_button">
 			</fieldset>
@@ -121,10 +121,10 @@
 			<fieldset id="deck_composition" class="hidden">
 				<section class="carte_contenute">
 					<label for="carta" class="autocompletabile">Carta: 
-						<input type="text" name="carta" class="nome_carta">
+						<input type="text" name="carte" class="nome_carta">
 					</label> 
 					<label for="qnt_carta">Quantità: 
-						<input type="number" name="qnt_carta" min="1" max="3" step="1" class="qnt_carta">
+						<input type="number" name="qnt" min="1" max="3" step="1" class="qnt_carta">
 					</label> 
 					<input type="button" value="+" class="aggiungi_carta"> 
 					<input type="button" value="-" class="rimuovi_carta">

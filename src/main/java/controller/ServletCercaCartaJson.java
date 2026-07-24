@@ -71,7 +71,7 @@ public class ServletCercaCartaJson extends HttpServlet {
     	if(request.getParameter("page") != null && request.getParameter("limit") != null) {
     		int page = Integer.parseInt(request.getParameter("page"));
     		int limit = Integer.parseInt(request.getParameter("limit"));
-    		if(request.getParameter("classe") == null) {
+    		if(request.getParameter("classe") == null || request.getParameter("classe").equals("")) {
     			CartaBean filter = new CartaBean();
     			if(request.getParameter("nome") != null) {
     				filter.setNomeIt(request.getParameter("nome"));

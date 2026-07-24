@@ -83,7 +83,13 @@ public class Checkout extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		UtenteBean utente = (UtenteBean) session.getAttribute("utente");
-		OrdineBean carrello = (OrdineBean) session.getAttribute("carrello");
+		OrdineBean ordine = new OrdineBean();
+		
+		if(utente == null) {
+			utente = new UtenteBean();
+			utente.setId(17); //per guest
+		}
+		ordine.setIdUtente(utente.getId());
 		List<ProdottoCompratoBean> prodCarrello = (List<ProdottoCompratoBean>) session.getAttribute("prodCarrello");
 		try {
 			InfoSpedBean indirizzo = null;
@@ -165,8 +171,8 @@ public class Checkout extends HttpServlet {
 					filter.setId(id);
 					filter.setIdUtente(utente.getId());
 					MetodoPagamentoBean bean = metodoDao.retrieveByKey(id, utente.getId());
-					if(request.getParameter("metodo") != null) {
-						String nome = request.getParameter("metodoPagamento_metodo");
+					if(request.getParameter("metodo") != null && request.getParameter("metodo").equals("")) {
+						String nome = request.getParameter("metodo");
 						if(!nome.equals(bean.getMetodo())) {
 							filter.setMetodo(nome);
 							metodoDao.changeMetodoPagamento(filter);
@@ -183,7 +189,8 @@ public class Checkout extends HttpServlet {
 					if(request.getParameter("metodo") != null) {
 						filter.setMetodo(request.getParameter("metodo"));
 					} else {
-						response.sendError(400,"Metodo mancante!");
+						request.setAttribute("msg", "Metodo mancante!");
+						response.sendError(400);
 					}
 					metodoDao.saveMetodoPagamento(filter);
 					metodo = filter;
@@ -193,26 +200,28 @@ public class Checkout extends HttpServlet {
 				request.setAttribute("msg","Errore nella scelta del metodo di pagamento!");
 				response.sendError(400);
 			}
+			ordine.setDataAcquisto(new Date(System.currentTimeMillis()));
+			ordine.setIdMetodo(metodo.getId());
+			ordine.setIdInfoSped(indirizzo.getId());
+			ordineDao.createOrdine(ordine);
+			ordine = ordineDao.retrieveCarrello(utente.getId());
 			for(ProdottoCompratoBean p : prodCarrello) {
 				ProdottoBean prodotto = prodottoDao.retrieveByKey(p.getIdOriginale());
 				p.setInfo(prodotto.getDescrizione());
 				p.setNome(prodotto.getNome());
 				p.setPrezzo(prodotto.getPrezzo());
+				p.setIdOrdine(ordine.getIdOrdine());
 				prodotto.setQnt(prodotto.getQnt() - p.getQnt());
 				prodottoDao.changeQnt(prodotto);
 				prodottoCDao.saveProdottoComprato(p);
 			}
-			carrello.setStato("Acquistato");
-			carrello.setDataAcquisto(new Date(System.currentTimeMillis()));
-			carrello.setIdMetodo(metodo.getId());
-			carrello.setIdInfoSped(indirizzo.getId());
-			ordineDao.changeDataAcquisto(carrello);
-			ordineDao.changeStato(carrello);
-			ordineDao.changeInfoSped(carrello);
-			ordineDao.changeMetodoPagamento(carrello);
+			ordine.setStato("Acquistato");
+			ordineDao.changeStato(ordine);
+			session.setAttribute("idOrdine", ordine.getIdOrdine());
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/recap.jsp");		
 			dispatcher.forward(request, response);
 			} catch(SQLException e) {
+				e.printStackTrace();
 				request.setAttribute("msg", "Errore nel caricamento delle informazioni nel database!");
 				response.sendError(500);
 		}

@@ -21,7 +21,7 @@ public class ProdottoCompratoDaoImpl implements ProdottoCompratoDao {
 	@Override
 	public synchronized boolean saveProdottoComprato(ProdottoCompratoBean prodotto) throws SQLException {
 		String sql = "INSERT "+TABLE_NAME+"(id_ordine,id_originale,prezzo,nome,qnt,info) "
-				+ "VALUES (?,?,?,?,?,?,?)";
+				+ "VALUES (?,?,?,?,?,?)";
 		try(Connection connection = ds.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)){
 			ps.setInt(1, prodotto.getIdOrdine());

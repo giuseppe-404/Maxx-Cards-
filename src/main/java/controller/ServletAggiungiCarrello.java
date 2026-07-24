@@ -79,29 +79,7 @@ public class ServletAggiungiCarrello extends HttpServlet {
 	    	prod.setPrezzo(prodotto.getPrezzo());
 	    	prod.setInfo(prodotto.getDescrizione());
 	    	prod.setNome(prodotto.getNome());
-	    	OrdineBean carrello = (OrdineBean)session.getAttribute("carrello");
-    		if(carrello == null) {
-    			UtenteBean utente = (UtenteBean)session.getAttribute("utente");
-    			if(utente != null) {
-    				carrello = ordineDao.retrieveCarrello(utente.getId());
-    				if(carrello == null) {
-    					carrello = new OrdineBean();
-        				carrello.setStato("Carrello");
-        				carrello.setIdUtente(utente.getId());
-        				ordineDao.createOrdine(carrello);
-        				carrello = ordineDao.retrieveCarrello(utente.getId());
-    				}
-    			}
-    			if(carrello == null) {
-    				carrello = new OrdineBean();
-    				carrello.setStato("Carrello");
-    			}
-    			session.setAttribute("carrello", carrello);
-    		} 
-    		boolean logged = (carrello.getIdOrdine() > 0);
-    		if(logged){
-    			prod.setIdOrdine(carrello.getIdOrdine());
-    		}
+    		
     		List<ProdottoCompratoBean> prodScelti = (List<ProdottoCompratoBean>) session.getAttribute("prodCarrello");
     		
     		if (prodScelti == null) {
@@ -116,9 +94,6 @@ public class ServletAggiungiCarrello extends HttpServlet {
     				if(prod.getQnt() == 0) {
     					diff = -p.getQnt();
     					daRimuovere = p;
-    					if(logged) {
-    						prodottoCDao.deleteProdottoComprato(p.getId(),carrello.getIdOrdine());
-    					}
     				} else {
     					diff = qnt - p.getQnt();
     					p.setQnt(prod.getQnt());
@@ -132,11 +107,7 @@ public class ServletAggiungiCarrello extends HttpServlet {
     		}
     		
     		if(!presente && prod.getQnt() > 0) {
-    			if(logged) {
-    				prodottoCDao.saveProdottoComprato(prod);
-    			}
     			prodScelti.add(prod);
-    			
     		}
     		session.setAttribute("prodCarrello", prodScelti);
     		
@@ -144,6 +115,7 @@ public class ServletAggiungiCarrello extends HttpServlet {
     	    obj.put("diff", diff);
     	    out.print(obj.toString());
     	} catch(SQLException e) {
+    		e.printStackTrace();
     		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     		return;
     	}

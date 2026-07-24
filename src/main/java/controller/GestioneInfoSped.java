@@ -52,8 +52,8 @@ public class GestioneInfoSped extends HttpServlet {
 		UtenteBean utente = (UtenteBean)request.getSession().getAttribute("utente");
 		try {
 			List<InfoSpedBean> infoSped = infoSpedDao.retrieveByIdUtente(utente.getId());
-			request.setAttribute("info", infoSped);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("");
+			request.setAttribute("infos", infoSped);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/common/infosped.jsp");
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {
 			request.setAttribute("msg", "Errore nell'ottenimento delle informazioni di spedizione dal database!");

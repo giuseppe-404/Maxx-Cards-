@@ -27,6 +27,12 @@ window.addEventListener("load", function() {
     const fail = document.getElementById("fail");
     const template = document.getElementsByClassName("product_link")[0];
 	
+	const page = document.getElementById("page")
+	const limit = document.getElementById("limit") 
+	const prec_btn = document.getElementById("prec_btn")
+	const next_btn = document.getElementById("next_btn")
+	var last_param = "";
+	var last_page = 0;
 	if (classe) {
 	        classe.addEventListener("change", function(){
 	            var figli = [tipologia.firstElementChild];
@@ -54,9 +60,19 @@ window.addEventListener("load", function() {
 	            tipologia.replaceChildren(...figli);
 	        })
 	    }
-	
+		prec_btn.addEventListener("click", function(){
+		      page.value = Number(page.value)-1
+		      prec_btn.disabled = (page.value == 0)
+		      cerca.click()
+		})
+		next_btn.addEventListener("click", function(){
+		      page.value = Number(page.value) +1
+		      prec_btn.disabled = (page.value == 0)
+		      cerca.click()
+		})
     if (cerca) {
         cerca.addEventListener("click", function() {
+			var new_search = true;
             var param = "classe=" + classe.value;
             if (nome && nome.value)
                 param += "&nome=" + nome.value
@@ -98,7 +114,20 @@ window.addEventListener("load", function() {
                 param += "&freccia7=" + freccia7.value
             if (freccia8 && freccia8.checked)
                 param += "&freccia8=" + freccia8.value
-
+			if (param == last_param){
+			    new_search = false
+			}
+			last_param = param
+			if (page && page.value) {
+			    if (new_search || page.value == last_page) {
+			        page.value = 0
+			        prec_btn.disabled = true;
+			    }
+			    last_page = page.value
+			    param += "&page="+page.value
+			}
+			if (limit && limit.value)
+			    param += "&limit="+limit.value
             ajax("servletCercaCartaJson", "post", param, function(request) {
                 if (request.readyState < 4)
                     return
@@ -107,9 +136,10 @@ window.addEventListener("load", function() {
 
                 var arr = JSON.parse(request.responseText);
                 if (arr.length == 0) {
+					next_btn.disabled = true;
                     fail.classList.remove("hidden");
                     return
-                }
+                } next_btn.disabled = false;
                 fail.classList.add("hidden");
 
                 var children = [template]

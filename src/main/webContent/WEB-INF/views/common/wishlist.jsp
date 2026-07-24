@@ -16,7 +16,7 @@
 	<%@include file="/WEB-INF/views/components/nav.jsp"%>
 	<main>
 		<c:choose>
-			<c:when test="${wants.size() <= 0}">
+			<c:when test="${prodotti.size() <= 0}">
 				<p>La wishlist è vuoto</p>
 			</c:when>
 			<c:otherwise>
@@ -24,19 +24,19 @@
 					<c:forEach var="prodotto" items="${prodotti}">
 						<tr class="prodotto_carrello prodotto_wishlist">
 							<td colspan="1">
-								<img src="uploadImmagine?action=show&prodottoId=${prodotto.id}&isProdotto=true" alt="Immagine di ${prodotto.nome}">
+								<img src="../uploadImmagine?action=show&prodottoId=${prodotto.id}&isProdotto=true" alt="Immagine di ${prodotto.nome}">
 							</td>
 							<td colspan="3">
 								<a href="getProdottoPage?id=${prodotto.id}">${prodotto.nome}</a>
 							</td>
 							<td colspan="1">
-								<p>${prodotto.prezzo}€</p>
+								<p>${prodotto.prezzo/100}€</p>
 							</td>
 							<td colspan="1">
 								<div class="wish_update">
 									<input type="hidden" value="${prodotto.id}" class="wish_id">
-									<input type="image" src="${pageContext.request.contextPath}/images/wish.png" class="wish_button" alt="Aggiungi alla wishlist">
-									<input type="image" src="${pageContext.request.contextPath}/images/wished.png" class="wish_button hidden" alt="Aggiungi alla wishlist">
+									<input type="image" src="${pageContext.request.contextPath}/images/wish.png" class="wish_button hidden" alt="Aggiungi alla wishlist">
+									<input type="image" src="${pageContext.request.contextPath}/images/wished.png" class="wish_button" alt="Aggiungi alla wishlist">
 								</div>
 								<p class="output_msg hidden"></p>
 							</td>

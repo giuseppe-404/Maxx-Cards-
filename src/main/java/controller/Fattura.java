@@ -45,34 +45,34 @@ public class Fattura extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		response.setContentType("text/csv; charset=UTF-8");
+		int id = (int)request.getSession().getAttribute("idOrdine");
+		response.setHeader("Content-Disposition", "attachment; filename=\"fattura"+id+".csv\"");
+		int tot = 0;
+		try {			
+			List<ProdottoCompratoBean> prod = daoProdottoC.retrieveByIdOrdine(id);
+			PrintWriter out = response.getWriter();
+			out.println(";;Maxx-Cards\n");
+			out.println("Ordine #"+id+"\n");
+			out.println(";Nome;Quantità;Note;Prezzo\n");
+			
+			for(ProdottoCompratoBean bean : prod) {
+				out.println(bean.toFattura());
+				tot=tot+(bean.getPrezzo()*bean.getQnt());
+			}
+			out.println(";;;Totale: "+Integer.toString(tot/100)+"\n");
+		}catch (SQLException e) {
+			e.printStackTrace();
+			request.setAttribute("msg", "Errore nell'ottenimento delle informazioni dell'ordine dal database!");
+			response.sendError(500);
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/csv; charset=UTF-8");
-		int id = Integer.parseInt(request.getParameter("idOrdine"));
-		response.setHeader("Content-Disposition", "attachment; filename=\"fattura"+id+".csv\"");
-		int tot = 0;
-		try {			
-			List<ProdottoCompratoBean> prod = daoProdottoC.retrieveByIdOrdine(id);
-			PrintWriter out = response.getWriter();
-			out.println("\t\tMaxx-Cards\n");
-			out.println("Ordine #"+id+"\n");
-			out.println("\tNome\tQuantità\tNote\tPrezzo\n");
-			
-			for(ProdottoCompratoBean bean : prod) {
-				out.println(bean.toFattura());
-				tot=tot+(bean.getPrezzo()*bean.getQnt());
-			}
-			out.println("\t\t\tTotale: "+Integer.toString(tot/100)+"\n");
-		}catch (SQLException e) {
-			request.setAttribute("msg", "Errore nell'ottenimento delle informazioni dell'ordine dal database!");
-			response.sendError(500);
-		}
-		
+		doGet(request, response);
 	}
 
 }

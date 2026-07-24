@@ -22,7 +22,7 @@ import dao.WantsDaoImpl;
 /**
  * Servlet implementation class ServletModificaWish
  */
-@WebServlet("/ServletModificaWish")
+@WebServlet("/common/servletModificaWish")
 public class ServletModificaWish extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private WantsDao wantsDao = null;
@@ -50,10 +50,14 @@ public class ServletModificaWish extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		UtenteBean utente = (UtenteBean)session.getAttribute("utente");
+		if (utente == null) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
 		try {
-			if(request.getParameter("id") == null) {
+			if(request.getParameter("id") != null) {
 				int id = Integer.parseInt(request.getParameter("id"));
-				if(request.getParameter("aggiungi").equals("on")) {
+				if(request.getParameter("aggiungi").equals("true")) {
 					WantsBean wants = new WantsBean();
 					wants.setIdUtente(utente.getId());
 					wants.setIdProdotto(id);
@@ -66,6 +70,7 @@ public class ServletModificaWish extends HttpServlet {
 				return;
 			}
 		}catch(SQLException e) {
+			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}

@@ -27,7 +27,7 @@
 			<button onclick="location.href = '../common/gestioneInfoSped';">Info Spedizione</button>
 			<button onclick="location.href = '../common/gestioneMetodoPagamento';">Metodi di pagamento</button>
 			<button onclick="location.href = '../common/mostraCronologia';">Cronologia</button>
-			<button onclick="location.href = '../common/gestioneWishlist';">Wishlist</button>
+			<button onclick="location.href = '../common/gestioneWishList';">Wishlist</button>
 			<button onclick="location.href = '../common/logout';">Logout</button>
 			<button onclick="location.href = '../common/eliminaAccount';">Eliminazione Account</button>
 		</section>

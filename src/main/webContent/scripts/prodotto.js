@@ -31,7 +31,7 @@ window.addEventListener("load", function() {
     var wish_switch = true;
     wish.forEach(function(input) {
         input.addEventListener("click", function() {
-			ajax("gestioneWishList", "get", "id="+id.value+"&aggiungi="+wish_switch, function(request){
+			ajax("common/servletModificaWish", "get", "id="+id.value+"&aggiungi="+wish_switch, function(request){
 				if (request.readyState < 4)
                     return;
                 output.classList.remove("hidden");

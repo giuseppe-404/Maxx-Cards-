@@ -108,6 +108,12 @@
                     </label>
 				</fieldset>
 				<input type="button" id="cerca_prod" value="Ricerca">
+				<div>
+<input type="hidden" value="20" id="limit">
+<input type="hidden" value="0" id="page">
+<input type="button" id="prec_btn" value="&lt" disabled>
+<input type="button" id="next_btn" value="&gt" disabled>
+</div>
 			</form>
 		</details>
 		<main>

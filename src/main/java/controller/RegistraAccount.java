@@ -71,8 +71,8 @@ public class RegistraAccount extends HttpServlet {
 			utente.setPwd(password);
 			try {
 				utenteDao.createUtente(utente);
-				HttpSession sessione = request.getSession();
-				sessione.setAttribute("utente",utente);
+				utente = utenteDao.retrieveByEmail(email);
+				session.setAttribute("utente",utente);
 				String redirectUrl = (String) session.getAttribute("redirectedURL");
 				request.setAttribute("msg", msg);
 				if(redirectUrl != null) {
@@ -86,6 +86,7 @@ public class RegistraAccount extends HttpServlet {
 				msg = "Email già in uso";
 				request.setAttribute("msg",msg);
 				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/account.jsp");
+				dispatcher.forward(request, response);
 			}
 		}catch(Exception e) {
 			request.setAttribute("msg","Errore durante la creazione dell'account");

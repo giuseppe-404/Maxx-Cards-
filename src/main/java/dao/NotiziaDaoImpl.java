@@ -68,7 +68,7 @@ public class NotiziaDaoImpl implements NotiziaDao {
 	@Override
 	public synchronized List<NotiziaBean> retrieveAll() throws SQLException {
 		ArrayList<NotiziaBean> list = new ArrayList<NotiziaBean>();
-		String sql = "SELECT * FROM " + TABLE_NAME + "ORDER BY id DESC";
+		String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY id DESC";
 		try(
 				Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql)

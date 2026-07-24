@@ -68,8 +68,9 @@ public class GestioneWishList extends HttpServlet {
     				response.sendError(500,"Errore nell'ottenimento dei prodotti");
     			}	
     		}
+    		
     		request.setAttribute("prodotti", prodotti);
-    		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/common/wishList.jsp");
+    		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/common/wishlist.jsp");
     		dispatcher.forward(request, response);
     	} catch(SQLException ex) {
     		request.setAttribute("msg", "Errore nell'ottenimento della wishlist!");

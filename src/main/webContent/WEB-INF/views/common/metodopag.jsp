@@ -14,7 +14,7 @@
 	<%@include file="/WEB-INF/views/components/optionsAside.jsp"%>
 	<%@include file="/WEB-INF/views/components/nav.jsp"%>
 	<main>
-		<form action="" method="get">
+		<form action="modificaMetodo" method="get">
 			<fieldset id="metodo_field">
 				<label for="metodo_scelto">Metodo di Pagamento:
 					<select name="metodo_scelto" id="metodo_scelto" required>

@@ -321,7 +321,8 @@ function loadProdData(prod) {//{id, tipo, nome, qnt, prezzo, descrizione, sconto
     document.getElementById("product_price").saveState();
 
     document.getElementById("product_image").resetToDefault();
-    document.getElementById("image_preview").src = "image?action=show&prodottoId=" + prod.id + "&isProdotto=true";
+    document.getElementById("image_preview").src = "../uploadImmagine?action=show&prodottoId=" + prod.id + "&isProdotto=true";
+	document.getElementById("image_preview").classList.remove("hidden");
 
     if (prod.lingua) {
         var lingua_select = document.getElementById("lingua_prodotto");

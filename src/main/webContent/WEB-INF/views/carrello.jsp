@@ -32,7 +32,7 @@
 										<a href="getProdottoPage?id=${prodotto.id}">${prodotto.nome}</a>
 									</td>
 									<td colspan="3">
-										<p>${prodotto.prezzo}€</p>
+										<p>${prodotto.prezzo/100}€</p>
 									</td>
 									<td colspan="3">
 										<div>

@@ -65,7 +65,7 @@ public class Index extends HttpServlet {
 				ProdottoBean temp = daoPR.retrieveByKey(i);
 				prod.add(temp);
 			}
-			List<NotiziaBean> notizie = daoN.retrieveAll(3,1);
+			List<NotiziaBean> notizie = daoN.retrieveAll(3,0);
 			request.setAttribute("notizie", notizie);
 			request.setAttribute("prodotti", prod);
 		}catch(SQLException e) {

@@ -14,7 +14,7 @@
 	<%@include file="/WEB-INF/views/components/optionsAside.jsp"%>
 	<%@include file="/WEB-INF/views/components/nav.jsp"%>
 	<main>
-		<form action="checkout" method="post">
+		<form action="modificaInfoSped" method="post">
 			<fieldset id="sped_field">
 				<label for="info_scelto">Informazioni di spedizione:
 					<select name="info_scelte" id="info_scelte" required>

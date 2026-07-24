@@ -6,7 +6,7 @@ window.addEventListener("load", function() {
         const wish = div.getElementsByClassName("wish_button");
 		const id = div.getElementsByClassName("wish_id")[0];
 		var output = div.getElementsByClassName("output_msg")[0];
-        var wish_switch = true;
+        var wish_switch = false;
 		
         wish.forEach(function(input) {
             input.addEventListener("click", function() {

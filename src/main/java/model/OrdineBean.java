@@ -15,7 +15,11 @@ public class OrdineBean implements Serializable{
 	private Date dataAcquisto;
 	private Date dataConsegna;
 	
-	public OrdineBean() {}
+	public OrdineBean() {
+		this.stato = "Carrello";
+		this.dataAcquisto = null;
+		this.dataConsegna = null;
+	}
 
 	public OrdineBean(int id_ordine, int id_utente, int id_metodo, int id_infosped) {
 		this.stato = "Carrello";

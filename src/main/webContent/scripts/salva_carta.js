@@ -266,7 +266,8 @@ function loadCardData(carta) {
 	document.getElementById("card_data").saveState();
 	
 	document.getElementById("card_image").resetToDefault();
-	document.getElementById("image_preview").src = "image?action=show&prodottoId="+carta.id+"&isProdotto=false";
+	document.getElementById("image_preview").src = "../uploadImmagine?action=show&prodottoId="+carta.id+"&isProdotto=false";
+	document.getElementById("image_preview").classList.remove("hidden");
 	
 	var tipologia_select = document.getElementById("tipologia_carta");
 	tipologia_select.getElementsByTagName("option").forEach(function(option){

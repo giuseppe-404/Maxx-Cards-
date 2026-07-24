@@ -19,7 +19,7 @@
 				<p>Il carrello è vuoto</p>
 			</c:when>
 			<c:otherwise>
-				<form action="checkout" method="post">
+				<form action="mostraCheckout" method="post">
 					<fieldset id="metodo_field">
 						<label for="metodo_scelto">Metodo di Pagamento:
 							<select name="metodo_scelto" id="metodo_scelto" required>

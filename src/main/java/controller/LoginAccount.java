@@ -62,6 +62,13 @@ public class LoginAccount extends HttpServlet {
 		HttpSession session = request.getSession();
 		try {
 			UtenteBean utente = utenteDao.retrieveByEmail(email);
+			if(utente == null) {
+				msg = "Email o password errata!";
+				request.setAttribute("msg",msg);
+				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/account.jsp");
+				dispatcher.forward(request,response);
+				return;
+			}
 			String storedPwd = utente.getPwd();
 			byte[] salt = utente.getSalt();
 			try{
@@ -75,15 +82,19 @@ public class LoginAccount extends HttpServlet {
 						session.removeAttribute("redirectedURL");
 						response.sendRedirect(redirectUrl);
 					}
-					else response.sendRedirect("/index");
+					else response.sendRedirect(request.getContextPath()+ "/index");
 				}
 				else {
 					msg = "Email o password errata!";
 					request.setAttribute("msg",msg);
+					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/account.jsp");
+					dispatcher.forward(request,response);
 				}
 			}catch(Exception exc) {
-				request.setAttribute("msg","Errore nella validazione delle informazioni!");
-				response.sendError(500);
+				msg = "Email o password errata!";
+				request.setAttribute("msg",msg);
+				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/account.jsp");
+				dispatcher.forward(request,response);
 			}
 		}catch(SQLException e) {
 			msg = "Email o password errata!";

@@ -69,6 +69,7 @@ public class ServletAggiungiCarrello extends HttpServlet {
 	    	int diff = qnt;
 	    	ProdottoBean prodotto = prodottoDao.retrieveByKey(id);
 	    	if(qnt < 0 || qnt > prodotto.getQnt()) {
+	    		System.out.println("ciao");
 	    		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 	    		return;
 	    	}

@@ -52,7 +52,7 @@ public class CercaCartaSingola extends HttpServlet {
 		try{
 			List<CSetBean> sets = setDao.retrieveAll();
 			request.setAttribute("sets", sets);
-			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/cercaCartaSingola");
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/cercaCartaSingola.jsp");
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {
 			request.setAttribute("msg", "Errore nell'ottenimento dei set!");

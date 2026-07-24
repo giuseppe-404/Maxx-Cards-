@@ -210,7 +210,7 @@ public class Checkout extends HttpServlet {
 			ordineDao.changeStato(carrello);
 			ordineDao.changeInfoSped(carrello);
 			ordineDao.changeMetodoPagamento(carrello);
-			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/");		
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/recap.jsp");		
 			dispatcher.forward(request, response);
 			} catch(SQLException e) {
 				request.setAttribute("msg", "Errore nel caricamento delle informazioni nel database!");

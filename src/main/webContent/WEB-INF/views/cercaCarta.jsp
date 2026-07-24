@@ -37,22 +37,10 @@
                     <label for="tipologia">Tipologia
 						<select name="tipologia" id="tipologia">
 	                        <option selected value=""> -- Tutte  -- </option>
-	                        <option value="none"></option>
-	                        <option value="fusione"></option>
-	                        <option value="synchro"></option>
-	                        <option value="xyz"></option>
-	                        <option value="rituale"></option>
-	                        <option value="continua"></option>
-	                        <option value="contro"></option>
-	                        <option value="link"></option>
-	                        <option value="link"></option>
-	                        <option value="link"></option>
-	                        <option value="link"></option>
-	                        <option value="link"></option>
 	                    </select>
 					</label>
 				</fieldset>
-				<fieldset id="monster_fieldset">
+				<fieldset id="monster_fieldset" class="hidden">
 					<label for="livello">Livello/Rango/LinkRating:
                         <input type="number" min="0" max="13" step="1" name="livello" id="livello">
                     </label>
@@ -116,7 +104,6 @@
 	                            	<option value="${tipo.tipo}">${tipo.tipo}</option>
 	                            </c:forEach>
                             </c:if>
-                            <option value="nuovo">Crea nuovo</option>
                         </select>
                     </label>
 				</fieldset>

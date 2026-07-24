@@ -24,7 +24,7 @@
 					<h1>${mostro.nomeIt}</h1>
 					<p>Nome inglese: ${mostro.nomeEn}</p>
 					<p>Nome giapponese: ${mostro.nomeJp}</p>
-					<c:if test="${mostro.punteggio <= 100 && mostro.punteggio >= 0}">
+					<c:if test="${mostro.punteggio <= 100 && mostro.punteggio >= 0 && mostro.tipologia.toUpperCase()!='LINK' && mostro.scalaPendulum < 0 }">
 						<p>Punteggio in Genesys: ${mostro.punteggio}</p>
 					</c:if>
 					<p>Attributo: ${mostro.attributo.toUpperCase()}</p>

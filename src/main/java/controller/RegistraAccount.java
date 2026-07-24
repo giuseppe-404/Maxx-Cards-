@@ -80,7 +80,7 @@ public class RegistraAccount extends HttpServlet {
 					response.sendRedirect(redirectUrl);
 				}
 				else {
-					response.sendRedirect("/index");
+					response.sendRedirect(request.getContextPath()+ "/index");
 				}
 			}catch(SQLException e) {
 				msg = "Email già in uso";

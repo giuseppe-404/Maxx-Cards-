@@ -23,9 +23,38 @@ window.addEventListener("load", function() {
     const freccia6 = document.getElementById("freccia6");
     const freccia7 = document.getElementById("freccia7");
     const freccia8 = document.getElementById("freccia8");
+	const monster_fieldset = document.getElementById("monster_fieldset");
     const fail = document.getElementById("fail");
     const template = document.getElementsByClassName("product_link")[0];
-
+	
+	if (classe) {
+	        classe.addEventListener("change", function(){
+	            var figli = [tipologia.firstElementChild];
+	            var valori = [];
+	            switch (classe.value) {
+	                case "mostro":
+	                    valori = ["Normale", "Fusione", "Synchro", "XYZ", "Rituale", "Link"];
+	                    monster_fieldset.classList.remove("hidden");
+	                    break;
+	                case "magia":
+	                    valori = ["Normale", "Rapida", "Continua", "Equipaggiamento", "Rituale", "Terreno"];
+	                    monster_fieldset.classList.add("hidden")
+	                    break;
+	                case "trappola":
+	                    valori = ["Normale", "Contro", "Continua"];
+	                    monster_fieldset.classList.add("hidden")
+	                    break;
+	            }
+	            valori.forEach(function(string) {
+	                var option = document.createElement("option");
+	                option.value = string;
+	                option.innerHTML = string;
+	                figli.push(option);
+	            })
+	            tipologia.replaceChildren(...figli);
+	        })
+	    }
+	
     if (cerca) {
         cerca.addEventListener("click", function() {
             var param = "classe=" + classe.value;
@@ -104,21 +133,3 @@ window.addEventListener("load", function() {
         cerca.click();
     }
 })
-
-function ajax(x, y, z, func){
-	var j = [
-		{nomeIt: "nome 0", id: 0},
-		{nomeIt: "nome 1", id: 1},
-		{nomeIt: "nome 2", id: 2},
-		{nomeIt: "nome 3", id: 3},
-		{nomeIt: "nome 4", id: 4},
-		{nomeIt: "nome 5", id: 5},
-		{nomeIt: "nome 6", id: 6},
-		{nomeIt: "nome 7", id: 7},
-		{nomeIt: "nome 8", id: 8},
-		{nomeIt: "nome 9", id: 9}
-	]
-	console.log(z);
-	var request = {readyState: 4, status: 200, responseText: JSON.stringify(j)}
-	func(request)
-}

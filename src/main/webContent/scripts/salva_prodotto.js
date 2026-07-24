@@ -42,10 +42,10 @@ window.addEventListener("load", function() {
 
     if (autocomplete) {
         var prodSearch = document.getElementById("ricerca_prodotto");
-        var autArgs = [prodSearch, "servletProdottoElencoJson", "get", null];
+        var autArgs = [prodSearch, "../servletProdottoNomeJson", "get", null];
         autocomplete(...autArgs, true, ricercaAutoc.bind(null, ...autArgs));
         document.getElementById("carica_prodotto").addEventListener("click", function() {
-            ajax("servletProdottoNomeJson", "get", "nome=" + prodSearch.value, function(request) {
+            ajax("../servletProdottoElencoJson", "get", "nome=" + prodSearch.value, function(request) {
                 if (request.readyState < 4)
                     return;
                 var error_p = document.getElementById("prod_retrieve_error");
@@ -273,12 +273,12 @@ function ricercaAutoc(inp, link, method) {
 
         inp.parentNode.appendChild(list_div);
 
-        var params = "nome=" + inp.val;
+        var params = "nome=" + val;
 
         ajax(link, method, params, function(request) {
             if (request.readyState < 4 || request.status != 200)
                 return;
-            var arr = JSON.parse(request.responseText).array;
+            var arr = JSON.parse(request.responseText);
             console.log(arr);
             const rg = new RegExp(val, "i");
             arr.forEach(function(item) {

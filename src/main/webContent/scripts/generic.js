@@ -1,3 +1,4 @@
+var l = "";
 window.addEventListener("load",function(event) {
     HTMLCollection.prototype.forEach = Array.prototype.forEach;
 	
@@ -9,7 +10,10 @@ window.addEventListener("load",function(event) {
 	var search = document.getElementById("ricerca");
 	var personal = document.getElementById("personal_area");
 	if (search){
-		var autArgs = [search, "servletCercaProdottoJson", "get", null];
+		if(window.location.href.includes("common") || window.location.href.includes("admin")){
+			l = "../"
+		}
+		var autArgs = [search, l+"servletProdottoNomeJson", "get", null];
 		autocomplete(...autArgs, true, searchBarAutocomplete.bind(null, ...autArgs));
 	}
 	if (search && personal){
@@ -364,7 +368,7 @@ function searchBarAutocomplete(inp, link, method) {
 
         inp.parentNode.appendChild(list_div);
 
-        var params = "nome=" + inp.val;
+        var params = "nome=" + val;
 
         ajax(link, method, params, function(request) {
             if (request.readyState < 4 || request.status != 200)
@@ -382,13 +386,13 @@ function searchBarAutocomplete(inp, link, method) {
                     list_elem.innerHTML += "<input type='hidden' value='" + item + "'>";
                     list_elem.addEventListener("click", function(e) {
                         closeAllLists();
-						ajax("servletProdottoNomeJson", "get", "nome="+this.getElementsByTagName("input")[0].value, function(request){
+						ajax(l+"servletProdottoElencoJson", "get", "nome="+this.getElementsByTagName("input")[0].value, function(request){
 							if(request.readyState < 4)
 								return
 							if(request.status != 200)
 								return
 							var id = JSON.parse(request.responseText).id;
-							location.href = 'getProdottoPage?id='+id;
+							location.href = l+'getProdottoPage?id='+id;
 						});
                     });
                     list_div.appendChild(list_elem);

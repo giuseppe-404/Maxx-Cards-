@@ -9,7 +9,7 @@ window.addEventListener("load", function() {
 
     button.addEventListener("click", function() {
         var quant = qnt.value;
-        ajax("servletAggiungiCarrello", "get", "id=" + id.value + "&qnt=" + quant, function(request) {
+        ajax("servletAggiungiCarrello", "get", "idProdotto=" + id.value + "&qnt=" + quant, function(request) {
             if (request.readyState < 4)
                 return;
             output.classList.remove("hidden");

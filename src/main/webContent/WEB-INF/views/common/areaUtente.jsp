@@ -15,21 +15,21 @@
 	<main>
 		<c:if test="${utente.admin}">
 			<section id="admin_section">
-				<button onclick="location.href = 'gestioneProdotti';">Prodotti</button>
-				<button onclick="location.href = 'gestioneCarte';">Carte</button>
-				<button onclick="location.href = 'gestioneOrdini';">Ordini Altrui</button>
+				<button onclick="location.href = '../admin/gestioneProdotti';">Prodotti</button>
+				<button onclick="location.href = '../admin/gestioneCarte';">Carte</button>
+				<button onclick="location.href = '../admin/gestioneOrdini';">Ordini Altrui</button>
 			</section>
 		</c:if>
 		<section id="common_section">
-			<button onclick="location.href = 'mostraCheckout';">Checkout</button>
-			<button onclick="location.href = 'mostraCarrello';">Carrello</button>
-			<button onclick="location.href = 'mostraStorico';">Storico</button>
-			<button onclick="location.href = 'gestioneInfoSped';">Info Spedizione</button>
-			<button onclick="location.href = 'gestioneMetodoPagamento';">Metodi di pagamento</button>
-			<button onclick="location.href = 'mostraCronologia';">Cronologia</button>
-			<button onclick="location.href = 'gestioneWishlist';">Wishlist</button>
-			<button onclick="location.href = 'logout';">Logout</button>
-			<button onclick="location.href = 'eliminaAccount';">Eliminazione Account</button>
+			<button onclick="location.href = '../checkout';">Checkout</button>
+			<button onclick="location.href = '../mostraCarrello';">Carrello</button>
+			<button onclick="location.href = '../common/mostraStorico';">Storico</button>
+			<button onclick="location.href = '../common/gestioneInfoSped';">Info Spedizione</button>
+			<button onclick="location.href = '../common/gestioneMetodoPagamento';">Metodi di pagamento</button>
+			<button onclick="location.href = '../common/mostraCronologia';">Cronologia</button>
+			<button onclick="location.href = '../common/gestioneWishlist';">Wishlist</button>
+			<button onclick="location.href = '../common/logout';">Logout</button>
+			<button onclick="location.href = '../common/eliminaAccount';">Eliminazione Account</button>
 		</section>
 	</main>
 	<%@include file="/WEB-INF/views/components/footer.jsp"%>

@@ -2,11 +2,11 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <header>
 	<section id="personal_area">
-		<a href="personalPage">
+		<a href="${pageContext.request.contextPath}/common/personalPage">
 			<img src="${pageContext.request.contextPath}/images/iconDark.png" alt="Area Personale" class="dark ">
 			<img src="${pageContext.request.contextPath}/images/iconLight.png" alt="Area Personale" class="light">
 		</a>
-		<a href="mostraCarrello">
+		<a href="${pageContext.request.contextPath}/mostraCarrello">
 			<img src="${pageContext.request.contextPath}/images/carrelloDark.png" alt="Carrello" class="dark">
 			<img src="${pageContext.request.contextPath}/images/carrelloLight.png" alt="Carrello" class="light">
 		</a>
@@ -16,7 +16,7 @@
 		</a>
 	</section>
 	<section id="logo">
-		<a href="index">
+		<a href="${pageContext.request.contextPath}/index">
 			<img src="${pageContext.request.contextPath}/images/logo.jpg" alt="Logo">
 		</a>
 	</section>

@@ -24,22 +24,26 @@ public class AuthFilter extends HttpFilter {
 			chain.doFilter(request, response);
 			return;
 		}
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		String role = null;
 		if(session != null) {
 			UtenteBean utente = (UtenteBean) session.getAttribute("utente");
-			if(utente.isAdmin()) {
-				role = "admin";
-			} else {
-				role = "common";
+			if(utente != null) {
+				if(utente.isAdmin()) {
+					role = "admin";
+				} else {
+					role = "common";
+				}
+				System.out.println(utente.getEmail());
 			}
+			
 		}
 		boolean autorizzato = false; 
 		if(role != null) {
 			if(path.startsWith("/admin/")) {
 				autorizzato = role.equals("admin");
 			} else if(path.startsWith("/common/")) {
-				autorizzato = role.equals("admin") || role.equals("users");
+				autorizzato = role.equals("admin") || role.equals("common");
 			}
 		}
 		if(autorizzato) {
@@ -49,7 +53,7 @@ public class AuthFilter extends HttpFilter {
 			session.setAttribute("redirectedUrl", requestedUrl);
 			msg = "";
 			session.setAttribute("msg", msg);
-			response.sendRedirect(request.getContextPath() + "/WEB-INF/views/account.jsp");
+			response.sendRedirect(request.getContextPath() + "/login");
 		}
 	}
 }

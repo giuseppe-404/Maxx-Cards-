@@ -13,19 +13,7 @@ window.addEventListener("load", function() {
     const template = document.getElementsByClassName("product_link")[0];
 
     if (cerca) {
-        var param = "idProdotto=" + search_category.value;
-        if (nome && nome.value)
-            param += "&nome=" + nome.value
-        if (descrizione && descrizione.value)
-            param += "&descrizione=" + descrizione.value
-        if (prezzo && prezzo.value)
-            param += "&prezzo=" + prezzo.value
-        if (lingua && lingua.value)
-            param += "&lingua=" + lingua.value
-        if (quality && quality.value)
-            param += "&quality=" + quality.value
-        if (idSet && idSet.value)
-            param += "&idSet=" + idSet.value
+        
         /*nome, descrizione, prezzo, lingua, idSet, quality, idProdotto (
             null o 0 > prodotot
             1 > carta sing
@@ -38,6 +26,19 @@ window.addEventListener("load", function() {
             8 > deck
         */
         cerca.addEventListener("click", function() {
+			var param = "idProdotto=" + search_category.value;
+			        if (nome && nome.value)
+			            param += "&nome=" + nome.value
+			        if (descrizione && descrizione.value)
+			            param += "&descrizione=" + descrizione.value
+			        if (prezzo && prezzo.value)
+			            param += "&prezzo=" + prezzo.value
+			        if (lingua && lingua.value)
+			            param += "&lingua=" + lingua.value
+			        if (quality && quality.value)
+			            param += "&quality=" + quality.value
+			        if (idSet && idSet.value)
+			            param += "&idSet=" + idSet.value
             ajax("servletCercaProdottoJson", "post", param, function(request) {
                 if (request.readyState < 4)
                     return
@@ -69,8 +70,8 @@ window.addEventListener("load", function() {
                     clone.getElementsByTagName("img")[0].alt = "immagine di" + prod.nome;
 
                     var product_description = clone.getElementsByClassName("product_description")[0];
-                    product_description.getElementsByTagName("h3")[0].innerHTMl = prod.nome;
-                    product_description.getElementsByTagName("p")[0].innerHTMl = prod.descrizione;
+                    product_description.getElementsByTagName("h3")[0].innerHTML = prod.nome;
+                    product_description.getElementsByTagName("p")[0].innerHTML = prod.descrizione;
                 })
                 template.parentNode.replaceChildren(...children);
             })

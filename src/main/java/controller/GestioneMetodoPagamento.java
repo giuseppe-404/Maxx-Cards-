@@ -53,7 +53,7 @@ public class GestioneMetodoPagamento extends HttpServlet {
 		try {
 			List<MetodoPagamentoBean> metodoPagamento = metodoPagamentoDao.retrieveByIdUtente(utente.getId());
 			request.setAttribute("info", metodoPagamento);
-			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("");
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/common/metodopag.jsp");
 			dispatcher.forward(request, response);
 		} catch(SQLException e) {
 			request.setAttribute("msg", "Errore nell'ottenimento dei metodi di pagamento dal database!");

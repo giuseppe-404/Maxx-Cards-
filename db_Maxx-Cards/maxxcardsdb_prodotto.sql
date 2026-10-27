@@ -33,7 +33,7 @@ CREATE TABLE `prodotto` (
   `mime_type` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `prod_img_check` CHECK ((((`path_img` is null) and (`mime_type` is null)) or ((`path_img` is not null) and (`mime_type` is not null))))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `prodotto` (
 
 LOCK TABLES `prodotto` WRITE;
 /*!40000 ALTER TABLE `prodotto` DISABLE KEYS */;
+INSERT INTO `prodotto` VALUES (22,'pist',3,4000,'Guarda una figata proprio',0,'',''),(42,'DeckBox',6,1000,'DeckBox di Jaden Yuki',20,'C:\\Users\\ASUS\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Maxx-Cards-\\\\images\\uploads\\prodotti\\1a0a08e9-25a3-4a3a-aaae-2dececdea358.png','image/png'),(43,'DeckBox 2',2,1000,'DeckBox di Jaden Yuki',0,'C:\\Users\\ASUS\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Maxx-Cards-\\\\images\\uploads\\prodotti\\aadcee7e-17a1-4142-9808-c0c937ee1d4c.png','image/png');
 /*!40000 ALTER TABLE `prodotto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 18:00:48
+-- Dump completed on 2026-10-27 12:38:03

@@ -34,6 +34,7 @@ CREATE TABLE `tipo` (
 
 LOCK TABLES `tipo` WRITE;
 /*!40000 ALTER TABLE `tipo` DISABLE KEYS */;
+INSERT INTO `tipo` VALUES ('Acqua'),('Bestia'),('Bestia Alata'),('Cyberso'),('Demone'),('Dinosauro'),('Dio Creatore'),('Divinità-Bestia'),('Drago'),('Fata'),('Guerriero'),('Guerriero-Bestia'),('Illusione'),('Incantatore'),('Insetto'),('Macchina'),('Pesce'),('Pianta'),('Psichico'),('Pyro'),('Rettile'),('Roccia'),('Serpente Marino'),('Tuono'),('Wyrm'),('Zombie');
 /*!40000 ALTER TABLE `tipo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -46,4 +47,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 18:00:45
+-- Dump completed on 2026-10-27 12:38:02

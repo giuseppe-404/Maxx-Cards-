@@ -36,7 +36,7 @@ CREATE TABLE `ordine` (
   CONSTRAINT `ordine_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `ordine_ibfk_2` FOREIGN KEY (`id_utente`, `id_metodo`) REFERENCES `metodopagamento` (`id_utente`, `id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `ordine_ibfk_3` FOREIGN KEY (`id_utente`, `id_infosped`) REFERENCES `infosped` (`id_utente`, `id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +45,7 @@ CREATE TABLE `ordine` (
 
 LOCK TABLES `ordine` WRITE;
 /*!40000 ALTER TABLE `ordine` DISABLE KEYS */;
+INSERT INTO `ordine` VALUES ('Carrello',1,NULL,1,NULL,'2020-12-12 00:00:00','2020-12-12 00:00:00'),('Acquistato',13,18,1,4,'2026-07-24 00:00:00',NULL),('Acquistato',14,18,1,5,'2026-07-24 00:00:00',NULL),('Acquistato',15,18,1,6,'2026-07-24 00:00:00',NULL),('Carrello',16,18,1,9,'2026-07-24 00:00:00',NULL),('Acquistato',17,11,2,5,'2026-07-24 00:00:00',NULL),('Acquistato',18,11,3,6,'2026-07-24 00:00:00',NULL),('Acquistato',19,20,1,1,'2026-07-24 00:00:00',NULL),('Acquistato',20,17,2,6,'2026-07-24 00:00:00',NULL);
 /*!40000 ALTER TABLE `ordine` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 18:00:46
+-- Dump completed on 2026-10-27 12:38:07

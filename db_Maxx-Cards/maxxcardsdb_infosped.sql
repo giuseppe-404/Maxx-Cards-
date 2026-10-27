@@ -42,6 +42,7 @@ CREATE TABLE `infosped` (
 
 LOCK TABLES `infosped` WRITE;
 /*!40000 ALTER TABLE `infosped` DISABLE KEYS */;
+INSERT INTO `infosped` VALUES (1,11,'Giuseppe','De Rosa','Via lui no',13,84013),(1,17,'AAAA','b','via via',1,84013),(1,18,'a','b','c',3,12345),(1,20,'sd','teq','via idns',12,65434),(2,11,'Giuseppe','De Rosa','Via lui no',13,84013),(2,17,'Giuseppe','De Rosa','Via lui no',13,84013),(2,18,'a','b','c',3,12345),(3,11,'Giuseppe','De Rosa','Via lui no',13,84013),(3,17,'a','b','c',3,12345),(3,18,'a','b','c',3,12345),(4,11,'Giuseppe','De Rosa','Via lui no',13,84013),(4,17,'a','b','c',3,12345),(4,18,'a','b','c',3,12345),(5,11,'Giuseppe','De Rosa','Via lui no',13,84013),(5,17,'a','b','c',3,12345),(5,18,'a','b','c',3,12345),(6,11,'Giuseppe','De Rosa','Via lui no',13,84013),(6,17,'Samuele','s','vvad',44,66681),(6,18,'a','b','c',3,12345),(7,18,'a','b','c',3,12345),(8,18,'a','b','c',3,12345),(9,18,'a','b','c',3,12345);
 /*!40000 ALTER TABLE `infosped` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 18:00:49
+-- Dump completed on 2026-10-27 12:38:06

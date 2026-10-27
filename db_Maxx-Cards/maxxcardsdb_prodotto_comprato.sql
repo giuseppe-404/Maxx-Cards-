@@ -35,7 +35,7 @@ CREATE TABLE `prodotto_comprato` (
   KEY `id_originale` (`id_originale`),
   CONSTRAINT `prodotto_comprato_ibfk_1` FOREIGN KEY (`id_ordine`) REFERENCES `ordine` (`id_ordine`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `prodotto_comprato_ibfk_2` FOREIGN KEY (`id_originale`) REFERENCES `prodotto` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `prodotto_comprato` (
 
 LOCK TABLES `prodotto_comprato` WRITE;
 /*!40000 ALTER TABLE `prodotto_comprato` DISABLE KEYS */;
+INSERT INTO `prodotto_comprato` VALUES (1,1,22,3300,'ciao',3,'no vabbe'),(3,13,42,1000,'DeckBox',1,'DeckBox di Jaden Yuki'),(4,14,43,1000,'DeckBox 2',1,'DeckBox di Jaden Yuki'),(5,15,43,1000,'DeckBox 2',1,'DeckBox di Jaden Yuki'),(6,17,42,1000,'DeckBox',1,'DeckBox di Jaden Yuki'),(7,18,42,1000,'DeckBox',1,'DeckBox di Jaden Yuki'),(8,19,43,1000,'DeckBox 2',1,'DeckBox di Jaden Yuki'),(9,20,43,1000,'DeckBox 2',1,'DeckBox di Jaden Yuki'),(10,20,43,1000,'DeckBox 2',3,'DeckBox di Jaden Yuki');
 /*!40000 ALTER TABLE `prodotto_comprato` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 18:00:46
+-- Dump completed on 2026-10-27 12:38:03

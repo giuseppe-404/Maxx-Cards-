@@ -28,8 +28,8 @@ CREATE TABLE `contienedeck` (
   `qnt` int NOT NULL,
   PRIMARY KEY (`id_deck`,`id_carta`),
   KEY `id_carta` (`id_carta`),
+  CONSTRAINT `conteienedeck_ibfk_2` FOREIGN KEY (`id_carta`) REFERENCES `carta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `contienedeck_ibfk_1` FOREIGN KEY (`id_deck`) REFERENCES `deck` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `contienedeck_ibfk_2` FOREIGN KEY (`id_carta`) REFERENCES `carta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `qnt_check` CHECK ((`qnt` between 1 and 3))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 18:00:50
+-- Dump completed on 2026-10-27 12:38:04

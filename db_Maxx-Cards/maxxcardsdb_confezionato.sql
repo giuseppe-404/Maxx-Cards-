@@ -24,11 +24,12 @@ DROP TABLE IF EXISTS `confezionato`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `confezionato` (
   `id` int NOT NULL,
-  `id_set` int DEFAULT NULL,
+  `id_set` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_set` (`id_set`),
-  CONSTRAINT `confezionato_ibfk_1` FOREIGN KEY (`id_set`) REFERENCES `cset` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `confezionato_ibfk_2` FOREIGN KEY (`id`) REFERENCES `prodottoygo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `confezionato_ibfk_2` FOREIGN KEY (`id`) REFERENCES `prodottoygo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `confezionato_ibfk_3` FOREIGN KEY (`id_set`) REFERENCES `cset` (`nome`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `confezionato_ibfk_4` FOREIGN KEY (`id_set`) REFERENCES `cset` (`nome`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 18:00:47
+-- Dump completed on 2026-10-27 12:38:03

@@ -27,7 +27,7 @@ public class GestioneOrdine extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/admin/mostraOrdini.jsp");
+		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/admin/mostraOrdini.jsp");
 		dispatcher.forward(request, response);
 	}
 

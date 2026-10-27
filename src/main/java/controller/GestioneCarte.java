@@ -45,7 +45,7 @@ public class GestioneCarte extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("");
+		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/admin/formCarta.jsp");
 		try {
 			request.setAttribute("",tipoDao.retrieveAll());
 		} catch(SQLException e) {

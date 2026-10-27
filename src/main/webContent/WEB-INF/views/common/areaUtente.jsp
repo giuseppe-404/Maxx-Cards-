@@ -17,7 +17,7 @@
 			<section id="admin_section">
 				<button onclick="location.href = '../admin/gestioneProdotti';">Prodotti</button>
 				<button onclick="location.href = '../admin/gestioneCarte';">Carte</button>
-				<button onclick="location.href = '../admin/gestioneOrdini';">Ordini Altrui</button>
+				<button onclick="location.href = '../admin/gestioneOrdine';">Ordini Altrui</button>
 			</section>
 		</c:if>
 		<section id="common_section">
